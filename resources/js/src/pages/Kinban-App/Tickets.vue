@@ -1,0 +1,64 @@
+<template>
+    <div class="p-10">
+
+        <div class="w-96 rounded-lg bg-gray-300 p-4" :style="{height:'92vh'}">
+
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl">Chilling Loccini</h1>
+                <div class="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="mt-4   overflow-y-scroll" :style="{height:'83vh'}">
+                <draggable
+                    v-model="tickets"
+                    group="tickets"
+                    item-key="id">
+                    <template #item="{element}">
+                        <Ticket :ticket="element" :lastTicketId="lastTicketId"/>
+                    </template>
+                </draggable>
+            </div>
+
+        </div>
+    </div>
+</template>
+<script>
+import Draggable from "vuedraggable"
+import Ticket from "../../components/Kinban-App/Ticket.vue";
+export default{
+    components: {
+        Ticket,
+        Draggable
+    },
+    data() {
+        return {
+            tickets:[
+                { id: 1, name: 'Payment Gateway Integration Failure', ref: 'ZEN-6789', assignee: { initial: 'AA' } },
+                { id: 2, name: 'Mobile App UI Issues', ref: 'ZEN-6790', assignee: { initial: 'BB' } },
+                { id: 3, name: 'Broken Contact Form', ref: 'ZEN-6791', assignee: { initial: 'CC' } },
+                { id: 4, name: 'Payment Gateway Integration Failure', ref: 'ZEN-6792', assignee: { initial: 'DD' } },
+                { id: 5, name: 'Product Image Distortion', ref: 'ZEN-6793', assignee: { initial: 'EE' } },
+                { id: 6, name: 'Website Down', ref: 'ZEN-6794', assignee: { initial: 'FF' } },
+                { id: 7, name: 'Navigation Menu Not Working', ref: 'ZEN-6795', assignee: { initial: 'GG' } },
+                { id: 8, name: '404 Page Not Found', ref: 'ZEN-6796', assignee: { initial: 'HH' } },
+                { id: 9, name: 'Website Speed Optimization', ref: 'ZEN-6797', assignee: { initial: 'II' } },
+                { id: 10, name: 'Payment Confirmation Page Redesign', ref: 'ZEN-6798', assignee: { initial: 'JJ' } }
+            ]
+        }
+    },
+    methods: {
+
+    },
+    computed:{
+        lastTicketId(){
+            return this.tickets[this.tickets.length-1].id
+        }
+    }
+}
+</script>
