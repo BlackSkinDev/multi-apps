@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 
-// Public API instance with default options
-export const Api = axios.create({
+
+export const KinbanAppApi = axios.create({
+    baseURL: `${import.meta.env.VITE_API_URL}kinban-app/`,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',

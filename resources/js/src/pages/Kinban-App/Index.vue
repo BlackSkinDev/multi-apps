@@ -17,9 +17,9 @@ export default {
     data() {
         return {
             apps: [
-                { name: 'Create Project',route:'kinban-tasks'},
-                { name: 'Manage Projects',route:'homepage' },
-                { name: 'Manage Project Stages',route:'homepage'},
+                { name: 'Manage Projects',route:'manage-projects'},
+                { name: 'Manage Project Stages',route:'homepage' },
+                { name: 'Other',route:'homepage'},
             ],
         };
     },

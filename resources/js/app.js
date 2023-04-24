@@ -4,6 +4,7 @@ import {createApp} from 'vue'
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+
 import router from './src/router/index.js'
 
 import App from './App.vue'

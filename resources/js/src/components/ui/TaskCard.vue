@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {useTaskStore} from "../../store/TaskStore";
+import {useTaskStore} from "../../store/ProjectStore";
 import {mapActions} from "pinia";
 export default {
     name: "TaskCard",

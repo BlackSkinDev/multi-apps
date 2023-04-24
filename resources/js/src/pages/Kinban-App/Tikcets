@@ -1,10 +1,9 @@
 <template>
-    <div class="p-10">
-
+    <div class="p-10 flex space-x-8">
         <div class="w-96 rounded-lg bg-gray-300 p-4" :style="{height:'92vh'}">
 
             <div class="flex justify-between items-center">
-                <h1 class="text-xl">Chilling Loccini</h1>
+                <h1 class="text-xl ~text-gray-600">To do</h1>
                 <div class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="2"></circle>
@@ -16,8 +15,35 @@
 
             <div class="mt-4   overflow-y-scroll" :style="{height:'83vh'}">
                 <draggable
+                    @change="onEnd"
                     v-model="tickets"
                     group="tickets"
+                    item-key="id">
+                    <template #item="{element}">
+                        <Ticket :ticket="element" :lastTicketId="lastTicketId"/>
+                    </template>
+                </draggable>
+            </div>
+
+        </div>
+        <div class="w-96 rounded-lg bg-gray-300 p-4" :style="{height:'92vh'}">
+
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl ~text-gray-600">To do</h1>
+                <div class="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="mt-4   overflow-y-scroll" :style="{height:'83vh'}">
+                <draggable
+                    @change="onEnd"
+                    v-model="tickets2"
+                    group="tickets2"
                     item-key="id">
                     <template #item="{element}">
                         <Ticket :ticket="element" :lastTicketId="lastTicketId"/>
@@ -49,11 +75,18 @@ export default{
                 { id: 8, name: '404 Page Not Found', ref: 'ZEN-6796', assignee: { initial: 'HH' } },
                 { id: 9, name: 'Website Speed Optimization', ref: 'ZEN-6797', assignee: { initial: 'II' } },
                 { id: 10, name: 'Payment Confirmation Page Redesign', ref: 'ZEN-6798', assignee: { initial: 'JJ' } }
+            ],
+            tickets2:[
+                { id: 7, name: 'Navigation Menu Not Working', ref: 'ZEN-6795', assignee: { initial: 'GG' } },
+                { id: 8, name: '404 Page Not Found', ref: 'ZEN-6796', assignee: { initial: 'HH' } },
+
             ]
         }
     },
     methods: {
-
+        onEnd(event){
+            console.log(event)
+        }
     },
     computed:{
         lastTicketId(){

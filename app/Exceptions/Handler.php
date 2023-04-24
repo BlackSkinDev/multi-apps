@@ -2,8 +2,15 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Exceptions\OAuthServerException;
+use OAuthException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -38,11 +45,23 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function register(): void
+    public function render($request, Throwable $e)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
+            return errorResponse('Resource not found', Response::HTTP_NOT_FOUND, null);
+        }
+        elseif ($e instanceof ValidationException) {
+            return  errorResponse($e->validator->errors()->first(), Response::HTTP_UNPROCESSABLE_ENTITY, $e->validator->errors());
+        }
+        elseif ($e instanceof AuthenticationException) {
+            return errorResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+        }
+
+        //return errorResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
+
+        return errorResponse('Error handling request.', Response::HTTP_INTERNAL_SERVER_ERROR, null);
     }
 }

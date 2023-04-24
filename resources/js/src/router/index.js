@@ -18,10 +18,16 @@ const routes = [
     },
 
     {
-        path:'/kinban-app/tasks',
-        name:"kinban-tasks",
-        component:()=>import('../pages/Kinban-App/Tickets.vue'),
-    }
+        path:'/kinban-app/projects',
+        name:"manage-projects",
+        component:()=>import('../pages/Kinban-App/Project/Index.vue'),
+    },
+    {
+        path:'/kinban-app/projects/:reference',
+        name:"show-project",
+        component:()=>import('../pages/Kinban-App/Project/Show.vue'),
+    },
+
 ]
 
 const router = createRouter({
