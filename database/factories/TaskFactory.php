@@ -24,6 +24,7 @@ class TaskFactory extends Factory
         return [
             'title'                 => $title = fake()->unique()->text(10),
             'description'           => fake()->text(100),
+            'position'              => fake()->unique()->numberBetween(1,1000000),
             'project_id'            => $project->id,
             'project_dev_stage_id'  => ProjectDevStage::inRandomOrder()->first()->id,
             'user_id'               => User::inRandomOrder()->first()->id,

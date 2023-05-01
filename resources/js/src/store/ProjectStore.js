@@ -9,12 +9,6 @@ export const useProjectStore = defineStore('ProjectStore', {
             project:{},
             project_stages_tasks:[],
             users:[],
-            // task:{},
-            // selectedProjectTasks:[],
-            // loadingProjectTasks:false,
-            // selectedProjectTasksMirror:[],
-            // currentProjectId:null,
-
         }
     },
     getters: {
@@ -33,7 +27,6 @@ export const useProjectStore = defineStore('ProjectStore', {
                 this.processingRequest = false
             }
         },
-
 
         async fetchProjects() {
             this.processingRequest = true
@@ -83,22 +76,11 @@ export const useProjectStore = defineStore('ProjectStore', {
             }
         },
 
-        async fetchUsers() {
-
-            try {
-                const {data:{data}} = await projectApi.getUsers()
-                this.users = data
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            }
-        },
-
-
-        async createTask(taskData) {
+        async saveProjectTask(request) {
             this.processingRequest = true
             try {
-                await taskApi.createTask(taskData)
+                await projectApi.saveProjectTask(this.project.id,request)
+                await this.fetchTasks();
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
@@ -106,59 +88,6 @@ export const useProjectStore = defineStore('ProjectStore', {
                 this.processingRequest = false
             }
         },
-
-
-        async editTask(task_id,taskData) {
-            this.processingRequest = true
-            try {
-                const {data:{data}} = await taskApi.editTask(task_id,taskData)
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            } finally {
-                this.processingRequest = false
-            }
-        },
-
-        async fetchProjectTasks(project_id) {
-            this.loadingProjectTasks = true
-            try {
-                const {data:{data}} = await taskApi.getProjectTasks(project_id)
-                this.currentProjectId = project_id
-                this.selectedProjectTasks = [...data]
-                this.selectedProjectTasksMirror = [...data]
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            } finally {
-                this.loadingProjectTasks = false
-            }
-        },
-
-        async swapTasksWithMirror() {
-            this.selectedProjectTasks = this.selectedProjectTasks.map((task, idx) => {
-                return {...task, priority: this.selectedProjectTasksMirror[idx].priority}
-            })
-            try {
-                await taskApi.updatePriorities(this.selectedProjectTasks)
-                this.selectedProjectTasksMirror = [...this.selectedProjectTasks]
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            }
-        },
-
-        async deleteTask(task_id){
-            try {
-                await taskApi.deleteTask(task_id)
-                await this.fetchProjectTasks(this.currentProjectId)
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            }
-        }
-
-
 
 
     },

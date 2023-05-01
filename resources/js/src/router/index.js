@@ -12,6 +12,12 @@ const routes = [
     },
 
     {
+        path:'/test',
+        name:"test",
+        component:()=>import('../components/Kinban-App/Test.vue'),
+    },
+
+    {
         path:'/kinban-app',
         name:"kinban",
         component:()=>import('../pages/Kinban-App/Index.vue'),

@@ -1,22 +1,7 @@
 <template>
-    <div class="flex flex-col h-screen bg-blue-600">
+    <div class="flex flex-col h-screen bg-blue-600" ref="myComponentRef">
         <main class="flex-1 overflow-hidden">
             <div class="flex flex-col h-full">
-                <Modal :isOpen="isOpen" :title="'Create Task'" :width="700" @close-modal="isOpen=false">
-                    <div class="mt-2 space-y-6">
-                        <Input label="Title" placeholder="Title"/>
-                        <Select label="Assignee" :options="users"/>
-                    </div>
-                    <div class="mt-4">
-                        <button
-                            type="button"
-                            class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            @click="isOpen = false"
-                        >
-                            Got it, thanks!
-                        </button>
-                    </div>
-                </Modal>
                 <div class="shrink-0 flex flex-wrap justify-between items-center p-4">
                     <div class="flex flex-col items-start max-w-full relative">
                         <h1
@@ -57,7 +42,7 @@
                             >
                                 <MenuItems class="origin-top-right mt-2 focus:outline-none absolute right-0 bg-white overflow-hidden  shadow-lg border w-32">
                                     <MenuItem v-slot="{active}" class="border-b">
-                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-2 text-sm text-g-700" @click="isOpen=true">Create Task</a>
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-2 text-sm text-g-700" @click="isCreateFormOpen=true">Create Task</a>
                                     </MenuItem>
                                     <MenuItem v-slot="{active}" class="border-b">
                                         <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-2 text-sm text-red-500">Delete</a>
@@ -77,25 +62,24 @@
                     </div>
                 </div>
             </div>
+
         </main>
+        <ProjectTaskCreateForm :isOpen="isCreateFormOpen" @save="saveTask" @close-modal="isCreateFormOpen=false" ref="createTaskForm"/>
     </div>
 </template>
 <script>
 import Draggable from "vuedraggable"
 import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
-import {Menu,MenuButton,MenuItem,MenuItems,Dialog,DialogPanel,DialogDescription,DialogTitle,TransitionRoot} from '@headlessui/vue'
-import {toast} from "../../../plugins/Toast";
+import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
 import {useProjectStore} from "../../../store/ProjectStore";
 import {mapState,mapActions} from "pinia";
 import {TriggerAction} from "../../../helpers/TriggerAction";
 import StageTaskList from "../../../components/Kinban-App/StageTaskList.vue";
-import Modal from "../../../components/ui/Modal.vue";
-import Input from "../../../components/ui/input.vue";
-import Select from "../../../components/ui/Select.vue";
+import {TASK_CREATE_SUCCESS_MESSAGE} from "../../../../constants";
+import ProjectTaskCreateForm from "../../../components/Kinban-App/ProjectTaskCreateForm.vue";
 
 export default{
     components: {
-        Input,
         Draggable,
         DotsHorizontalIcon,
         PencilIcon,
@@ -104,25 +88,16 @@ export default{
         MenuItem,
         MenuItems,
         StageTaskList,
-        Dialog,
-        DialogPanel,
-        DialogDescription,
-        DialogTitle,
-        TransitionRoot,
-        Modal,
-        Select
+        ProjectTaskCreateForm
     },
     data() {
         return {
             isEditing:false,
-            isOpen:false
+            isCreateFormOpen:false
         }
     },
     methods: {
-        ...mapActions(useProjectStore,['fetchProject','updateProject','fetchTasks','fetchUsers']),
-        hey(){
-            toast.success("Edit")
-        },
+        ...mapActions(useProjectStore,['fetchProject','updateProject','fetchTasks','saveProjectTask']),
         edit(){
             this.isEditing = true
             this.$nextTick(() => {
@@ -140,18 +115,27 @@ export default{
                     });
                 }
             }
-        }
+        },
+        async saveTask(data) {
+            const res = await TriggerAction(this.saveProjectTask(data), TASK_CREATE_SUCCESS_MESSAGE, true)
+            if(res){
+                this.isCreateFormOpen = false;
+                this.$refs.createTaskForm.resetForm();
+                //await TriggerAction(this.fetchTasks())
+                location.reload()
+
+            }
+
+        },
     },
     async mounted() {
            await  TriggerAction(this.fetchProject(this.$route.params.reference)),
            await  TriggerAction(this.fetchTasks())
-           await  TriggerAction(this.fetchUsers())
     },
     computed:{
         ...mapState(useProjectStore,{
             project:(state)         => state.project,
             stages_tasks:(state)    => state.project_stages_tasks,
-            users:(state)    => state.users
         }),
 
         name:{
@@ -161,7 +145,13 @@ export default{
             set(value){
                 return useProjectStore().project.name = value
             }
-        }
+        },
+    },
+
+    watch: {
+        stages_tasks() {
+            this.$forceUpdate();
+        },
     },
 
 }

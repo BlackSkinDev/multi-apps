@@ -14,9 +14,9 @@
             </TransitionChild>
 
             <div class="fixed inset-0 overflow-y-auto"  >
-                <div class="flex mt-32 items-center justify-center p-4 text-center">
+                <div class="flex  items-center justify-center p-4 text-center " :class="classes">
                     <DialogPanel
-                        class="transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all "
+                        class="transform overflow-hidden rounded-2xl bg-white  p-6 text-left align-middle shadow-xl transition-all "
                         :style="{width:`${width}px`}"
                     >
                         <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
@@ -61,6 +61,10 @@ export default {
         width: {
             type: Number,
             default: '500',
+        },
+        classes: {
+            type: String,
+            default: 'mt-32',
         },
     },
     methods:{

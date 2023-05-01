@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Project;
+namespace App\Http\Controllers\Api\Project;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class ProjectUserController extends Controller
 {
@@ -14,9 +13,10 @@ class ProjectUserController extends Controller
      */
     public function index()
     {
-
-        $users = User::get();
-
+        $searchTerm = request('q');
+        $users = User::when($searchTerm,function ($query) use ($searchTerm){
+            return $query->where('name', 'LIKE', "%$searchTerm%");
+        })->get();
         return successResponse(UserResource::collection($users));
     }
 }

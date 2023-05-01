@@ -35,7 +35,7 @@ class ProjectController extends Controller
      */
     public function show($ref)
     {
-        $project = Project::where('reference',$ref)->first();
+        $project = Project::where('reference',$ref)->firstorfail();
         return successResponse(ProjectResource::make($project));
     }
 

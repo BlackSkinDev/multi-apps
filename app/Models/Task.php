@@ -9,27 +9,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','description','project_id','project_dev_stage_id','user_id','reference'];
+    protected $fillable = ['title','description','project_id','project_dev_stage_id','user_id','reference','position'];
+    const POSITION_GAP = 60000;
+    const DEFAULT_TASK_REFERENCE = 1000;
 
     public static function boot()
     {
         parent::boot();
         static::created(function ($item) {
-            $lastTask = self::where('id', '<>', $item->id)->orderBy('id', 'desc')->first();
-            $stage_id = ProjectDevStage::orderBy('priority')->first()->id;
+            $lastTaskReference = self::where('id', '<>', $item->id)->orderBy('id', 'desc')->first()?->reference;
+            $stage_id = ProjectDevStage::orderBy('position')->first()->id;
 
-            if ($lastTask) {
-                $lastReference = $lastTask->reference;
-                $lastReferenceParts = explode('-', $lastReference);
+            if ($lastTaskReference) {
+                $lastReferenceParts = explode('-', $lastTaskReference);
                 $lastReferenceNumber = intval(array_pop($lastReferenceParts));
                 $reference = strtoupper(substr($item->project->name,0,3))."-".$lastReferenceNumber + 1;
             } else {
-                $reference = strtoupper(substr($item->project->name,0,3))."-"."1000";
+                $reference = strtoupper(substr($item->project->name,0,3))."-".self::DEFAULT_TASK_REFERENCE;
             }
-            $item->update(['reference' => $reference,'project_dev_stage_id'=>$stage_id]);
+            $item->update([
+                'reference' => $reference,
+                'project_dev_stage_id'=>$stage_id,
+                'position'=>self::query()->where('project_id',$item->project_id)
+                    ->orderByDesc('position')->first()?->position + self::POSITION_GAP
+            ]);
         });
-
     }
+
 
     public function projectDevStage(): BelongsTo
     {

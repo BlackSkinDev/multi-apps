@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\Project\ProjectController;
-use App\Http\Controllers\Api\ProjectDevStageController;
-use App\Http\Controllers\Api\ProjectTaskController;
-use App\Http\Controllers\Project\ProjectUserController;
+use App\Http\Controllers\Api\Project\ProjectDevStageController;
+use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
+use App\Http\Controllers\Api\Project\ProjectTaskController;
+use App\Http\Controllers\Api\Project\MediaController;
+use App\Http\Controllers\Api\Project\ProjectUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,16 +24,32 @@ Route::prefix('kinban-app')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('',[ProjectController::class,'index']);
         Route::post('',[ProjectController::class,'store']);
-        Route::get('users',[ProjectUserController::class,'index']);
         Route::get('{ref}',[ProjectController::class,'show']);
         Route::patch('{project}',[ProjectController::class,'update']);
         Route::get('{project}/tasks',[ProjectTaskController::class,'index']);
         Route::post('{project}/tasks',[ProjectTaskController::class,'store']);
+
     });
+
+    Route::prefix('tasks')->group(function () {
+        Route::patch( '{task}',[ProjectTaskController::class,'update']);
+        Route::delete('{task}',[ProjectTaskController::class,'destroy']);
+        Route::patch( '{task}/unassign',[ProjectTaskAssignmentController::class,'update']);
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('',[ProjectUserController::class,'index']);
+    });
+
+    Route::post('upload',[MediaController::class,'store']);
 
     Route::prefix('projects-dev-stages')->group(function () {
         Route::get('',[ProjectDevStageController::class,'index']);
     });
+
+    // project users fetch
+    // task update and delete
+    // upload
 
 
 });

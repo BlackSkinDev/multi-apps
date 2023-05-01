@@ -14,8 +14,11 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^37.1.0",
+        "@ckeditor/ckeditor5-vue": "^5.1.0",
         "@headlessui/vue": "^1.7.13",
         "@heroicons/vue": "^1.0.6",
+        "@tinymce/tinymce-vue": "^4.0.7",
         "pinia": "^2.0.33",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.0",

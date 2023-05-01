@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
             return errorResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
-        //return errorResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
+        return errorResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
 
         return errorResponse('Error handling request.', Response::HTTP_INTERNAL_SERVER_ERROR, null);
     }

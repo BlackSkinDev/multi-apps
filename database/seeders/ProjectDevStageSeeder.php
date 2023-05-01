@@ -13,12 +13,12 @@ class ProjectDevStageSeeder extends Seeder
     public function run(): void
     {
         $project_dev_stages = [
-          ['name'=>'To Do','priority'=>1],
-          ['name'=>'In progress','priority'=>2],
-          ['name'=>'In review','priority'=>3],
-          ['name'=>'In testing','priority'=>4],
-          ['name'=>'Testing failed','priority'=>5],
-          ['name'=>'Done','priority'=>6],
+          ['name'=>'To Do','position'=>1],
+          ['name'=>'In progress','position'=>2],
+          ['name'=>'In review','position'=>3],
+          ['name'=>'In testing','position'=>4],
+          ['name'=>'Testing failed','position'=>5],
+          ['name'=>'Done','position'=>6],
         ];
 
         ProjectDevStage::insert($project_dev_stages);
