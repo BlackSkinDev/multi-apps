@@ -93,7 +93,8 @@ export default{
     data() {
         return {
             isEditing:false,
-            isCreateFormOpen:false
+            isCreateFormOpen:false,
+            stages:this.stages_tasks
         }
     },
     methods: {
@@ -131,6 +132,7 @@ export default{
     async mounted() {
            await  TriggerAction(this.fetchProject(this.$route.params.reference)),
            await  TriggerAction(this.fetchTasks())
+
     },
     computed:{
         ...mapState(useProjectStore,{
@@ -148,11 +150,7 @@ export default{
         },
     },
 
-    watch: {
-        stages_tasks() {
-            this.$forceUpdate();
-        },
-    },
+
 
 }
 </script>

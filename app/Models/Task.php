@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Task extends Model
 {
     use HasFactory;
     protected $fillable = ['title','description','project_id','project_dev_stage_id','user_id','reference','position'];
     const POSITION_GAP = 60000;
+    const POSITION_MIN = 0.0002;
     const DEFAULT_TASK_REFERENCE = 1000;
 
     public static function boot()
@@ -33,6 +35,20 @@ class Task extends Model
                 'position'=>self::query()->where('project_id',$item->project_id)
                     ->orderByDesc('position')->first()?->position + self::POSITION_GAP
             ]);
+        });
+        static::saved(function ($model) {
+            if ($model->position < self::POSITION_MIN){
+                DB::statement("SET @previousPosition :=0");
+                DB::statement("
+                UPDATE tasks
+                SET position = (@previousPosition := @previousPosition + ?)
+                WHERE project_dev_stage_id = ?
+                ORDER BY position
+                ",[
+                        self::POSITION_GAP,
+                        $model->project_dev_stage_id
+                    ]);
+                }
         });
     }
 

@@ -41,7 +41,6 @@
                 </template>
             </Draggable>
 
-
         </div>
     </div>
 </template>
@@ -51,6 +50,9 @@ import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
 import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
 import Task from "./Task.vue";
 import Draggable from 'vuedraggable'
+import {TriggerAction} from "../../helpers/TriggerAction";
+import {useTaskStore} from "../../store/TaskStore";
+import {mapActions} from "pinia";
 export default {
     name: "StageTasks",
     components: {
@@ -72,8 +74,24 @@ export default {
         }
     },
     methods:{
-        onChange(e){
-            console.log(e)
+        ...mapActions(useTaskStore,['moveTask']),
+        async onChange(e) {
+            let item = e.added || e.moved;
+            if(!item) return
+            let index = item.newIndex;
+            let prevTask = this.tasks[index-1]
+            let nextTask = this.tasks[index+1]
+            let task =     this.tasks[index]
+            let position = task.position
+            if (prevTask && nextTask){
+                position = (prevTask.position + nextTask.position)/2;
+            } else if(prevTask){
+                position = prevTask.position + (prevTask.position/2);
+            } else if(nextTask){
+                position = nextTask.position/2
+            }
+           await TriggerAction(this.moveTask(task.id, {project_dev_stage_id: this.stage.id,position}))
+
         }
     }
 }

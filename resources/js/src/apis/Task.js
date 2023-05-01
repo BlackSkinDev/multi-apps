@@ -4,7 +4,6 @@ const BASE_ENDOINT = 'tasks'
 
 export default {
 
-
     deleteTask(task_id){
         return KinbanAppApi.delete(`${BASE_ENDOINT}/${task_id}`)
     },
@@ -14,7 +13,11 @@ export default {
     },
 
     unassignTask(task_id){
-        return KinbanAppApi.patch(`${BASE_ENDOINT}/${task_id}/unassign`,request)
+        return KinbanAppApi.patch(`${BASE_ENDOINT}/${task_id}/unassign`)
+    },
+
+    moveTask(task_id,request){
+        return KinbanAppApi.patch(`${BASE_ENDOINT}/${task_id}/move`,request)
     }
 
 

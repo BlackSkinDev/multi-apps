@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
 use App\Http\Controllers\Api\Project\ProjectTaskController;
 use App\Http\Controllers\Api\Project\MediaController;
 use App\Http\Controllers\Api\Project\ProjectUserController;
+use App\Http\Controllers\Api\Project\TaskPositionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,7 @@ Route::prefix('kinban-app')->group(function () {
         Route::patch( '{task}',[ProjectTaskController::class,'update']);
         Route::delete('{task}',[ProjectTaskController::class,'destroy']);
         Route::patch( '{task}/unassign',[ProjectTaskAssignmentController::class,'update']);
+        Route::patch( '{task}/move',[TaskPositionController::class,'update']);
     });
 
     Route::prefix('users')->group(function () {
@@ -46,10 +48,6 @@ Route::prefix('kinban-app')->group(function () {
     Route::prefix('projects-dev-stages')->group(function () {
         Route::get('',[ProjectDevStageController::class,'index']);
     });
-
-    // project users fetch
-    // task update and delete
-    // upload
 
 
 });

@@ -13,9 +13,6 @@ export const useTaskStore = defineStore('TaskStore', {
     },
     actions: {
 
-
-
-
         async deleteProjectTask(task_id){
             try {
                 await TaskApi.deleteTask(task_id)
@@ -24,7 +21,6 @@ export const useTaskStore = defineStore('TaskStore', {
                 return error.response?.data?.message
             }
         },
-
 
         async updateProjectTask(task_id,request) {
             this.processingRequest = true
@@ -41,6 +37,15 @@ export const useTaskStore = defineStore('TaskStore', {
         async unassignTask(task_id) {
             try {
                 await TaskApi.unassignTask(task_id)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
+        async moveTask(task_id,request){
+            try {
+                await TaskApi.moveTask(task_id,request)
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
