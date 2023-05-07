@@ -7,6 +7,7 @@ use App\Http\Requests\Project\CreateProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Resources\Project\ProjectResource;
 use App\Models\Project;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -14,7 +15,7 @@ class ProjectController extends Controller
     /**
      * get all projects
      */
-    public function index()
+    public function index():JsonResponse
     {
         $projects = Project::latest()->get();
         return successResponse(ProjectResource::collection($projects));
@@ -24,37 +25,36 @@ class ProjectController extends Controller
     /**
      * create new Project
      */
-    public function store(CreateProjectRequest $request)
+    public function store(CreateProjectRequest $request):JsonResponse
     {
         Project::create($request->Validated());
         return successResponse();
     }
 
     /**
-     * Display the specified resource.
+     * Display a project
      */
-    public function show($ref)
+    public function show(Project $project):JsonResponse
     {
-        $project = Project::where('reference',$ref)->firstorfail();
         return successResponse(ProjectResource::make($project));
     }
 
 
 
     /**
-     * Update the specified resource in storage.
+     * Update a project
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project):JsonResponse
     {
         $project->update($request->validated());
         return successResponse();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * delete a project
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project):JsonResponse
     {
-        //
+        return successResponse();
     }
 }

@@ -25,7 +25,7 @@ Route::prefix('kinban-app')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('',[ProjectController::class,'index']);
         Route::post('',[ProjectController::class,'store']);
-        Route::get('{ref}',[ProjectController::class,'show']);
+        Route::get('{project}',[ProjectController::class,'show']);
         Route::patch('{project}',[ProjectController::class,'update']);
         Route::get('{project}/tasks',[ProjectTaskController::class,'index']);
         Route::post('{project}/tasks',[ProjectTaskController::class,'store']);

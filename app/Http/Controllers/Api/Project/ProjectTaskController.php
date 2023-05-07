@@ -9,13 +9,14 @@ use App\Http\Resources\Project\ProjectTaskResource;
 use App\Models\Project;
 use App\Models\ProjectDevStage;
 use App\Models\Task;
+use Illuminate\Http\JsonResponse;
 
 class ProjectTaskController extends Controller
 {
     /**
      * get all projects tasks
      */
-    public function index(Project $project)
+    public function index(Project $project):JsonResponse
     {
         $tasks = ProjectDevStage::enabled()
             ->with(['tasks' => function($query) use ($project) {
@@ -31,7 +32,7 @@ class ProjectTaskController extends Controller
     /**
      * create new task for project
      */
-    public function store(CreateTaskRequest $request,Project $project)
+    public function store(CreateTaskRequest $request,Project $project):JsonResponse
     {
          $data = array_merge($request->validated(),['project_id'=>$project->id]);
          Task::create($data);
@@ -41,7 +42,7 @@ class ProjectTaskController extends Controller
     /**
      * update task for project
      */
-    public function update(UpdateTaskRequest $request,Task $task)
+    public function update(UpdateTaskRequest $request,Task $task):JsonResponse
     {
         $task->update($request->validated());
         return successResponse();
@@ -51,7 +52,7 @@ class ProjectTaskController extends Controller
     /**
      * delete task for project
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task):JsonResponse
     {
         $task->delete();
         return successResponse();

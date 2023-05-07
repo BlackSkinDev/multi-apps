@@ -29,7 +29,7 @@ const routes = [
         component:()=>import('../pages/Kinban-App/Project/Index.vue'),
     },
     {
-        path:'/kinban-app/projects/:reference',
+        path:'/kinban-app/projects/:id',
         name:"show-project",
         component:()=>import('../pages/Kinban-App/Project/Show.vue'),
     },

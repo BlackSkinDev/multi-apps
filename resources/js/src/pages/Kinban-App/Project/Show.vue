@@ -130,7 +130,7 @@ export default{
         },
     },
     async mounted() {
-           await  TriggerAction(this.fetchProject(this.$route.params.reference)),
+           await  TriggerAction(this.fetchProject(this.$route.params.id)),
            await  TriggerAction(this.fetchTasks())
 
     },

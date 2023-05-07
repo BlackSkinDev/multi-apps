@@ -42,7 +42,7 @@
             <div v-if="!processingRequest">
                 <ul class="grid grid-cols-1 gap-4  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" v-if="projects.length">
                     <li v-for="project in projects" :key="project" class="bg-blue-600 hover:bg-blue-700 rounded-md min-h-[7rem] p-4 cursor-pointer">
-                        <router-link :to="{name:'show-project',params:{reference:project.reference}}" class="text-white  text-md font-bold  inset-0">{{project.name}}</router-link>
+                        <router-link :to="{name:'show-project',params:{id:project.id}}" class="text-white  text-md font-bold  inset-0">{{project.name}}</router-link>
                         <div class="mt-8 flex justify-between items-center absolute">
                             <p class="text-sm text-white">{{project.reference}}</p>
                         </div>
