@@ -25,7 +25,7 @@
 
 <script>
 
-import {useProjectStore} from "../../store/ProjectStore";
+import {useProjectStore} from "../../store/kinban-app-store/ProjectStore";
 import {mapState,mapActions} from "pinia";
 import Modal from "../ui/Modal.vue";
 import RichEditor from "../ui/RichEditor.vue";
@@ -64,7 +64,7 @@ export default {
             }
         },
         updateTask(){
-            this.$emit('update',this.taskForm)
+            this.$emit('update',this.taskForm,this.task.id)
         },
         close(){
             this.$emit('close-modal')

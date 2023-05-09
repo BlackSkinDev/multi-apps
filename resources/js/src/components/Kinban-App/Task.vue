@@ -51,18 +51,14 @@
 </template>
 
 <script>
-import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
-import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
-import {useProjectStore} from "../../store/ProjectStore";
+import {DotsHorizontalIcon, PencilIcon} from "@heroicons/vue/solid"
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import {useProjectStore} from "../../store/kinban-app-store/ProjectStore";
 import {mapActions} from "pinia";
-import {TriggerAction} from "../../helpers/TriggerAction";
-import {
-    TASK_DELETE_SUCCESS_MESSAGE,
-    TASK_UPDATE_SUCCESS_MESSAGE
-} from "../../../constants";
 import ProjectTaskEditForm from "./ProjectTaskEditForm.vue";
 import DeleteConfirmation from "../ui/DeleteConfirmation.vue";
-import {useTaskStore} from "../../store/TaskStore";
+import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
+
 export default {
     name: "Task",
     components: {
@@ -93,23 +89,25 @@ export default {
             this.deleteId = id
         },
         async deleteSelectedItem(id) {
-            const res = await TriggerAction(this.deleteProjectTask(id), TASK_DELETE_SUCCESS_MESSAGE, true)
-            if (res) {
-                this.isDeleteModalOpen = false
-                //await TriggerAction(this.fetchTasks())
-                location.reload()
-            }
+            this.$emit('deleteTask',id)
+            this.isDeleteModalOpen = false
         },
-        async updateTask(data){
-            const res = await TriggerAction(this.updateProjectTask(this.task.id,data),TASK_UPDATE_SUCCESS_MESSAGE,true)
-            if (res ){
-                this.isEditFormOpen = false
-                //await  TriggerAction(this.fetchTasks())
-                location.reload()
-            }
+        async updateTask(data,task_id){
+             this.$emit('updateTask',data,task_id)
+             this.isEditFormOpen = false
         },
 
     },
+    computed:{
+        stages_tasks:{
+            get(){
+                return useProjectStore().project_stages_tasks;
+            },
+            set(value){
+                return useProjectStore().project_stages_tasks = value
+            }
+        },
+    }
 
 }
 </script>

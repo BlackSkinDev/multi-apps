@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\ProjectDevStage;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +14,14 @@ class DatabaseSeeder extends Seeder
     {
 
          $this->call([
-            ProjectDevStageSeeder::class
+            ProjectDevStageSeeder::class,
+            TaskPrioritySeeder::class,
+            TaskTypeSeeder::class,
          ]);
-         \App\Models\Project::factory(10)->create();
-         \App\Models\User::factory(10)->create();
-         \App\Models\Task::factory(20)->create();
+        \App\Models\Company::factory(10)->create();
+        \App\Models\User::factory(10)->create();
+        \App\Models\Project::factory(10)->create();
+        \App\Models\Task::factory(20)->create();
 
     }
 }

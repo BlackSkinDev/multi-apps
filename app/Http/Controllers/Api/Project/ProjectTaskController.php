@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\Project\ProjectTaskResource;
+use App\Http\Resources\Task\TaskResource;
 use App\Models\Project;
 use App\Models\ProjectDevStage;
 use App\Models\Task;
@@ -35,8 +36,8 @@ class ProjectTaskController extends Controller
     public function store(CreateTaskRequest $request,Project $project):JsonResponse
     {
          $data = array_merge($request->validated(),['project_id'=>$project->id]);
-         Task::create($data);
-         return successResponse();
+         $task = Task::create($data);
+         return successResponse(TaskResource::make($task));
     }
 
     /**

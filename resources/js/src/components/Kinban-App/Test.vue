@@ -1,19 +1,9 @@
 <template>
-    <div class="relative p-10">
-        <h1
-            class="text-4xl font-bold cursor-pointer inline-block"
-            @click="editing = true, newHeading = heading"
-            v-show="!editing"
-        >
-            {{ heading }}
-        </h1>
-        <input
-            class="text-4xl font-bold  w-full absolute top-0 left-0"
-            v-show="editing"
-            v-model="newHeading"
-            v-on:keyup.enter="$event.target.blur()"
-            @blur="updateHeading"
-        />
+    <div>
+        <div v-show="loading" class="h-1 bg-gray-200">
+            <div :style="{ width: progress + '%' }" class="h-1 bg-red-500"></div>
+        </div>
+        <p v-if="loading"></p>
     </div>
 </template>
 
@@ -21,30 +11,36 @@
 export default {
     data() {
         return {
-            heading: "Editable Heading",
-            newHeading: "",
-            editing: false,
+            loading: false,
+            progress: 0,
         };
     },
+    mounted() {
+        this.simulateLoading();
+        window.addEventListener('load', () => {
+            this.loading = false;
+        });
+    },
     methods: {
-        updateHeading() {
-            // Make API call to update the heading
-            // For example, using Axios:
+        simulateLoading() {
+            this.loading = true;
+            this.progress = 0;
 
-            this.heading = this.newHeading;
-            this.editing = false;
-            this.newHeading = "";
+            // get the total page load time from performance.timing
+            const pageLoadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
 
+            // set the interval time based on the total page load time
+            const intervalTime = Math.floor(pageLoadTime / 100);
 
-            // axios.put("/api/update-heading", { newHeading: this.newHeading })
-            //     .then(response => {
-            //         this.heading = this.newHeading;
-            //         this.editing = false;
-            //         this.newHeading = "";
-            //     })
-            //     .catch(error => {
-            //         console.error(error);
-            //     });
+            const interval = setInterval(() => {
+                this.progress += 1;
+                if (this.progress >= 100) {
+                    clearInterval(interval);
+                    this.progress = 100;
+                    this.loading = false;
+                }
+            }, intervalTime);
+
         },
     },
 };

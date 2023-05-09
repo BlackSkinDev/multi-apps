@@ -17,9 +17,13 @@ return new class extends Migration
             $table->string('reference')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->foreignId('project_dev_stage_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('project_dev_stage_id')->constrained()->onDelete('cascade');
+            $table->foreignId('reporter_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('task_type_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('task_priority_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-            $table->double('position')->nullable();
+            $table->dateTime('due_date')->nullable();
+            $table->double('position');
             $table->timestamps();
         });
 

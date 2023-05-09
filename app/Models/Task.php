@@ -18,23 +18,22 @@ class Task extends Model
     public static function boot()
     {
         parent::boot();
-        static::created(function ($item) {
+        static::creating(function ($item) {
             $lastTaskReference = self::where('id', '<>', $item->id)->orderBy('id', 'desc')->first()?->reference;
             $stage_id = ProjectDevStage::orderBy('position')->first()->id;
 
             if ($lastTaskReference) {
                 $lastReferenceParts = explode('-', $lastTaskReference);
                 $lastReferenceNumber = intval(array_pop($lastReferenceParts));
-                $reference = strtoupper(substr($item->project->name,0,3))."-".$lastReferenceNumber + 1;
+                $reference = $item->project->reference."-".$lastReferenceNumber + 1;
             } else {
-                $reference = strtoupper(substr($item->project->name,0,3))."-".self::DEFAULT_TASK_REFERENCE;
+                $reference =  $item->project->reference."-".self::DEFAULT_TASK_REFERENCE;
             }
-            $item->update([
-                'reference' => $reference,
-                'project_dev_stage_id'=>$stage_id,
-                'position'=>self::query()->where('project_id',$item->project_id)
-                    ->orderByDesc('position')->first()?->position + self::POSITION_GAP
-            ]);
+            $item->reference = $reference;
+            $item->project_dev_stage_id = $stage_id;
+            $item->position = self::query()->where('project_id',$item->project_id)
+                    ->orderByDesc('position')->first()?->position + self::POSITION_GAP;
+
         });
         static::saved(function ($model) {
             if ($model->position < self::POSITION_MIN){

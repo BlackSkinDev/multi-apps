@@ -53,13 +53,14 @@
                     </div>
                 </div>
                 <div class="flex-1 p-4 overflow-x-auto">
-                    <div class="inline-flex h-full space-x-4">
+                    <div class="inline-flex h-full space-x-4" v-if="!loading">
                         <StageTaskList
                             v-for="(stage,idx) in stages_tasks"
                             :key="idx" class="w-72 bg-gray-200 max-h-full flex flex-col rounded-md"
                             :stage="stage"
                         />
                     </div>
+                    <clip-loader v-else  class="mt-3 mx-auto block" :loading="loading" :color="'black'" :size="'20px'"></clip-loader>
                 </div>
             </div>
 
@@ -71,12 +72,13 @@
 import Draggable from "vuedraggable"
 import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
 import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
-import {useProjectStore} from "../../../store/ProjectStore";
+import {useProjectStore} from "../../../store/kinban-app-store/ProjectStore";
 import {mapState,mapActions} from "pinia";
 import {TriggerAction} from "../../../helpers/TriggerAction";
 import StageTaskList from "../../../components/Kinban-App/StageTaskList.vue";
-import {TASK_CREATE_SUCCESS_MESSAGE} from "../../../../constants";
+import {FIRST_DEV_STAGE_NAME, TASK_CREATE_SUCCESS_MESSAGE} from "../../../constants/kinban-app-constants";
 import ProjectTaskCreateForm from "../../../components/Kinban-App/ProjectTaskCreateForm.vue";
+import ClipLoader from "vue-spinner/src/ClipLoader.vue";
 
 export default{
     components: {
@@ -88,7 +90,8 @@ export default{
         MenuItem,
         MenuItems,
         StageTaskList,
-        ProjectTaskCreateForm
+        ProjectTaskCreateForm,
+        ClipLoader
     },
     data() {
         return {
@@ -119,25 +122,27 @@ export default{
         },
         async saveTask(data) {
             const res = await TriggerAction(this.saveProjectTask(data), TASK_CREATE_SUCCESS_MESSAGE, true)
-            if(res){
+            if(res) {
                 this.isCreateFormOpen = false;
                 this.$refs.createTaskForm.resetForm();
-                //await TriggerAction(this.fetchTasks())
-                location.reload()
-
+                const toDoStage = this.stages_tasks.find(stage => stage.name === FIRST_DEV_STAGE_NAME);
+                toDoStage.tasks.push(this.newProject);
             }
+
+
 
         },
     },
     async mounted() {
-           await  TriggerAction(this.fetchProject(this.$route.params.id)),
+           await  TriggerAction(this.fetchProject(this.$route.params.ref)),
            await  TriggerAction(this.fetchTasks())
 
     },
     computed:{
         ...mapState(useProjectStore,{
             project:(state)         => state.project,
-            stages_tasks:(state)    => state.project_stages_tasks,
+            newProject:(state)      => state.newProject,
+            loading:(state)         => state.processingRequest
         }),
 
         name:{
@@ -146,6 +151,14 @@ export default{
             },
             set(value){
                 return useProjectStore().project.name = value
+            }
+        },
+        stages_tasks:{
+            get(){
+                return useProjectStore().project_stages_tasks;
+            },
+            set(value){
+                return useProjectStore().project_stages_tasks = value
             }
         },
     },

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import projectApi from "../apis/Project";
-import {API_SUCCESS_MESSAGE} from "../../constants";
+import projectApi from "../../apis/kinban-app/Project";
+import {API_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
 export const useProjectStore = defineStore('ProjectStore', {
     state: () => {
         return {
@@ -9,6 +9,7 @@ export const useProjectStore = defineStore('ProjectStore', {
             project:{},
             project_stages_tasks:[],
             users:[],
+            newProject:{}
         }
     },
     getters: {
@@ -42,15 +43,12 @@ export const useProjectStore = defineStore('ProjectStore', {
         },
 
         async fetchProject(ref) {
-            this.processingRequest = true
             try {
                 const {data:{data}} = await projectApi.getProject(ref)
                 this.project = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
-            }finally {
-                this.processingRequest = false
             }
         },
 
@@ -72,15 +70,17 @@ export const useProjectStore = defineStore('ProjectStore', {
             } catch (error) {
                 return error.response?.data?.message
             } finally {
-                this.processingRequest = false
+                setTimeout(() => {
+                    this.processingRequest = false
+                }, 1000)
             }
         },
 
         async saveProjectTask(request) {
             this.processingRequest = true
             try {
-                await projectApi.saveProjectTask(this.project.id,request)
-                await this.fetchTasks();
+                const {data:{data}} = await projectApi.saveProjectTask(this.project.id,request)
+                this.newProject = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

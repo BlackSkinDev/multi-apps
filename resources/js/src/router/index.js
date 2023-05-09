@@ -19,19 +19,25 @@ const routes = [
 
     {
         path:'/kinban-app',
-        name:"kinban",
-        component:()=>import('../pages/Kinban-App/Index.vue'),
+        name:"kinban-login",
+        component:()=>import('../pages/auth/login.vue'),
+    },
+
+    {
+        path:'/kinban-app/register',
+        name:"kinban-register",
+        component:()=>import('../pages/auth/register.vue'),
     },
 
     {
         path:'/kinban-app/projects',
         name:"manage-projects",
-        component:()=>import('../pages/Kinban-App/Project/Index.vue'),
+        component:()=>import('../pages/kinban-App/Project/Index.vue'),
     },
     {
-        path:'/kinban-app/projects/:id',
+        path:'/kinban-app/projects/:ref/browse',
         name:"show-project",
-        component:()=>import('../pages/Kinban-App/Project/Show.vue'),
+        component:()=>import('../pages/kinban-App/Project/Show.vue'),
     },
 
 ]

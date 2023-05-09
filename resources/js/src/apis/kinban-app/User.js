@@ -11,6 +11,11 @@ export default {
     },
 
 
+    getUser(id){
+        return KinbanAppApi.get(`${BASE_ENDOINT}/${id}`)
+    },
+
+
 
 
 

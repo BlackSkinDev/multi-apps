@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Project;
 use App\Models\ProjectDevStage;
+use App\Models\TaskType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,16 +20,22 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
-        $project = Project::inRandomOrder()->first();
+        $project    = Project::inRandomOrder()->first();
+        $company    = $project->company;
+        $user       = User::inRandomOrder()->where('company_id',$company->id)->first() ?? User::factory()->create(['company_id' => $company->id]);
+        $reporter   = User::inRandomOrder()->where('company_id',$company->id)->first() ?? User::factory()->create(['company_id' => $company->id]);
+
 
         return [
-            'title'                 => $title = fake()->unique()->text(10),
+            'title'                 => fake()->unique()->text(10),
             'description'           => fake()->text(100),
-            'position'              => fake()->unique()->numberBetween(1,1000000),
             'project_id'            => $project->id,
             'project_dev_stage_id'  => ProjectDevStage::inRandomOrder()->first()->id,
-            'user_id'               => User::inRandomOrder()->first()->id,
-            'reference'             => (strtoupper(substr($project->name,0,3)))."-".mt_rand(1000,2000)
+            'user_id'               => $user->id,
+            'reporter_id'           => $reporter->id,
+            'task_type_id'          => TaskType::inRandomOrder()->first()->id,
+            'task_priority_id'      => TaskType::inRandomOrder()->first()->id,
+            'due_date'              => fake()->dateTime()
         ];
     }
 }

@@ -13,7 +13,7 @@ class ProjectDevStage extends Model
     protected $fillable = ['name','enabled'];
 
     public function scopeEnabled($query){
-        return $query->where('enabled',true);
+        return $query->where('enabled',true)->orderBy('position','asc');
     }
 
     public function tasks(): HasMany

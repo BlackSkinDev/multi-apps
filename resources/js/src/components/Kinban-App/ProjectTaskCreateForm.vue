@@ -19,7 +19,7 @@
 </template>
 <script>
 
-import {useProjectStore} from "../../store/ProjectStore";
+import {useProjectStore} from "../../store/kinban-app-store/ProjectStore";
 import {mapState} from "pinia";
 import Modal from "../ui/Modal.vue";
 import RichEditor from "../ui/RichEditor.vue";

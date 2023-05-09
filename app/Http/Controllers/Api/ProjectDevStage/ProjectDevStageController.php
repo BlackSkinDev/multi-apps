@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\Project;
+namespace App\Http\Controllers\Api\ProjectDevStage;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectDevStage\ProjectDevStageResource;
 use App\Models\ProjectDevStage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectDevStageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Fetch all project dev stages
      */
-    public function index()
+    public function index():JsonResponse
     {
         $stages =  ProjectDevStage::enabled()->get();
         return successResponse(ProjectDevStageResource::collection($stages));
@@ -20,7 +21,7 @@ class ProjectDevStageController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new project dev stage
      */
     public function store(Request $request)
     {
@@ -28,7 +29,7 @@ class ProjectDevStageController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Fetch a project dev stage
      */
     public function show(ProjectDevStage $projectDevStage)
     {
@@ -38,7 +39,7 @@ class ProjectDevStageController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
+     * Update a project dev stage
      */
     public function update(Request $request, ProjectDevStage $projectDevStage)
     {
@@ -46,7 +47,7 @@ class ProjectDevStageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a project dev stage
      */
     public function destroy(ProjectDevStage $projectDevStage)
     {

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import ProjectDevStageApi from "../apis/ProjectDevStage";
-import {API_SUCCESS_MESSAGE} from "../../constants";
+import ProjectDevStageApi from "../../apis/kinban-app/ProjectDevStage";
+import {API_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
 export const useProjectDevStageStore = defineStore('ProjectDevStageStore', {
     state: () => {
         return {

@@ -37,7 +37,7 @@
                 @change="onChange"
             >
                 <template #item="{element}">
-                    <Task :task="element"/>
+                    <Task :task="element" @deleteTask="deleteTask" @updateTask="updateTask"/>
                 </template>
             </Draggable>
 
@@ -51,8 +51,11 @@ import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
 import Task from "./Task.vue";
 import Draggable from 'vuedraggable'
 import {TriggerAction} from "../../helpers/TriggerAction";
-import {useTaskStore} from "../../store/TaskStore";
-import {mapActions} from "pinia";
+import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
+import {mapActions, mapState} from "pinia";
+import {TASK_DELETE_SUCCESS_MESSAGE, TASK_UPDATE_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {useUserStore} from "../../store/kinban-app-store/UserStore";
+
 export default {
     name: "StageTasks",
     components: {
@@ -70,11 +73,12 @@ export default {
     },
     data(){
         return{
-            tasks:this.stage.tasks,
+
         }
     },
     methods:{
-        ...mapActions(useTaskStore,['moveTask']),
+        ...mapActions(useTaskStore,['moveTask','deleteProjectTask','updateProjectTask']),
+        ...mapActions(useUserStore,['fetchUser']),
         async onChange(e) {
             let item = e.added || e.moved;
             if(!item) return
@@ -92,6 +96,41 @@ export default {
             }
            await TriggerAction(this.moveTask(task.id, {project_dev_stage_id: this.stage.id,position}))
 
+        },
+        async deleteTask(id){
+             const res = await TriggerAction(this.deleteProjectTask(id), TASK_DELETE_SUCCESS_MESSAGE, true)
+             if (res){
+                 this.tasks = this.tasks.filter(task => task.id !== id);
+             }
+        },
+        async updateTask(data,task_id){
+            const res = await TriggerAction(this.updateProjectTask(task_id,data),TASK_UPDATE_SUCCESS_MESSAGE,true)
+            if(res){
+                await this.fetchUser(data.user_id);
+                const { title, description } = data;
+                const updatedTask = { title, description, user: { ...this.user } };
+
+                this.tasks = this.tasks.map(task => {
+                    if (task.id === task_id) {
+                        return {
+                            ...task,
+                            ...updatedTask,
+                        };
+                    }
+                    return task;
+                });
+            }
+        }
+    },
+    computed:{
+        ...mapState(useUserStore,['user']),
+        tasks:{
+            get(){
+                return this.stage.tasks
+            },
+            set(value){
+                this.stage.tasks = value
+            }
         }
     }
 }

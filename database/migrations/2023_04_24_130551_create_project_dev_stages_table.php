@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('enabled')->default(1);
-            $table->double('position')->nullable();
+            $table->double('position');
             $table->timestamps();
         });
     }

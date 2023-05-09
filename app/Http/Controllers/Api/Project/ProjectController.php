@@ -9,6 +9,7 @@ use App\Http\Resources\Project\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -31,11 +32,13 @@ class ProjectController extends Controller
         return successResponse();
     }
 
+
     /**
-     * Display a project
+     * Fetch a project.
      */
-    public function show(Project $project):JsonResponse
+    public function show($ref):JsonResponse
     {
+        $project = Project::where('reference',$ref)->firstorfail();
         return successResponse(ProjectResource::make($project));
     }
 
@@ -55,6 +58,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project):JsonResponse
     {
+        $project->delete();
         return successResponse();
     }
 }

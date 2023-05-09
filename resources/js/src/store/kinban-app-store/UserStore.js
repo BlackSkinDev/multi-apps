@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import UserApi from "../apis/User";
-import {API_SUCCESS_MESSAGE} from "../../constants";
+import UserApi from "../../apis/kinban-app/User";
+import {API_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
 export const useUserStore = defineStore('UserStore', {
     state: () => {
         return {
             processingRequest:false,
             users:[],
+            user:{}
         }
     },
     getters: {
@@ -17,6 +18,17 @@ export const useUserStore = defineStore('UserStore', {
             try {
                 const {data:{data}} = await UserApi.getUsers(q)
                 this.users = data
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
+        async fetchUser(id) {
+
+            try {
+                const {data:{data}} = await UserApi.getUser(id)
+                this.user = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

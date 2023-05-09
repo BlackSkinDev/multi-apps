@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('reference')->nullable();
+            $table->text('description')->nullable();
+            $table->string('reference');
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('project_lead_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
