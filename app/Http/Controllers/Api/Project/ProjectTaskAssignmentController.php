@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Project;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
-use Illuminate\Http\Request;
 
 class ProjectTaskAssignmentController extends Controller
 {

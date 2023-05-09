@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
-            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('company_id')->nullable()->constrained()->onDelete('cascade');
             $table->tinyInteger('enabled')->default(1);
             $table->tinyInteger('is_admin')->default(0);
             $table->timestamp('email_verified_at')->nullable();

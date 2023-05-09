@@ -1,36 +1,29 @@
 <?php
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
 
-if (! function_exists('successResponse')) {
+if (! function_exists('httpResponse')) {
     /**
-     * Return a standard success json response
+     * Return a standard  json response
      *
      */
-    function successResponse($data = [], int $code = 200) : JsonResponse
-    {
-        return response()->json([
-            'success' => true,
-            'data'    => $data
-        ], $code);
-    }
-}
-
-if (! function_exists('errorResponse')) {
-    /**
-     * Return a standard error json response
-     *
-     */
-    function errorResponse(string $message, int $code = 400, MessageBag $errors = null) : JsonResponse
+    function httpResponse(bool $success,$data=null,string $message=null, int $code=null) : JsonResponse
     {
         $response = [
-            'success' => false,
-            'message' => $message,
+            'success' => $success,
         ];
+        if ($success && $data){
+            $response['data'] = $data;
+        }
 
-        if ($errors) {
-            $response['errors'] = $errors;
+        if ($message){
+            $response['message'] = $message;
+        }
+
+        if (!$code){
+            $code = $success ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST;
         }
 
         return response()->json($response, $code);

@@ -51,16 +51,20 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
-            return errorResponse('Resource not found', Response::HTTP_NOT_FOUND, null);
+            return httpResponse(false,null,'Resource not found', Response::HTTP_NOT_FOUND, null);
         }
         elseif ($e instanceof ValidationException) {
-            return  errorResponse($e->validator->errors()->first(), Response::HTTP_UNPROCESSABLE_ENTITY, $e->validator->errors());
+            return  httpResponse(false,null,$e->validator->errors()->first(), Response::HTTP_UNPROCESSABLE_ENTITY, $e->validator->errors());
         }
         elseif ($e instanceof AuthenticationException) {
-            return errorResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            return httpResponse(false,null,$e->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
-        return errorResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
+        elseif ($e instanceof ClientErrorException) {
+            return httpResponse(false,null,$e->getMessage());
+        }
+
+        return httpResponse(false,null,$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
 
         return errorResponse('Error handling request.', Response::HTTP_INTERNAL_SERVER_ERROR, null);
     }
