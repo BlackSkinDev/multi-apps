@@ -64,7 +64,7 @@ import {Popover, PopoverButton, PopoverOverlay, PopoverPanel} from '@headlessui/
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import Input from "../../../components/ui/input.vue";
 import Button from "../../../components/ui/button.vue";
-import {CREATE_PROJECT_SUCCESS_MESSAGE} from "../../../constants/kinban-app-constants";
+import {CREATE_PROJECT_SUCCESS_MESSAGE} from "../../../constants/constants";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 
 

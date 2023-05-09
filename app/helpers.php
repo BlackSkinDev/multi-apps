@@ -9,12 +9,12 @@ if (! function_exists('httpResponse')) {
      * Return a standard  json response
      *
      */
-    function httpResponse(bool $success,$data=null,string $message=null, int $code=null) : JsonResponse
+    function httpResponse(bool $success,$data=[],string $message=null, int $code=null) : JsonResponse
     {
         $response = [
             'success' => $success,
         ];
-        if ($success && $data){
+        if ($success){
             $response['data'] = $data;
         }
 

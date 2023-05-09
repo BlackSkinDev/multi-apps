@@ -75,4 +75,5 @@ class User extends Authenticatable
 //    public function scopeEnabled($query){
 //        return $query->where('enabled',true);
 //    }
+
 }

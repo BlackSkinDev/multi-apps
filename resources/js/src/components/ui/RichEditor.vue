@@ -11,7 +11,7 @@
 
 <script>
 import Editor from '@tinymce/tinymce-vue'
-import {TINYMCE_MEDIA_UPLOAD_URL} from "../../constants/kinban-app-constants";
+import {TINYMCE_MEDIA_UPLOAD_URL} from "../../constants/constants";
 
 export default {
     name: 'app',

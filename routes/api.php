@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\AuthUserController;
+use App\Http\Controllers\Api\Auth\RefreshTokenController;
 use App\Http\Controllers\Api\Project\ProjectController;
 use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
 use App\Http\Controllers\Api\Project\ProjectTaskController;
@@ -21,17 +23,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('kinban-app')->group(function () {
+
 
     Route::prefix('auth')->group(function () {
 
-        Route::post('register',[AuthController::class,'register']);
-        Route::post('login',[AuthController::class,'login']);
-        Route::post('refresh-token',[AuthController::class,'refreshToken']);
+        Route::post('register',[AuthController::class,'store']);
+        Route::post('login',[AuthController::class,'show']);
+        Route::post('refresh-token',[RefreshTokenController::class,'update']);
 
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('user', [AuthController::class, 'user']);
-            Route::post('logout', [AuthController::class,'logout'])->middleware('auth:sanctum');
+            Route::get('user', [AuthUserController::class, 'show']);
+            Route::post('logout', [AuthController::class,'delete']);
         });
 
     });
@@ -65,4 +67,4 @@ Route::prefix('kinban-app')->group(function () {
     });
 
 
-});
+

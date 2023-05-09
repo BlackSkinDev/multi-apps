@@ -53,7 +53,7 @@ import Draggable from 'vuedraggable'
 import {TriggerAction} from "../../helpers/TriggerAction";
 import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
 import {mapActions, mapState} from "pinia";
-import {TASK_DELETE_SUCCESS_MESSAGE, TASK_UPDATE_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {TASK_DELETE_SUCCESS_MESSAGE, TASK_UPDATE_SUCCESS_MESSAGE} from "../../constants/constants";
 import {useUserStore} from "../../store/kinban-app-store/UserStore";
 
 export default {

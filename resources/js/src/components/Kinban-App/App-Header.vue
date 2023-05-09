@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {LOGIN_ROUTE_NAME,REGISTER_ROUTE_NAME} from "../../constants/kinban-app-constants";
+import {LOGIN_ROUTE_NAME,REGISTER_ROUTE_NAME} from "../../constants/constants";
 
 export default {
     name: "App-Header",

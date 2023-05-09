@@ -40,7 +40,7 @@ import Button from "../../components/ui/button.vue";
 import {useAuthStore} from "../../store/kinban-app-store/AuthStore";
 import {mapState,mapActions} from "pinia";
 import {TriggerAction} from "../../helpers/TriggerAction";
-import {REGISTRATION_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {REGISTRATION_SUCCESS_MESSAGE} from "../../constants/constants";
 
 export default {
     name: "register.vue",

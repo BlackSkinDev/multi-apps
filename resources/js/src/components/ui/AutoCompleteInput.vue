@@ -56,7 +56,7 @@ import {useUserStore} from "../../store/kinban-app-store/UserStore";
 import {mapActions} from "pinia";
 import {TriggerAction} from "../../helpers/TriggerAction";
 import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
-import {TASK_UNASSIGN_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {TASK_UNASSIGN_SUCCESS_MESSAGE} from "../../constants/constants";
 
 export default {
     name: "AutoCompleteInput",

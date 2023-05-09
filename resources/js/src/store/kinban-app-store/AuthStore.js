@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import {API_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {API_SUCCESS_MESSAGE} from "../../constants/constants";
 import authApi from "../../apis/kinban-app/Auth";
 export const useAuthStore = defineStore('AuthStore', {
     state: () => {

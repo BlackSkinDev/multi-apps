@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import TaskApi from "../../apis/kinban-app/Task";
-import {API_SUCCESS_MESSAGE} from "../../constants/kinban-app-constants";
+import {API_SUCCESS_MESSAGE} from "../../constants/constants";
 export const useTaskStore = defineStore('TaskStore', {
     state: () => {
         return {

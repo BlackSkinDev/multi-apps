@@ -76,7 +76,7 @@ import {useProjectStore} from "../../../store/kinban-app-store/ProjectStore";
 import {mapState,mapActions} from "pinia";
 import {TriggerAction} from "../../../helpers/TriggerAction";
 import StageTaskList from "../../../components/Kinban-App/StageTaskList.vue";
-import {FIRST_DEV_STAGE_NAME, TASK_CREATE_SUCCESS_MESSAGE} from "../../../constants/kinban-app-constants";
+import {FIRST_DEV_STAGE_NAME, TASK_CREATE_SUCCESS_MESSAGE} from "../../../constants/constants";
 import ProjectTaskCreateForm from "../../../components/Kinban-App/ProjectTaskCreateForm.vue";
 import ClipLoader from "vue-spinner/src/ClipLoader.vue";
 

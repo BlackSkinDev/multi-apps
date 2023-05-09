@@ -1,10 +1,10 @@
 import axios from 'axios'
-import {UNAUTHORIZED_CODE} from "../../constants/kinban-app-constants";
+import {UNAUTHORIZED_CODE} from "../../constants/constants";
 
 
 
-export const KinbanAppApi = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}kinban-app/`,
+export const Api = axios.create({
+    baseURL: `${import.meta.env.VITE_API_URL}/`,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -12,7 +12,7 @@ export const KinbanAppApi = axios.create({
 });
 
 
-KinbanAppApi.interceptors.response.use(
+Api.interceptors.response.use(
     function (response) {
         return response;
     },

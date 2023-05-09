@@ -1,5 +1,5 @@
 import {toast} from "../plugins/Toast";
-import {API_SUCCESS_MESSAGE} from "../constants/kinban-app-constants";
+import {API_SUCCESS_MESSAGE} from "../constants/constants";
 
 export const TriggerAction = async (action, message = null, triggerSuccessToast = false) => {
     const response = await action;
