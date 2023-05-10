@@ -142,13 +142,13 @@
         <table cellspacing="0" cellpadding="0" border="0">
             <tr>
                 <td align="center">
-                    <a href="#" style="color:#777777;text-decoration:none;">Home</a>
+                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Home</a>
                 </td>
                 <td align="center">
-                    <a href="#" style="color:#777777;text-decoration:none;">About Us</a>
+                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">About Us</a>
                 </td>
                 <td align="center">
-                    <a href="#" style="color:#777777;text-decoration:none;">Contact Us</a>
+                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Contact Us</a>
                 </td>
             </tr>
         </table>
