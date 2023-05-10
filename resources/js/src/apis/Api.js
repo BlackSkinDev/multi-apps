@@ -4,7 +4,7 @@ import {UNAUTHORIZED_CODE} from "../constants/constants";
 
 
 export const Api = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/`,
+    baseURL: `${import.meta.env.VITE_API_URL}/v1/`,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
