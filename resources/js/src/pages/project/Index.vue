@@ -57,14 +57,14 @@
 
 <script>
 import {PlusIcon} from "@heroicons/vue/solid"
-import {useProjectStore} from "../../../store/kinban-app-store/ProjectStore";
+import {useProjectStore} from "../../store/ProjectStore";
 import {mapActions,mapState} from "pinia";
-import {TriggerAction} from "../../../helpers/TriggerAction";
+import {TriggerAction} from "../../helpers/TriggerAction";
 import {Popover, PopoverButton, PopoverOverlay, PopoverPanel} from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-import Input from "../../../components/ui/input.vue";
-import Button from "../../../components/ui/button.vue";
-import {CREATE_PROJECT_SUCCESS_MESSAGE} from "../../../constants/constants";
+import Input from "../../components/ui/input.vue";
+import Button from "../../components/ui/button.vue";
+import {CREATE_PROJECT_SUCCESS_MESSAGE} from "../../constants/constants";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 
 

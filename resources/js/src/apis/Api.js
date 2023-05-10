@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {UNAUTHORIZED_CODE} from "../../constants/constants";
+import {UNAUTHORIZED_CODE} from "../constants/constants";
 
 
 

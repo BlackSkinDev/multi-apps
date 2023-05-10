@@ -1,7 +1,7 @@
 <template>
     <div class="border-b p-6 ">
         <div class="flex justify-between">
-            <h1 class="text-2xl font-bold -blue-500">Kinban App</h1>
+            <h1 class="text-2xl font-bold -blue-500">ProjecktPilot</h1>
             <div class="flex justify-start space-x-4" v-show="!unauthenticated">
                 <router-link :to="{name:'kinban-login'}" v-show="showLoginButton">
                     <button
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {LOGIN_ROUTE_NAME,REGISTER_ROUTE_NAME} from "../../constants/constants";
+import {LOGIN_ROUTE_NAME,REGISTER_ROUTE_NAME} from "../constants/constants";
 
 export default {
     name: "App-Header",

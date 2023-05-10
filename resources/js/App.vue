@@ -3,22 +3,22 @@
 </template>
 
 <script>
-import KinbanAppLayout from "./src/layouts/KinbanAppLayout.vue";
-import DefaultLayout from "./src/layouts/Defaultlayout.vue";
+import DashboardLayout from "./src/layouts/DashboardLayout.vue";
+import IndexLayout from "./src/layouts/IndexLayout.vue";
 
 
 export default {
     components: {
-        KinbanAppLayout,
-        DefaultLayout,
+        DashboardLayout,
+        IndexLayout,
     },
 
     computed: {
         layout() {
-            if (this.$route.matched.some(record => record.path.startsWith('/kinban-app'))) {
-                return 'KinbanAppLayout'
+            if (this.$route.matched.some(record => record.path.startsWith('/dashboard'))) {
+                return 'DashboardLayout'
             } else {
-                return 'DefaultLayout'
+                return 'IndexLayout'
             }
         },
     },

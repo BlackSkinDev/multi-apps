@@ -53,11 +53,11 @@
 <script>
 import {DotsHorizontalIcon, PencilIcon} from "@heroicons/vue/solid"
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
-import {useProjectStore} from "../../store/kinban-app-store/ProjectStore";
+import {useProjectStore} from "../../store/ProjectStore";
 import {mapActions} from "pinia";
-import ProjectTaskEditForm from "./ProjectTaskEditForm.vue";
+import ProjectTaskEditForm from "../Project/ProjectTaskEditForm.vue";
 import DeleteConfirmation from "../ui/DeleteConfirmation.vue";
-import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
+import {useTaskStore} from "../../store/TaskStore";
 
 export default {
     name: "Task",

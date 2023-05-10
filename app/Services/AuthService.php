@@ -27,7 +27,7 @@ class AuthService
      * @param array $user_data
      * @return mixed
      */
-    public function register(array $user_data)
+    public function register(array $user_data): mixed
     {
         return $this->userRepository->create($user_data);
     }
@@ -38,7 +38,7 @@ class AuthService
      * @return array
      * @throws ClientErrorException
      */
-    public function login(array $request)
+    public function login(array $request): array
     {
         $user = $this->userRepository->findByEmail($request['email']);
 
@@ -68,6 +68,7 @@ class AuthService
     /**
      * Refresh access token
      * @param string $token
+     * @return Application|CookieJar|Cookie
      * @throws ClientErrorException
      */
     public function refreshToken(string $token): Application|CookieJar|Cookie

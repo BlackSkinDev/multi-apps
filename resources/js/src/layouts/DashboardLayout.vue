@@ -4,9 +4,9 @@
 </template>
 
 <script>
-import AppHeader from "../components/Kinban-App/App-Header.vue";
+import AppHeader from "../components/App-Header.vue";
 export default {
-    name: "KinbanAppLayout",
+    name: "DashboardLayout",
     components:{
         AppHeader
 

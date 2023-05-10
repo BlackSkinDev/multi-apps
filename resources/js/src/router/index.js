@@ -14,31 +14,27 @@ const routes = [
     {
         path:'/test',
         name:"test",
-        component:()=>import('../components/Kinban-App/Test.vue'),
+        component:()=>import('../components/Test.vue'),
     },
 
     {
-        path:'/kinban-app',
-        name:"kinban-login",
+        path:'/signin',
+        name:"signin",
         component:()=>import('../pages/auth/login.vue'),
     },
 
-    {
-        path:'/kinban-app/register',
-        name:"kinban-register",
-        component:()=>import('../pages/auth/register.vue'),
-    },
 
-    {
-        path:'/kinban-app/projects',
-        name:"manage-projects",
-        component:()=>import('../pages/kinban-App/Project/Index.vue'),
-    },
-    {
-        path:'/kinban-app/projects/:ref/browse',
-        name:"show-project",
-        component:()=>import('../pages/kinban-App/Project/Show.vue'),
-    },
+    //
+    // {
+    //     path:'/kinban-app/projects',
+    //     name:"manage-projects",
+    //     component:()=>import('../pages/project'),
+    // },
+    // {
+    //     path:'/kinban-app/projects/:ref/browse',
+    //     name:"show-project",
+    //     component:()=>import('../pages/project/Show.vue'),
+    // },
 
 ]
 

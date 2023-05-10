@@ -13,6 +13,9 @@
                         label="Password"
                     />
                     <Button :text="'Login'" :disabled="false"></Button>
+                    <p class="text-gray-700 text-center text-sm">
+                        Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
+                    </p>
                 </form>
             </div>
         </div>

@@ -48,13 +48,13 @@
 <script>
 import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
 import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
-import Task from "./Task.vue";
+import Task from "../Task/Task.vue";
 import Draggable from 'vuedraggable'
 import {TriggerAction} from "../../helpers/TriggerAction";
-import {useTaskStore} from "../../store/kinban-app-store/TaskStore";
+import {useTaskStore} from "../../store/TaskStore";
 import {mapActions, mapState} from "pinia";
 import {TASK_DELETE_SUCCESS_MESSAGE, TASK_UPDATE_SUCCESS_MESSAGE} from "../../constants/constants";
-import {useUserStore} from "../../store/kinban-app-store/UserStore";
+import {useUserStore} from "../../store/UserStore";
 
 export default {
     name: "StageTasks",
