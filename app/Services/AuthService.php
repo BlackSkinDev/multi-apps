@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Exceptions\ClientErrorException;
+use App\Interfaces\IPersonalAccessTokenRepository;
+use App\Interfaces\IRefreshTokenRepository;
+use App\Interfaces\IUserRepository;
 use App\Repositories\PersonalAccessTokenRepository;
 use App\Repositories\RefreshTokenRepository;
 use App\Repositories\UserRepository;
@@ -14,7 +17,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 class AuthService
 {
 
-    public function __construct(UserRepository $userRepository,RefreshTokenRepository $refreshTokenRepository,PersonalAccessTokenRepository $personalAccessTokenRepository)
+    public function __construct(IUserRepository $userRepository,IRefreshTokenRepository $refreshTokenRepository,IPersonalAccessTokenRepository $personalAccessTokenRepository)
     {
         $this->userRepository                   = $userRepository;
         $this->refreshTokenRepository           = $refreshTokenRepository;

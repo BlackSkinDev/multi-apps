@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\IRefreshTokenRepository;
 use App\Models\RefreshToken;
 
-class RefreshTokenRepository
+class RefreshTokenRepository implements IRefreshTokenRepository
 {
     protected RefreshToken $model;
 

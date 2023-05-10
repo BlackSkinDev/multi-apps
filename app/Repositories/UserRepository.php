@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\IUserRepository;
 use App\Models\User;
 
-class UserRepository
+class UserRepository implements IUserRepository
 {
     protected User $model;
 
@@ -40,7 +41,7 @@ class UserRepository
     /**
      * Delete  user
      */
-    public function delete(User $user): ?bool
+    public function destroy(User $user): ?bool
     {
         return $user->delete();
     }

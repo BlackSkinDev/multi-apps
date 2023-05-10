@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\IPersonalAccessTokenRepository;
 use App\Models\PersonalAccessToken;
 
-class PersonalAccessTokenRepository
+class PersonalAccessTokenRepository implements IPersonalAccessTokenRepository
 {
 
     protected PersonalAccessToken $model;
