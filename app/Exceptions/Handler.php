@@ -6,8 +6,6 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-use Laravel\Passport\Exceptions\OAuthServerException;
-use OAuthException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Illuminate\Http\Response;
@@ -66,6 +64,6 @@ class Handler extends ExceptionHandler
 
         return httpResponse(false,null,$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
 
-        return errorResponse('Error handling request.', Response::HTTP_INTERNAL_SERVER_ERROR, null);
+        return httpResponse(false,null,'An error occurred. We have been notified', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

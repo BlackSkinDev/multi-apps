@@ -8,28 +8,52 @@ use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 use Symfony\Component\HttpFoundation\Cookie;
 
 
 class AuthService
 {
 
-    public function __construct(IUserRepository $userRepository,IRefreshTokenRepository $refreshTokenRepository,IPersonalAccessTokenRepository $personalAccessTokenRepository)
-    {
-        $this->userRepository                   = $userRepository;
-        $this->refreshTokenRepository           = $refreshTokenRepository;
-        $this->personalAccessTokenRepository    = $personalAccessTokenRepository;
+    public function __construct(
+        IUserRepository                 $userRepository,
+        IRefreshTokenRepository         $refreshTokenRepository,
+        IPersonalAccessTokenRepository  $personalAccessTokenRepository,
+        EmailService                    $emailService
+    ) {
+        $this->userRepository                = $userRepository;
+        $this->refreshTokenRepository        = $refreshTokenRepository;
+        $this->personalAccessTokenRepository = $personalAccessTokenRepository;
+        $this->emailService                  = $emailService;
     }
 
 
     /**
      * Register user
      * @param array $user_data
-     * @return mixed
      */
-    public function register(array $user_data): mixed
+    public function register(array $user_data)
     {
-        return $this->userRepository->create($user_data);
+        DB::beginTransaction();
+
+        if($user = $this->userRepository->create($user_data)){
+            try {
+
+                $this->emailService->sendWelcomeEmail($user);
+
+                DB::commit();;
+
+                return $user;
+
+            } catch (\Exception $e){
+                DB::rollBack();
+                Log::error($e);
+                throw new Exception('An error occured. We have been notified');
+            }
+        }
     }
 
     /**
@@ -50,6 +74,14 @@ class AuthService
             throw new ClientErrorException('Incorrect password');
         }
 
+        if (!$user->enabled) {
+            throw new ClientErrorException('Your account has been deactivated. Contact your admin!');
+        }
+
+        if (!$user->email_verified_at) {
+            throw new ClientErrorException('Please verify your account. A verification link has been sent to your email!');
+        }
+
         $access_token = $user->createToken("auth-token");
 
         $cookie = cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
@@ -59,6 +91,7 @@ class AuthService
         return [
             'name'          => $user->name,
             'email'         => $user->email,
+            'is_admin'      => (bool)$user->is_admin,
             'refresh_token' => $refresh_token->token,
             'cookie'        => $cookie
         ];

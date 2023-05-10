@@ -47,6 +47,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     /**
      * Takes string password and Hashes it
      *
@@ -54,6 +55,15 @@ class User extends Authenticatable
     public function password() : Attribute
     {
         return Attribute::set(fn ($value) => Hash::make($value));
+    }
+
+    /**
+     * get user firstname
+     *
+     */
+    public function getFirstnameAttribute(): string
+    {
+        return (explode(" ",$this->name))[0];
     }
 
     /**
@@ -72,8 +82,8 @@ class User extends Authenticatable
         return $initials;
     }
 
-//    public function scopeEnabled($query){
-//        return $query->where('enabled',true);
-//    }
+    public function scopeEnabled($query){
+        return $query->where('enabled',true);
+    }
 
 }
