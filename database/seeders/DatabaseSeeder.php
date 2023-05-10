@@ -14,14 +14,16 @@ class DatabaseSeeder extends Seeder
     {
 
          $this->call([
-            ProjectDevStageSeeder::class,
             TaskPrioritySeeder::class,
             TaskTypeSeeder::class,
          ]);
         \App\Models\Company::factory(10)->create();
         \App\Models\User::factory(10)->create();
         \App\Models\Project::factory(10)->create();
+        \App\Models\ProjectDevStage::factory(20)->create();
         \App\Models\Task::factory(20)->create();
+
+
 
     }
 }

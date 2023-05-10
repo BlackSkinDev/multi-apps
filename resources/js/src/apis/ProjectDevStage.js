@@ -5,7 +5,9 @@ const BASE_ENDOINT = 'projects-dev-stages'
 export default {
 
     getProjectDevStages(){
-        return KinbanAppApi.get(`${BASE_ENDOINT}`)
+        return KinbanAppApi.get(`${BASE_ENDOIN
+
+        }`)
     },
 
 
