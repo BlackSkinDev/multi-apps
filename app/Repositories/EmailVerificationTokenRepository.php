@@ -25,7 +25,7 @@ class EmailVerificationTokenRepository implements IEmailVerificationTokenReposit
     }
 
     /**
-     * Create fetch email verification token record using the token
+     * Find an email verification token record by using token
      */
     public function findByToken(string $token)
     {
@@ -35,7 +35,7 @@ class EmailVerificationTokenRepository implements IEmailVerificationTokenReposit
     /**
      * Delete user token
      */
-    public function delete(EmailVerificationToken $token)
+    public function delete(EmailVerificationToken $token): ?bool
     {
         return $token->delete();
     }

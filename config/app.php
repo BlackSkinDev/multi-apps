@@ -18,6 +18,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
     'refresh_token_expiry' => env('APP_REFRESH_TOKEN_EXPIRY', 2),
     'email_verification_token_expiry' => env('APP_EMAIL_VERIFICATION_TOKEN_EXPIRY', 2),
+    'password_reset_token_expiry' => env('APP_PASSWORD_RESET_TOKEN_EXPIRY', 2),
     'tokens_length' => env('APP_TOKENS_LENGTH', 40),
 
     /*

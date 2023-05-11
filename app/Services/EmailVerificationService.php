@@ -26,11 +26,13 @@ class EmailVerificationService
 
     /**
      * Send Verification email to user
-     * @param User $user
+     * @param string $email
      * @throws ClientErrorException
      */
-    public function sendVerificationEmail(User $user): void
+    public function sendVerificationEmail(string $email): void
     {
+        $user = $this->userRepository->findByEmail($email);
+
         DB::beginTransaction();
 
         $email_verification = $this->emailVerificationTokenRepository->create(['user_id'=>$user->id]);
@@ -49,7 +51,7 @@ class EmailVerificationService
     }
 
     /**
-     * Send Welcome email to user
+     * Verify user email
      * @param string $token
      * @throws ClientErrorException
      */

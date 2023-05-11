@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\AuthUserController;
-use App\Http\Controllers\Api\Auth\EmailVerificationTokenController;
+use App\Http\Controllers\Api\Auth\EmailVerificationController;
+use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RefreshTokenController;
 use App\Http\Controllers\Api\Project\ProjectController;
 use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
@@ -45,9 +46,15 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('email')->group(function () {
 
-        Route::post('verify',[EmailVerificationTokenController::class,'show']);
-        Route::post('resend',[EmailVerificationTokenController::class,'store']);
+        Route::post('verify',[EmailVerificationController::class,'update'])->name('email_verification');
+        Route::post('resend',[EmailVerificationController::class,'store']);
 
+    });
+
+    Route::prefix('password-reset')->group(function () {
+
+        Route::post('',[PasswordResetController::class,'store'])->name('password_reset');
+        Route::post('reset',[PasswordResetController::class,'update']);
 
     });
 

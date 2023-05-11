@@ -82,7 +82,7 @@ class AuthService
 
         if (!$user->email_verified_at) {
             try {
-                $this->emailVerificationService->sendVerificationEmail($user);
+                $this->emailVerificationService->sendVerificationEmail($user->email);
             } catch (\Exception $e){
                 Log::error($e);
                 throw new Exception(__('validation.error_occurred'));
