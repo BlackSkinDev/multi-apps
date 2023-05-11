@@ -17,7 +17,7 @@ class AuthUserController extends Controller
         $data = [
             'name'       => auth()->user()->name,
             'email'      => auth()->user()->email,
-            'is_admin'   => auth()->user()->is_admin
+            'is_admin'   => (bool) auth()->user()->is_admin
         ];
         return httpResponse(true,$data);
     }

@@ -64,6 +64,6 @@ class Handler extends ExceptionHandler
 
         return httpResponse(false,null,$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);
 
-        return httpResponse(false,null,'An error occurred. We have been notified', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return httpResponse(false,null,__('validation.error_occurred'), Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

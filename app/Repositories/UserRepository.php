@@ -45,4 +45,13 @@ class UserRepository implements IUserRepository
     {
         return $user->delete();
     }
+
+    /**
+     * Verify user
+     */
+    public function verifyEmail(User $user): void
+    {
+          $user->update(['email_verified_at' => now()]);
+    }
+
 }

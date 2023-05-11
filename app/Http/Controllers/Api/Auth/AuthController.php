@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\RegisterRequest;
 use App\Services\AuthService;
+use App\Services\EmailVerificationService;
 use Illuminate\Http\JsonResponse;
 
 
@@ -16,7 +17,7 @@ class AuthController extends Controller
 
     public function __construct(AuthService $authService)
     {
-        $this->authService = $authService;
+        $this->authService                = $authService;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\IUserRepository;
 use App\Jobs\SendEmailsJob;
+use App\Mail\EmailVerificationMail;
 use App\Mail\WelcomeEmail;
 use App\Models\User;
 
@@ -27,6 +28,18 @@ class EmailService
         dispatch(new SendEmailsJob($user->email,$user,WelcomeEmail::class));
     }
 
+    /**
+     * Send email verification mail to user
+     * @param User $user
+     */
+    public function sendEmailVerificationLink(User $user,$token): void
+    {
+        $data = [
+            'user'  =>$user,
+            'token' =>$token
+        ];
+        dispatch(new SendEmailsJob($user->email,$data,EmailVerificationMail::class));
+    }
 
 
 }

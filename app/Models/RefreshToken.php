@@ -13,9 +13,6 @@ class RefreshToken extends Model
 
     protected $fillable = ['personal_access_token_id','expired_at','token'];
 
-    CONST DEFAULT_EXPIRY        = 2;
-    CONST REFRESH_TOKEN_LENGTH  = 40;
-
 
     protected $casts = [
         'expired_at' => 'datetime',
@@ -26,8 +23,8 @@ class RefreshToken extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->expired_at = Carbon::now()->addMinutes(self::DEFAULT_EXPIRY);
-            $model->token      = hash('sha256', Str::random(self::REFRESH_TOKEN_LENGTH));
+            $model->expired_at = Carbon::now()->addMinutes(config('app.refresh_token_expiry'));
+            $model->token      = hash('sha256', Str::random(config('app.tokens_length')));
         });
 
     }

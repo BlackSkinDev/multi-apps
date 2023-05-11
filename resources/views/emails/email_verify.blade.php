@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to {{config('app.name')}}</title>
+    <title>Verify Email</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 
     <style>
@@ -76,6 +76,12 @@
             text-decoration: underline;
         }
 
+        .disabled-link{
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+        }
+
 
 
         /* Add styles for screens with a max width of 600px */
@@ -114,44 +120,52 @@
     </style>
 </head>
 <body>
-    <div class="body-text">
-        <div class="header">
-            <img src="https://laravel.com/img/notification-logoe.png" alt={{config('app.name')}}>
-        </div>
-        <div class="body-content">
-            <p>Hello {{$name}},</p>
-
-            <div style="margin-top:20px">
-                <p style="margin-top: 15px"> Welcome to {{ config('app.name') }}! We're thrilled to have you onboard and can't wait to see what you create.<p>
-
-                <p style="margin-top: 15px">As a registered user, you can now create, manage, and track your projects and tasks with ease. Whether you're working on a team or as an individual, {{ config('app.name') }} has everything you need to stay organized and productive.</p>
-
-                <p style="margin-top: 15px"> If you have any questions or need help getting started, our support team is always here to assist you. Just reply to this email, and we'll be happy to help.</p>
-
-                <p style="margin-top: 15px"> Thanks again for joining us, and we hope you enjoy using {{ config('app.name') }}!</p>
-
-            </div>
-            <div class="signature">
-                <p>Best regards,</p>
-                <p style="margin-top: 6px">The {{ config('app.name') }} Team.</p>
-            </div>
-
-        </div>
+<div class="body-text">
+    <div class="header">
+        <img src="https://laravel.com/img/notification-logoe.png" alt={{config('app.name')}}>
     </div>
-    <div class="footer">
-        <table cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <td align="center">
-                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Home</a>
-                </td>
-                <td align="center">
-                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">About Us</a>
-                </td>
-                <td align="center">
-                    <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Contact Us</a>
-                </td>
-            </tr>
-        </table>
+    <div class="body-content">
+        <p>Hello {{$name}},</p>
+
+        <div style="margin-top:20px;word-wrap: break-word;">
+
+            <p style="margin-top: 15px">
+                Thank you for signing up for {{config('app.name')}}! Before you can start using our platform, we need to verify your email address.
+            <p>
+
+            <p style="margin-top: 15px">
+                Please click on the following link to confirm your email address: <a href="{{$link}}" target="_blank" style="text-decoration: none">Verify email</a>. Link expires in {{$duration}} minutes.
+            </p>
+
+            <p style="margin-top: 15px">
+                If the above link doesn't work, please copy and paste this URL into your browser: <a href="#" class="disabled-link">{{$link}}</a>
+            </p>
+
+
+            <p style="margin-top: 15px"> Thank you for choosing our service! If you have any questions or concerns, please feel free to reply to this email.</p>
+
+        </div>
+        <div class="signature">
+            <p>Best regards,</p>
+            <p style="margin-top: 6px">The {{ config('app.name') }} Team.</p>
+        </div>
+
     </div>
+</div>
+<div class="footer">
+    <table cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center">
+                <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Home</a>
+            </td>
+            <td align="center">
+                <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">About Us</a>
+            </td>
+            <td align="center">
+                <a href="{{config('app.url')}}" style="color:#777777;text-decoration:none;">Contact Us</a>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

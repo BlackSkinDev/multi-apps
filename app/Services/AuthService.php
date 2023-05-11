@@ -8,7 +8,6 @@ use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -22,18 +21,21 @@ class AuthService
         IUserRepository                 $userRepository,
         IRefreshTokenRepository         $refreshTokenRepository,
         IPersonalAccessTokenRepository  $personalAccessTokenRepository,
-        EmailService                    $emailService
+        EmailService                    $emailService,
+        EmailVerificationService        $emailVerificationService,
     ) {
         $this->userRepository                = $userRepository;
         $this->refreshTokenRepository        = $refreshTokenRepository;
         $this->personalAccessTokenRepository = $personalAccessTokenRepository;
         $this->emailService                  = $emailService;
+        $this->emailVerificationService      = $emailVerificationService;
     }
 
 
     /**
      * Register user
      * @param array $user_data
+     * @throws ClientErrorException
      */
     public function register(array $user_data)
     {
@@ -51,7 +53,7 @@ class AuthService
             } catch (\Exception $e){
                 DB::rollBack();
                 Log::error($e);
-                throw new Exception('An error occured. We have been notified');
+                throw new ClientErrorException(__('validation.error_occurred'));
             }
         }
     }
@@ -79,6 +81,12 @@ class AuthService
         }
 
         if (!$user->email_verified_at) {
+            try {
+                $this->emailVerificationService->sendVerificationEmail($user);
+            } catch (\Exception $e){
+                Log::error($e);
+                throw new Exception(__('validation.error_occurred'));
+            }
             throw new ClientErrorException('Please verify your account. A verification link has been sent to your email!');
         }
 
