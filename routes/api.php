@@ -34,7 +34,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
 
         Route::post('register',[AuthController::class,'store']);
-        Route::post('login',[AuthController::class,'show']);
+        Route::post('login',[AuthController::class,'show'])->name('login');
         Route::post('refresh-token',[RefreshTokenController::class,'update']);
 
         Route::middleware('auth:sanctum')->group(function () {

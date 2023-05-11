@@ -54,7 +54,7 @@
 import {UserCircleIcon} from "@heroicons/vue/solid";
 import {useUserStore} from "../../store/UserStore";
 import {mapActions} from "pinia";
-import {TriggerAction} from "../../helpers/TriggerAction";
+import {Util} from "../../util";
 import {useTaskStore} from "../../store/TaskStore";
 import {TASK_UNASSIGN_SUCCESS_MESSAGE} from "../../constants/constants";
 
@@ -83,7 +83,7 @@ export default {
             const match = this.user.name.match(regex);
             if (match) {
                 const searchTerm = this.user.name.split("@")[1]?.trim();
-                await TriggerAction(this.fetchUsers(searchTerm))
+                await Util(this.fetchUsers(searchTerm))
                 this.generateBgColors()
 
             } else {

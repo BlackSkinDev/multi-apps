@@ -30,5 +30,13 @@ class RefreshTokenRepository implements IRefreshTokenRepository
         return $this->model->where('token',$token)->first();
     }
 
+    /**
+     * delete refresh token
+     */
+    public function delete(RefreshToken $refreshToken): ?bool
+    {
+        return $refreshToken->delete();
+    }
+
 
 }

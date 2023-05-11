@@ -1,7 +1,6 @@
 <template>
     <div class="flex flex-col md:flex-row">
         <div class="w-full md:w-2/3 h-screen bg-gray-200 md:bg-transparent hidden md:block">
-            <!-- Replace the src with your own image -->
             <img class="w-full h-full object-cover" :src="team_image" alt="Image">
         </div>
         <div class="flex flex-col justify-center items-center w-full md:w-1/3 px-8 py-6">
@@ -22,7 +21,7 @@
                         />
                         <Input
                             label="Username"
-                            placeholder="Afeezdev"
+                            placeholder="afeez_dev"
                             type="text"
                             v-model="registerFormData.username"
                             name="username"
@@ -56,7 +55,7 @@ import Input from "../components/ui/input.vue";
 import Button from "../components/ui/Button.vue";
 import {mapActions, mapState} from "pinia/dist/pinia";
 import {useAuthStore} from "../store/AuthStore";
-import {TriggerAction} from "../helpers/TriggerAction";
+import {TriggerPiniaAction} from "../util";
 import {REGISTRATION_SUCCESS_MESSAGE} from "../constants/constants";
 import team from "../assests/images/pro.png"
 export default {
@@ -85,7 +84,7 @@ export default {
             }
         },
         async registerAccount() {
-            const res = await TriggerAction(this.register(this.registerFormData),REGISTRATION_SUCCESS_MESSAGE,true);
+            const res = await TriggerPiniaAction(this.register(this.registerFormData),REGISTRATION_SUCCESS_MESSAGE,true);
             if (res) {
                 this.resetForm();
                 setTimeout(() => {

@@ -6,12 +6,10 @@ use App\Exceptions\ClientErrorException;
 use App\Interfaces\IPersonalAccessTokenRepository;
 use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
-use Illuminate\Cookie\CookieJar;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
-use Symfony\Component\HttpFoundation\Cookie;
+
 
 
 class AuthService
@@ -90,9 +88,11 @@ class AuthService
             throw new ClientErrorException('Please verify your account. A verification link has been sent to your email!');
         }
 
-        $access_token = $user->createToken("auth-token");
+        $access_token = $this->userRepository->createUserToken($user);
+
 
         $cookie = cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
+
 
         $refresh_token = $this->refreshTokenRepository->create(['personal_access_token_id' => $access_token->accessToken->id]);
 
@@ -106,31 +106,6 @@ class AuthService
     }
 
 
-    /**
-     * Refresh access token
-     * @param string $token
-     * @return Application|CookieJar|Cookie
-     * @throws ClientErrorException
-     */
-    public function refreshToken(string $token): Application|CookieJar|Cookie
-    {
-        $refresh_token = $this->refreshTokenRepository->findByToken($token);
-
-        if(!$refresh_token){
-            throw new ClientErrorException('Invalid refresh token was detected!');
-        }
-
-        if($refresh_token->expired_at->lt(now())){
-            $refresh_token->clear();
-            throw new ClientErrorException('Refresh token has expired!');
-        }
-
-        $accessToken =  $this->personalAccessTokenRepository->findById($refresh_token->personal_access_token_id);
-
-        $access_token = $accessToken->user->createToken("auth-token");
-
-        return cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
-    }
 
     /**
      * Log out

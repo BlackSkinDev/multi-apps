@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {ValidateEmail, ValidatePassword, ValidateUsername} from "../../helpers/TriggerAction";
+import {ValidateEmail, ValidatePassword, ValidateUsername} from "../../util";
 
 
 export default {

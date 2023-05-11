@@ -5,13 +5,21 @@
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Welcome back <span class="ml-4">&#128075;</span>
                 </h1>
-                <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="create">
+                <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="loginUser">
+
                     <Input
                         label="Email"
+                        placeholder="name@company.com"
+                        type="email"
+                        v-model="loginFormData.email"
                     />
                     <Input
                         label="Password"
+                        placeholder="••••••••"
+                        :is-password="true"
+                        v-model="loginFormData.password"
                     />
+
                     <Button :text="'Login'" :disabled="false"></Button>
                     <p class="text-gray-700 text-center text-sm">
                         Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
@@ -28,9 +36,33 @@
 
 import Input from "../../components/ui/input.vue";
 import Button from "../../components/ui/button.vue";
+import {mapActions, mapState} from "pinia/dist/pinia";
+import {useAuthStore} from "../../store/AuthStore"
+import {TriggerPiniaAction} from "../../util";
+
 export default {
     name: "login.vue",
-    components:{Input,Button}
+    components:{Input,Button},
+    data(){
+        return{
+            loginFormData:{
+                email:"",
+                password:""
+            },
+        }
+    },
+    methods:{
+        ...mapActions(useAuthStore,['login']),
+        async loginUser() {
+            const response = await TriggerPiniaAction(this.login(this.loginFormData))
+            if (response) this.$router.push({ name: "dashboard" })
+        }
+    },
+    computed:{
+        ...mapState(useAuthStore,{
+            loading:(state)         => state.processingAuthRequest,
+        }),
+    },
 }
 </script>
 

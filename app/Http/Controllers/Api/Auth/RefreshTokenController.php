@@ -6,13 +6,14 @@ use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\RefreshTokenRequest;
 use App\Services\AuthService;
+use App\Services\RefreshTokenService;
 use Illuminate\Http\JsonResponse;
 
 class RefreshTokenController extends Controller
 {
-    public function __construct(AuthService $authService)
+    public function __construct(RefreshTokenService $refreshTokenService)
     {
-        $this->authService = $authService;
+        $this->refreshTokenService = $refreshTokenService;
     }
 
     /**
@@ -23,7 +24,7 @@ class RefreshTokenController extends Controller
      */
     public function update(RefreshTokenRequest $request): JsonResponse
     {
-        $cookie = $this->authService->refreshToken($request->refresh_token);
+        $cookie = $this->refreshTokenService->refreshToken($request->refresh_token);
 
         return httpResponse(true)->withCookie($cookie);
     }

@@ -74,7 +74,7 @@ import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
 import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
 import {useProjectStore} from "../../store/ProjectStore";
 import {mapState,mapActions} from "pinia";
-import {TriggerAction} from "../../helpers/TriggerAction";
+import {Util} from "../../util";
 import StageTaskList from "../../components/Project/StageTaskList.vue";
 import {FIRST_DEV_STAGE_NAME, TASK_CREATE_SUCCESS_MESSAGE} from "../../constants/constants";
 import ProjectTaskCreateForm from "../../components/Project/ProjectTaskCreateForm.vue";
@@ -111,7 +111,7 @@ export default{
         async saveProjectname() {
             if (this.name !== ''){
                 this.isEditing = false
-                const response = await TriggerAction(this.updateProject({name:this.name}))
+                const response = await Util(this.updateProject({name:this.name}))
                 if (!response){
                     this.isEditing = true
                     await this.$nextTick(() => {
@@ -121,7 +121,7 @@ export default{
             }
         },
         async saveTask(data) {
-            const res = await TriggerAction(this.saveProjectTask(data), TASK_CREATE_SUCCESS_MESSAGE, true)
+            const res = await Util(this.saveProjectTask(data), TASK_CREATE_SUCCESS_MESSAGE, true)
             if(res) {
                 this.isCreateFormOpen = false;
                 this.$refs.createTaskForm.resetForm();
@@ -134,8 +134,8 @@ export default{
         },
     },
     async mounted() {
-           await  TriggerAction(this.fetchProject(this.$route.params.ref)),
-           await  TriggerAction(this.fetchTasks())
+           await  Util(this.fetchProject(this.$route.params.ref)),
+           await  Util(this.fetchTasks())
 
     },
     computed:{

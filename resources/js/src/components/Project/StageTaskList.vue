@@ -50,7 +50,7 @@ import {DotsHorizontalIcon,PencilIcon} from "@heroicons/vue/solid"
 import {Menu,MenuButton,MenuItem,MenuItems} from '@headlessui/vue'
 import Task from "../Task/Task.vue";
 import Draggable from 'vuedraggable'
-import {TriggerAction} from "../../helpers/TriggerAction";
+import {Util} from "../../util";
 import {useTaskStore} from "../../store/TaskStore";
 import {mapActions, mapState} from "pinia";
 import {TASK_DELETE_SUCCESS_MESSAGE, TASK_UPDATE_SUCCESS_MESSAGE} from "../../constants/constants";
@@ -94,17 +94,17 @@ export default {
             } else if(nextTask){
                 position = nextTask.position/2
             }
-           await TriggerAction(this.moveTask(task.id, {project_dev_stage_id: this.stage.id,position}))
+           await Util(this.moveTask(task.id, {project_dev_stage_id: this.stage.id,position}))
 
         },
         async deleteTask(id){
-             const res = await TriggerAction(this.deleteProjectTask(id), TASK_DELETE_SUCCESS_MESSAGE, true)
+             const res = await Util(this.deleteProjectTask(id), TASK_DELETE_SUCCESS_MESSAGE, true)
              if (res){
                  this.tasks = this.tasks.filter(task => task.id !== id);
              }
         },
         async updateTask(data,task_id){
-            const res = await TriggerAction(this.updateProjectTask(task_id,data),TASK_UPDATE_SUCCESS_MESSAGE,true)
+            const res = await Util(this.updateProjectTask(task_id,data),TASK_UPDATE_SUCCESS_MESSAGE,true)
             if(res){
                 await this.fetchUser(data.user_id);
                 const { title, description } = data;

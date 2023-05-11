@@ -24,4 +24,14 @@ class PersonalAccessTokenRepository implements IPersonalAccessTokenRepository
         return $this->model->find($id);
     }
 
+    /**
+     * Get token user
+     */
+    public function fetchUser(int $id)
+    {
+        return $this->model->find($id)->user;
+    }
+
+
+
 }

@@ -59,7 +59,7 @@
 import {PlusIcon} from "@heroicons/vue/solid"
 import {useProjectStore} from "../../store/ProjectStore";
 import {mapActions,mapState} from "pinia";
-import {TriggerAction} from "../../helpers/TriggerAction";
+import {Util} from "../../util";
 import {Popover, PopoverButton, PopoverOverlay, PopoverPanel} from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import Input from "../../components/ui/input.vue";
@@ -79,7 +79,7 @@ export default {
     methods:{
         ...mapActions(useProjectStore,['fetchProjects','createProject']),
         async create(closePopover) {
-            const response = await TriggerAction(this.createProject({name: this.name}),CREATE_PROJECT_SUCCESS_MESSAGE,true)
+            const response = await Util(this.createProject({name: this.name}),CREATE_PROJECT_SUCCESS_MESSAGE,true)
             if (response){
                 this.name=""
                 closePopover()
@@ -94,7 +94,7 @@ export default {
         })
     },
     async mounted() {
-        await TriggerAction(this.fetchProjects())
+        await Util(this.fetchProjects())
     }
 }
 </script>

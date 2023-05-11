@@ -1,7 +1,9 @@
-import {toast} from "../plugins/Toast";
-import {API_SUCCESS_MESSAGE} from "../constants/constants";
+import {toast} from "./plugins/Toast";
+import {API_SUCCESS_MESSAGE} from "./constants/constants";
 
-export const TriggerAction = async (action, message = null, triggerSuccessToast = false) => {
+
+
+export const TriggerPiniaAction = async (action, message = null, triggerSuccessToast = false) => {
     const response = await action;
 
     if (response !== API_SUCCESS_MESSAGE) {
@@ -13,16 +15,18 @@ export const TriggerAction = async (action, message = null, triggerSuccessToast 
     return response === API_SUCCESS_MESSAGE;
 };
 
+
+
 export const ValidateEmail =  (email) => {
     let emailPattern = /\S+@\S+\.\S+/;
     return emailPattern.test(email);
 };
 
 export const ValidatePassword =  (password) => {
-    return password.length > 6;
+    return password.length >= 6;
 };
 
 
 export const ValidateUsername =  (username) => {
-    return username.length > 6;
+    return username.length >= 6;
 };

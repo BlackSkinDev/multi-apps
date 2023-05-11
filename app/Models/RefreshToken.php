@@ -29,11 +29,4 @@ class RefreshToken extends Model
 
     }
 
-
-    public function clear(){
-        $user = PersonalAccessToken::where('id',$this->personal_access_token_id)->first()->user;
-        $user->tokens()->delete();
-        $this->delete();
-    }
-
 }

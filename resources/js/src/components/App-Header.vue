@@ -3,7 +3,7 @@
         <div class="flex justify-between">
             <h1 class="text-2xl font-bold -blue-500">ProjecktPilot</h1>
             <div class="flex justify-start space-x-4" v-show="!unauthenticated">
-                <router-link :to="{name:'kinban-login'}" v-show="showLoginButton">
+                <router-link :to="{name:'signin'}" v-show="showLoginButton">
                     <button
                         type="button"
                         class="inline-flex justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -11,7 +11,7 @@
                         Login
                     </button>
                 </router-link>
-                <router-link :to="{name:'kinban-register'}"  v-show="showRegisterButton">
+                <router-link :to="{name:'homepage'}"  v-show="showRegisterButton">
                     <button
                         type="button"
                         class="inline-flex justify-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

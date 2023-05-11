@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import {API_SUCCESS_MESSAGE} from "../constants/constants";
 import authApi from "../apis/Auth";
+
 export const useAuthStore = defineStore('AuthStore', {
     state: () => {
         return {
@@ -27,9 +28,8 @@ export const useAuthStore = defineStore('AuthStore', {
             this.processingAuthRequest = true
             try {
                 const {data:{data}} = await authApi.login(userData)
-                this.resetFormData('login')
-                const { email, name,refresh_token } = data;
-                this.user = {email,name}
+                const { email, name,refresh_token,is_admin } = data;
+                this.user = {email, name,is_admin}
                 localStorage.setItem('logged_in',true)
                 localStorage.setItem('refresh_token',refresh_token)
                 return API_SUCCESS_MESSAGE
@@ -39,6 +39,18 @@ export const useAuthStore = defineStore('AuthStore', {
                 this.processingAuthRequest = false
             }
         },
+
+        async fetchAuthUser() {
+            try {
+                const {data:{data}} = await authApi.getAuthUser()
+                const { email, name,is_admin } = data;
+                this.user = {email, name,is_admin}
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
 
 
         async logout() {

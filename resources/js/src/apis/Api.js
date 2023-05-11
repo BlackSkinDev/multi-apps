@@ -33,9 +33,8 @@ Api.interceptors.response.use(
         if (error.response.status === UNAUTHORIZED_CODE && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                const refreshToken = localStorage.getItem('refresh_token');
-                const {data:{data}} = await axios.post('/auth/refresh-token', {refresh_token: refreshToken});
-                localStorage.setItem('refresh_token',data.refresh_token);
+                const refresh_token = localStorage.getItem('refresh_token');
+                await axios.post(`${import.meta.env.VITE_API_URL}v1/auth/refresh-token`, {refresh_token});
                 return Api(originalRequest);
             } catch (error) {
                 localStorage.removeItem('logged_in');

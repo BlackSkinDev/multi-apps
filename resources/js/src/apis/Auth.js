@@ -1,19 +1,19 @@
-import {Api} from "./Api";
+import {Api,publicApi} from "./Api";
 
 
 const ENDPOINT = 'auth';
 export default {
 
     register(userData){
-        return Api.post(`${ENDPOINT}/register`,userData)
+        return publicApi.post(`${ENDPOINT}/register`,userData)
     },
     login(credentials){
-        return Api.post(`${ENDPOINT}/login`,credentials)
+        return publicApi.post(`${ENDPOINT}/login`,credentials)
     },
     logout(){
         return Api.post(`${ENDPOINT}/logout`)
     },
-    fetchAuthUser(){
+    getAuthUser(){
         return Api.get(`${ENDPOINT}/user`)
     },
 

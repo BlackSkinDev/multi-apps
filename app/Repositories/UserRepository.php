@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\IUserRepository;
 use App\Models\User;
+use Laravel\Sanctum\NewAccessToken;
 
 class UserRepository implements IUserRepository
 {
@@ -52,6 +53,22 @@ class UserRepository implements IUserRepository
     public function verifyEmail(User $user): void
     {
           $user->update(['email_verified_at' => now()]);
+    }
+
+    /**
+     * create  user token
+     */
+    public function createUserToken(User $user): NewAccessToken
+    {
+        return $user->createToken("auth-token");
+    }
+
+    /**
+     * delete user tokens
+     */
+    public function deleteTokens(User $user): void
+    {
+        $user->tokens()->delete();
     }
 
 }
