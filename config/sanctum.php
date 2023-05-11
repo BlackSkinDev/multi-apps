@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'expiration' => 1,
+    'expiration' => config('app.sanctun_access_token_expiry'),
 
     /*
     |--------------------------------------------------------------------------
