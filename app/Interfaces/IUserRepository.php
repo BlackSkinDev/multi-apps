@@ -10,4 +10,5 @@ interface IUserRepository
     public function findByEmail(string $email);
     public function update(User $user, array $data);
     public function destroy(User $user);
+    public function verifyEmail(User $user);
 }
