@@ -9,5 +9,5 @@ export const REGISTER_ROUTE_NAME               = "kinban-login"
 export const LOGIN_ROUTE_NAME                  = "kinban-register"
 export const CREATE_PROJECT_SUCCESS_MESSAGE    = 'Project created successfully'
 export const UNAUTHORIZED_CODE                 = 401
-export const REGISTRATION_SUCCESS_MESSAGE      = "Registration successful! Proceeding to login";
+export const REGISTRATION_SUCCESS_MESSAGE      = "Registration successful! Redirecting to login";
 

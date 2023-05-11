@@ -13,3 +13,16 @@ export const TriggerAction = async (action, message = null, triggerSuccessToast 
     return response === API_SUCCESS_MESSAGE;
 };
 
+export const ValidateEmail =  (email) => {
+    let emailPattern = /\S+@\S+\.\S+/;
+    return emailPattern.test(email);
+};
+
+export const ValidatePassword =  (password) => {
+    return password.length > 6;
+};
+
+
+export const ValidateUsername =  (username) => {
+    return username.length > 6;
+};

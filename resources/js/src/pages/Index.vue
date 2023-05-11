@@ -2,10 +2,10 @@
     <div class="flex flex-col md:flex-row">
         <div class="w-full md:w-2/3 h-screen bg-gray-200 md:bg-transparent hidden md:block">
             <!-- Replace the src with your own image -->
-            <img class="w-full h-full object-cover" :src="team" alt="Image">
+            <img class="w-full h-full object-cover" :src="team_image" alt="Image">
         </div>
         <div class="flex flex-col justify-center items-center w-full md:w-1/3 px-8 py-6">
-            <h1 class="font-bold text-xl p-6 w-full text-gray-700">
+            <h1 class="font-bold text-xl p-6 w-full text-gray-700 " >
                 Simplify project management, boost team collaboration, and stay on track with <span class="text-blue-700 cursor-pointer">ProjectzPilot.</span>
             </h1>
             <div class="w-full">
@@ -13,12 +13,19 @@
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-700">
                         Get started for free
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="registerAccount">
+                    <form class="space-y-4 md:space-y-6 " :class="loading ? 'opacity-50' : ''" action="#" @submit.prevent="registerAccount">
                         <Input
                             label="Name"
                             placeholder="Afeez Azeez"
                             type="text"
                             v-model="registerFormData.name"
+                        />
+                        <Input
+                            label="Username"
+                            placeholder="Afeezdev"
+                            type="text"
+                            v-model="registerFormData.username"
+                            name="username"
                         />
                         <Input
                             label="Email"
@@ -32,7 +39,7 @@
                             :is-password="true"
                             v-model="registerFormData.password"
                         />
-                        <Button :text="'Create Account'" :disabled="loading"></Button>
+                        <Button :text="'Create Account'" :disabled="disabled" :loading="loading" ref="registerButton"/>
                         <p class="text-gray-700 text-center text-sm">
                             Already have an account? <router-link :to="{name:'signin'}" class="text-blue-500 hover:text-blue-700">Sign in here.</router-link>
                         </p>
@@ -60,27 +67,46 @@ export default {
             registerFormData:{
                 name:"",
                 email:"",
+                username:"",
                 password:""
             },
-            team:team
+
+            team_image:team
         }
     },
     methods:{
         ...mapActions(useAuthStore,['register']),
+        resetForm(){
+            this.registerFormData ={
+                name:"",
+                email:"",
+                username:"",
+                password:""
+            }
+        },
         async registerAccount() {
             const res = await TriggerAction(this.register(this.registerFormData),REGISTRATION_SUCCESS_MESSAGE,true);
             if (res) {
+                this.resetForm();
                 setTimeout(() => {
-                    this.$router.push("/kinban-app");
+                    this.$router.push("/signin");
                 }, 2000);
             }
-        }
+        },
+
     },
     computed:{
         ...mapState(useAuthStore,{
-            loading:(state)    => state.processingAuthRequest
-        })
-    }
+            loading:(state)         => state.processingAuthRequest,
+        }),
+        disabled(){
+            return this.registerFormData.name     === ''
+                || this.registerFormData.email    === ''
+                || this.registerFormData.password === ''
+                || this.registerFormData.username === ''
+
+        }
+    },
 }
 </script>
 
