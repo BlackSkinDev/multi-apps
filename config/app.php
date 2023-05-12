@@ -15,12 +15,16 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'ProjectzPilot'),
     'refresh_token_expiry' => env('APP_REFRESH_TOKEN_EXPIRY', 60),
     'email_verification_token_expiry' => env('APP_EMAIL_VERIFICATION_TOKEN_EXPIRY', 20),
     'password_reset_token_expiry' => env('APP_PASSWORD_RESET_TOKEN_EXPIRY', 20),
-    'sanctun_access_token_expiry' => env('APP_SANCTUM_ACCESS_TOKEN_EXPIRY', 1),
+    'sanctum_access_token_expiry' => env('APP_SANCTUM_ACCESS_TOKEN_EXPIRY', 1),
     'tokens_length' => env('APP_TOKENS_LENGTH', 40),
+    'magic_link_token_expiry' => env('APP_MAGIC_LINK_TOKEN_EXPIRY', 1),
+
+
+
 
     /*
     |--------------------------------------------------------------------------

@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Interfaces\IEmailVerificationTokenRepository;
+use App\Interfaces\IMagicLinkTokenRepository;
 use App\Interfaces\IPasswordResetTokenRepository;
 use App\Interfaces\IPersonalAccessTokenRepository;
 use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
 use App\Repositories\EmailVerificationTokenRepository;
+use App\Repositories\MagicLinkTokenRepository;
 use App\Repositories\PasswordResetTokenRepository;
 use App\Repositories\PersonalAccessTokenRepository;
 use App\Repositories\RefreshTokenRepository;
@@ -26,6 +28,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(IPersonalAccessTokenRepository::class,PersonalAccessTokenRepository::class);
         $this->app->bind(IEmailVerificationTokenRepository::class,EmailVerificationTokenRepository::class);
         $this->app->bind(IPasswordResetTokenRepository::class,PasswordResetTokenRepository::class);
+        $this->app->bind(IMagicLinkTokenRepository::class,MagicLinkTokenRepository::class);
     }
 
     /**

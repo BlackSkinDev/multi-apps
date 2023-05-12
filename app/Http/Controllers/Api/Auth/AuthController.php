@@ -40,7 +40,7 @@ class AuthController extends Controller
      */
     public function show(LoginRequest $request): JsonResponse
     {
-        $data  = $this->authService->login($request->validated());
+        $data  = $this->authService->loginWithPassword($request->validated());
 
         return httpResponse(true,array_diff_key($data, ['cookie' => null]))->withCookie($data['cookie']);
     }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ClientErrorException;
+use App\Interfaces\IMagicLinkTokenRepository;
 use App\Interfaces\IPersonalAccessTokenRepository;
 use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
@@ -21,12 +22,14 @@ class AuthService
         IPersonalAccessTokenRepository  $personalAccessTokenRepository,
         EmailService                    $emailService,
         EmailVerificationService        $emailVerificationService,
+        IMagicLinkTokenRepository       $magicLinkTokenRepository
     ) {
         $this->userRepository                = $userRepository;
         $this->refreshTokenRepository        = $refreshTokenRepository;
         $this->personalAccessTokenRepository = $personalAccessTokenRepository;
         $this->emailService                  = $emailService;
         $this->emailVerificationService      = $emailVerificationService;
+        $this->magicLinkTokenRepository      = $magicLinkTokenRepository;
     }
 
 
@@ -57,18 +60,15 @@ class AuthService
     }
 
     /**
-     * Login user
+     * Login user with password
      * @param array $request
      * @return array
      * @throws ClientErrorException
      */
-    public function login(array $request): array
+    public function loginWithPassword(array $request): array
     {
         $user = $this->userRepository->findByEmail($request['email']);
 
-        if(!$user){
-            throw new ClientErrorException('This email is not associated with any account');
-        }
 
         if (! password_verify($request['password'],$user->password)) {
             throw new ClientErrorException('Incorrect password');
@@ -103,6 +103,41 @@ class AuthService
             'refresh_token' => $refresh_token->token,
             'cookie'        => $cookie
         ];
+    }
+
+
+    /**
+     * Login user with magic link
+     * @param array $request
+     * @throws ClientErrorException
+     */
+    public function loginWithMagicLink(array $request): void
+    {
+        $user = $this->userRepository->findByEmail($request['email']);
+
+        if (!$user->enabled) {
+            throw new ClientErrorException('Your account has been deactivated. Contact your admin!');
+        }
+
+        if (!$user->email_verified_at) {
+            try {
+                $this->emailVerificationService->sendVerificationEmail($user->email);
+            } catch (\Exception $e){
+                Log::error($e);
+                throw new Exception(__('validation.error_occurred'));
+            }
+            throw new ClientErrorException('Please verify your account. A verification link has been sent to your email!');
+        }
+
+        $token = $this->magicLinkTokenRepository->create(['email'=>$user->email]);
+
+        try {
+            $this->emailService->sendMagicLoginLink($user,$token);
+        } catch (\Exception $e){
+            Log::error($e);
+            throw new Exception(__('validation.error_occurred'));
+        }
+
     }
 
 

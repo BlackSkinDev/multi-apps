@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\AuthUserController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
+use App\Http\Controllers\Api\Auth\MagicAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RefreshTokenController;
 use App\Http\Controllers\Api\Project\ProjectController;
@@ -36,6 +37,11 @@ Route::prefix('v1')->group(function () {
         Route::post('register',[AuthController::class,'store']);
         Route::post('login',[AuthController::class,'show'])->name('login');
         Route::post('refresh-token',[RefreshTokenController::class,'update']);
+
+        Route::prefix('magic-login')->group(function () {
+            Route::post('',[MagicAuthController::class,'store']);
+            Route::post('verify',[MagicAuthController::class,'update'])->name('magic_login');
+        });
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('user', [AuthUserController::class, 'show']);

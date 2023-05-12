@@ -1,10 +1,16 @@
 <template>
-    <button :disabled="disabled" type="submit"  :class="(disabled || loading) ? 'opacity-50 cursor-not-allowed' : '' " class="w-full bg-blue-700  text-white hover:bg-blue-600 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+    <button :disabled="disabled"
+            :class="[(disabled || loading) ? 'opacity-50 cursor-not-allowed' : '', 'w-full bg-blue-700 hover:bg-blue-600', bgClass]"
+            class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            style="box-shadow: none; border-color: transparent;"
+    >
         <div class="flex items-center justify-center gap-5">
             <p>{{!loading ? text : 'Processing...'}}</p>
-            <sync-loader :loading="loading" :color="'white'" ></sync-loader>
+            <sync-loader :loading="loading" :color="'white'"></sync-loader>
         </div>
     </button>
+
+
 
 </template>
 
@@ -20,7 +26,8 @@ export default {
     props: {
         disabled: Boolean,
         text: String,
-        loading:Boolean
+        loading:Boolean,
+        bgClass:String
     },
     methods:{
 

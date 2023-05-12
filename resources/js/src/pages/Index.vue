@@ -38,7 +38,7 @@
                             :is-password="true"
                             v-model="registerFormData.password"
                         />
-                        <Button :text="'Create Account'" :disabled="disabled" :loading="loading" ref="registerButton"/>
+                        <Button :text="'Create Account'" :disabled="disabled" :loading="loading" />
                         <p class="text-gray-700 text-center text-sm">
                             Already have an account? <router-link :to="{name:'signin'}" class="text-blue-500 hover:text-blue-700">Sign in here.</router-link>
                         </p>

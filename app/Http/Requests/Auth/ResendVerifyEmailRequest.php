@@ -33,4 +33,5 @@ class ResendVerifyEmailRequest extends FormRequest
             'email.exists'      => 'This email is not associated with any user'
        ];
     }
+
 }

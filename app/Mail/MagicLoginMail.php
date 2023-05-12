@@ -2,22 +2,30 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class EmailVerificationMail extends Mailable
+class MagicLoginMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    protected string $name;
+    protected User $user;
+    protected string $token;
 
     /**
      * Create a new message instance.
      */
     public function __construct(public array $data)
     {
-        //
+        $this->token = $this->data['token'];
+        $this->user  = $this->data['user'];
+        $this->name  = $this->user->firstname;
     }
 
     /**
@@ -25,8 +33,9 @@ class EmailVerificationMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $app_name =  config('app.name');
         return new Envelope(
-            subject: 'Verify your Email Address!',
+            subject:"{$this->name} - This is your sign-in link to {$app_name}"
         );
     }
 
@@ -35,19 +44,14 @@ class EmailVerificationMail extends Mailable
      */
     public function content(): Content
     {
-        $token = $this->data['token'];
-
-        $user  = $this->data['user'];
-
-        $verification_link = config('frontend.email_verify_url')."/${token}";
-
+        $magic_link = route('magic_login', ['token' => $this->token]);
 
         return new Content(
-            markdown: 'emails.email_verify',
+            markdown: 'emails.magic_login_mail',
             with: [
-                'name'      => $user->firstname,
-                'link'      => $verification_link,
-                'duration'  => config('app.email_verification_token_expiry')
+                'name'      => $this->name,
+                'link'      => $magic_link,
+                'duration'  => config('app.magic_link_token_expiry')
             ],
         );
     }
