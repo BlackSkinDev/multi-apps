@@ -9,6 +9,8 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Illuminate\Http\Response;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -60,6 +62,10 @@ class Handler extends ExceptionHandler
 
         elseif ($e instanceof ClientErrorException) {
             return httpResponse(false,null,$e->getMessage());
+        }
+
+        elseif ($e instanceof ThrottleRequestsException) {
+            return response()->json(['message' => 'Max attempts exceeded.Retry later.'], 429);
         }
 
         return httpResponse(false,null,$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, null);

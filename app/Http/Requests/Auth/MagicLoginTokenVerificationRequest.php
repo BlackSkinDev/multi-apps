@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MagicLoginTokenVerificationRequest extends FormRequest
@@ -17,20 +18,20 @@ class MagicLoginTokenVerificationRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'token'       => ['required','exists:magic_link_tokens,token'],
+            'token' => ['required','exists:magic_link_tokens,token'],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'token.required'        => "Magic link token wasn't detected, try requesting link again",
-            'token.exists'          => 'Link is Invalid, try requesting again!',
+            'token.required'  => "Magic link token wasn't detected, try requesting link again",
+            'token.exists'    => 'Link is Invalid, try requesting again!',
         ];
     }
 }

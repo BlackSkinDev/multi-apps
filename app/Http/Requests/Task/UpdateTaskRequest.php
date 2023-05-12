@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-
-class TaskPositionRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,11 @@ class TaskPositionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $taskId = $this->route('task')->id;
         return [
-            'position' => ['required','numeric'],
-            'project_dev_stage_id'     => ['nullable','exists:project_dev_stages,id'],
+            'title'       => ['required', Rule::unique('tasks')->ignore($taskId)],
+            'description' => ['nullable','string'],
+            'user_id'     => ['nullable','exists:users,id'],
         ];
     }
 }

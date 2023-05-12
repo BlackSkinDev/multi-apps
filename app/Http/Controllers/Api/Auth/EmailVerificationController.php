@@ -34,6 +34,7 @@ class EmailVerificationController extends Controller
      * resend verify email to user
      * @param ResendVerifyEmailRequest $request
      * @return JsonResponse
+     * @throws ClientErrorException
      */
     public function store(ResendVerifyEmailRequest $request): JsonResponse
     {

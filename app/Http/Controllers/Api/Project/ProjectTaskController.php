@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Project;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\CreateTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Resources\Project\ProjectTaskResource;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Project;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -17,19 +18,19 @@ class RegisterRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'name'      =>['required'],
-            'email'     =>['required','email','unique:users'],
-            'username'  =>['required','unique:users','regex:/^[a-z0-9_]+$/','min:6'],
-            'password'  =>['required','min:6']
+            'name'      => ['required'],
+            'email'     => ['required','email','unique:users'],
+            'username'  => ['required','unique:users','regex:/^[a-z0-9_]+$/','min:6'],
+            'password'  => ['required','min:6']
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'username.regex' => 'Username can only contain letters,numbers and underscore'

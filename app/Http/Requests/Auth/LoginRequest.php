@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests\auth;
+namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -17,20 +18,20 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'email'=>['required','exists:users'],
+            'email'       =>['required','exists:users'],
             'password'    =>['required']
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'email.exists'    => 'This email is not associated with any user'
+            'email.exists' => 'This email is not associated with any user'
         ];
     }
 }

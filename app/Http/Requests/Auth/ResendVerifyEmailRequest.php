@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ResendVerifyEmailRequest extends FormRequest
@@ -17,7 +18,7 @@ class ResendVerifyEmailRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -26,11 +27,11 @@ class ResendVerifyEmailRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
        return [
-            'email.required'    => 'Email is required to verify your account',
-            'email.exists'      => 'This email is not associated with any user'
+            'email.required' => 'Email is required to verify your account',
+            'email.exists'   => 'This email is not associated with any user'
        ];
     }
 

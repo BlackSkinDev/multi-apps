@@ -17,13 +17,14 @@ class AuthController extends Controller
 
     public function __construct(AuthService $authService)
     {
-        $this->authService                = $authService;
+        $this->authService = $authService;
     }
 
     /**
      * Sign up an admin user
      * @param RegisterRequest $request
      * @return JsonResponse
+     * @throws ClientErrorException
      */
     public function store(RegisterRequest $request): JsonResponse
     {

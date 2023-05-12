@@ -6,12 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AddAuthTokenHeader
+class AddTokenToHeaderFromCookie
 {
     /**
-     * Handle an incoming request.
+     * Fetch access token stored in cookie and to request header to authenticate user
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param \Closure(Request): (Response) $next
+     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {

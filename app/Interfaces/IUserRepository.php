@@ -12,4 +12,5 @@ interface IUserRepository
     public function destroy(User $user);
     public function verifyEmail(User $user);
     public function createUserToken(User $user);
+    public function deleteTokens(User $user);
 }

@@ -16,7 +16,7 @@ createApp(App)
     .use(pinia)
     .use(Toast, {
         position: POSITION.TOP_RIGHT,
-        timeout: 1500
+        timeout: 1500,
     })
     .use( CKEditor )
     .mount("#app")

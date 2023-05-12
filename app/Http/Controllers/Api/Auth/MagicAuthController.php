@@ -20,7 +20,6 @@ class MagicAuthController extends Controller
      * Send Magic link
      * @param MagicLoginRequest $request
      * @return JsonResponse
-     * @throws ClientErrorException
      */
     public function store(MagicLoginRequest $request): JsonResponse
     {

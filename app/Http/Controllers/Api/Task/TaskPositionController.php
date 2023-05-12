@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TaskPositionRequest;
+use App\Http\Requests\Task\TaskPositionRequest;
 use App\Models\Task;
 
 class TaskPositionController extends Controller

@@ -60,14 +60,9 @@ class EmailVerificationService
 
         $email_verification = $this->emailVerificationTokenRepository->findByToken($token);
 
-        if (!$email_verification){
-            throw new ClientErrorException("Verification link is invalid.");
-        }
-
         if ($email_verification->expired_at->lt(now())){
             throw new ClientErrorException("Verification link has expired");
         }
-
 
         $this->userRepository->verifyEmail($email_verification->user);
 

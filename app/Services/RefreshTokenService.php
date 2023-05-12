@@ -33,14 +33,8 @@ class RefreshTokenService
     {
         $refresh_token = $this->refreshTokenRepository->findByToken($token);
 
-        if(!$refresh_token){
-            throw new ClientErrorException('Invalid refresh token was detected!');
-        }
-
         if($refresh_token->expired_at->lt(now())){
-            $token_user = $this->personalAccessTokenRepository->fetchUser($refresh_token->personal_access_token_id);
-            $this->userRepository->deleteTokens($token_user);
-            $this->refreshTokenRepository->delete($refresh_token);
+            $this->clearTokens($refresh_token);
             throw new ClientErrorException('Your session has expired.Login again!');
         }
 
@@ -49,6 +43,17 @@ class RefreshTokenService
         $access_token = $accessToken->user->createToken("auth-token");
 
         return cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
+    }
+
+    /**
+     * @param $refresh_token
+     * @return void
+     */
+    public function clearTokens($refresh_token): void
+    {
+        $token_user = $this->personalAccessTokenRepository->fetchUser($refresh_token->personal_access_token_id);
+        $this->userRepository->deleteTokens($token_user);
+        $this->refreshTokenRepository->delete($refresh_token);
     }
 
 }
