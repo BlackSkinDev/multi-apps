@@ -33,7 +33,7 @@ class EmailVerificationTokenRepository implements IEmailVerificationTokenReposit
     }
 
     /**
-     * Delete user token
+     * Delete  token
      */
     public function delete(EmailVerificationToken $token): ?bool
     {

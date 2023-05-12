@@ -29,7 +29,7 @@ class SendEmailsJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Send email using the mailable passed
      */
     public function handle(): void
     {

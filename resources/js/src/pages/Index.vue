@@ -5,7 +5,7 @@
         </div>
         <div class="flex flex-col justify-center items-center w-full md:w-1/3 px-8 py-6">
             <h1 class="font-bold text-xl p-6 w-full text-gray-700 " >
-                Simplify project management, boost team collaboration, and stay on track with <span class="text-blue-700 cursor-pointer">ProjectzPilot.</span>
+                Simplify project management, boost team collaboration, and stay on track with <span class="text-blue-700 cursor-pointer">{{app_name}}.</span>
             </h1>
             <div class="w-full">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -56,7 +56,7 @@ import Button from "../components/ui/Button.vue";
 import {mapActions, mapState} from "pinia/dist/pinia";
 import {useAuthStore} from "../store/AuthStore";
 import {TriggerPiniaAction} from "../util";
-import {REGISTRATION_SUCCESS_MESSAGE} from "../constants/constants";
+import {APP_NAME, REGISTRATION_SUCCESS_MESSAGE} from "../constants/constants";
 import team from "../assests/images/pro.png"
 export default {
     name: "Index.vue",
@@ -69,9 +69,12 @@ export default {
                 username:"",
                 password:""
             },
-
-            team_image:team
+            team_image:team,
+            app_name:APP_NAME
         }
+    },
+    mounted() {
+        document.title = `${this.app_name} | Sign up`;
     },
     methods:{
         ...mapActions(useAuthStore,['register']),

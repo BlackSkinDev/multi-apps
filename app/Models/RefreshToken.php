@@ -24,7 +24,7 @@ class RefreshToken extends Model
 
         static::creating(function ($model) {
             $model->expired_at = Carbon::now()->addMinutes(config('app.refresh_token_expiry'));
-            $model->token      = hash('sha256', Str::random(config('app.tokens_length')));
+            $model->token      = generateHashToken(config('app.tokens_length'));
         });
 
     }

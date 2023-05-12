@@ -64,9 +64,7 @@ class PasswordResetService
             throw new ClientErrorException("Password reset link has expired");
         }
 
-
         $user = $this->userRepository->findByEmail($password_reset_token->email);
-
 
         $this->userRepository->update($user,['password'=>$data['new_password']]);
 

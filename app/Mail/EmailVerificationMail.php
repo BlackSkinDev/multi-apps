@@ -2,8 +2,10 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -12,12 +14,18 @@ class EmailVerificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected string $name;
+    protected User $user;
+    protected string $token;
+
     /**
      * Create a new message instance.
      */
     public function __construct(public array $data)
     {
-        //
+        $this->token = $this->data['token'];
+        $this->user  = $this->data['user'];
+        $this->name  = $this->user->firstname;
     }
 
     /**
@@ -35,17 +43,12 @@ class EmailVerificationMail extends Mailable
      */
     public function content(): Content
     {
-        $token = $this->data['token'];
-
-        $user  = $this->data['user'];
-
-        $verification_link = config('app.url').config('frontend.email_verify_url').$token;
-
+        $verification_link = config('app.url').config('frontend.email_verify_url').$this->token;
 
         return new Content(
             markdown: 'emails.email_verify',
             with: [
-                'name'      => $user->firstname,
+                'name'      => $this->name,
                 'link'      => $verification_link,
                 'duration'  => config('app.email_verification_token_expiry')
             ],
@@ -55,7 +58,7 @@ class EmailVerificationMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

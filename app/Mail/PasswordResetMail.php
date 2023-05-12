@@ -2,9 +2,10 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -12,13 +13,18 @@ use Illuminate\Queue\SerializesModels;
 class PasswordResetMail extends Mailable
 {
     use Queueable, SerializesModels;
+    protected string $name;
+    protected User $user;
+    protected string $token;
 
     /**
      * Create a new message instance.
      */
     public function __construct(public array $data)
     {
-        //
+        $this->token = $this->data['token'];
+        $this->user  = $this->data['user'];
+        $this->name  = $this->user->firstname;
     }
 
     /**
@@ -36,16 +42,12 @@ class PasswordResetMail extends Mailable
      */
     public function content(): Content
     {
-        $token = $this->data['token'];
-
-        $user  = $this->data['user'];
-
-        $reset_link = config('app.url').config('frontend.password_reset_url').$token;
+        $reset_link = config('app.url').config('frontend.password_reset_url').$this->token;
 
         return new Content(
             markdown: 'emails.password_reset',
             with: [
-                'name'      => $user->firstname,
+                'name'      => $this->name,
                 'link'      => $reset_link,
                 'duration'  => config('app.password_reset_token_expiry')
             ],
@@ -55,7 +57,7 @@ class PasswordResetMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

@@ -40,7 +40,7 @@ class RefreshTokenService
 
         $accessToken =  $this->personalAccessTokenRepository->findById($refresh_token->personal_access_token_id);
 
-        $access_token = $accessToken->user->createToken("auth-token");
+        $access_token = $this->userRepository->createUserToken($accessToken->user);
 
         return cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
     }

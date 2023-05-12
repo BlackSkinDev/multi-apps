@@ -41,7 +41,7 @@ class EmailVerificationService
 
             $this->emailService->sendEmailVerificationLink($user,$email_verification->token);
 
-            DB::commit();;
+            DB::commit();
 
         } catch (\Exception $e){
             DB::rollBack();

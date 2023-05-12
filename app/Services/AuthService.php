@@ -71,7 +71,7 @@ class AuthService
 
 
         if (! password_verify($request['password'],$user->password)) {
-            throw new ClientErrorException('Incorrect password');
+            throw new ClientErrorException('Incorrect password!');
         }
 
         if (!$user->enabled) {
@@ -100,11 +100,18 @@ class AuthService
     {
         $user = $this->userRepository->findByEmail($request['email']);
 
+        DB::beginTransaction();
+
         $magic_token = $this->magicLinkTokenRepository->create(['email'=>$user->email]);
 
         try {
+
             $this->emailService->sendMagicLoginLink($user,$magic_token->token);
+
+            DB::commit();
+
         } catch (\Exception $e){
+            DB::rollBack();
             Log::error($e);
             throw new Exception(__('validation.error_occurred'));
         }
@@ -122,6 +129,7 @@ class AuthService
     {
 
         $magic_token = $this->magicLinkTokenRepository->findByToken($token);
+
         $user = $this->userRepository->findByEmail($magic_token->email);
 
         if (!$user->enabled) {

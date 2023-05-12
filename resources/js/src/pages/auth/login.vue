@@ -63,6 +63,7 @@ import Button from "../../components/ui/button.vue";
 import {mapActions, mapState} from "pinia/dist/pinia";
 import {useAuthStore} from "../../store/AuthStore"
 import {TriggerPiniaAction} from "../../util";
+import {APP_NAME} from "../../constants/constants";
 
 export default {
     name: "login.vue",
@@ -77,8 +78,12 @@ export default {
                 email:"",
             },
             sign_in_method:'password',
-            inputKey:0
+            inputKey:0,
+            app_name:APP_NAME
         }
+    },
+    mounted() {
+        document.title = `${this.app_name} | Sign in`;
     },
     methods:{
         ...mapActions(useAuthStore,['login']),

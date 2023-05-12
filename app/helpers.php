@@ -3,6 +3,7 @@
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Str;
 
 if (! function_exists('httpResponse')) {
     /**
@@ -31,16 +32,14 @@ if (! function_exists('httpResponse')) {
 }
 
 
-if (! function_exists('removeSpecialChars')) {
+if (! function_exists('generateHashToken')) {
     /**
-     * remove all non-special characters other than - from a string
+     * generate hash tokens app wide
      *
      */
-    function removeSpecialChars($string): array|string|null
+    function generateHashToken(int $length): array|string|null
     {
-        $pattern = '/[^a-zA-Z0-9-]/'; // pattern to match all non-alphanumeric and non-hyphen characters
-        // remove all non-matching characters
-        return preg_replace($pattern, '', $string);
+        return  hash('sha256', Str::random($length));
     }
 
 }
