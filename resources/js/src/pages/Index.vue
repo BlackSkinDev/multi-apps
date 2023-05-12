@@ -52,7 +52,7 @@
 
 <script>
 import Input from "../components/ui/input.vue";
-import Button from "../components/ui/Button.vue";
+import Button from "../components/ui/button.vue";
 import {mapActions, mapState} from "pinia/dist/pinia";
 import {useAuthStore} from "../store/AuthStore";
 import {TriggerPiniaAction} from "../util";
