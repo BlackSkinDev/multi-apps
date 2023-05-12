@@ -23,5 +23,21 @@ class MagicLinkTokenRepository implements IMagicLinkTokenRepository
         return $this->model->create($data);
     }
 
+    /**
+     * get magic link record by token
+     */
+    public function findByToken(string $token)
+    {
+        return $this->model->where('token',$token)->first();
+    }
+
+    /**
+     * delete magic link records that have been sent to a user
+     */
+    public function delete(MagicLinkToken $magicLinkToken)
+    {
+       $this->model->where('email',$magicLinkToken->email)->orWhere('token',$magicLinkToken->token)->delete();
+    }
+
 
 }

@@ -31,8 +31,8 @@ class PasswordResetRequest extends FormRequest
     public function messages()
     {
         return [
-            'token.required'        => "Password reset token wasn't detected, try resending the email!",
-            'token.exists'          => 'Invalid password reset token was detected, try resending the email!',
+            'token.required'        => "Password reset token wasn't detected, try requesting link again!",
+            'token.exists'          => 'Invalid password reset link, try requesting link again!',
             'old_password.required' => 'Old password is required',
             'new_password.required' => 'New password is required',
             'new_password.different' => 'The new password must be different from the old password',

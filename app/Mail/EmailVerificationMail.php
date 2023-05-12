@@ -39,7 +39,7 @@ class EmailVerificationMail extends Mailable
 
         $user  = $this->data['user'];
 
-        $verification_link = config('frontend.email_verify_url')."/${token}";
+        $verification_link = config('app.url').config('frontend.email_verify_url').$token;
 
 
         return new Content(
