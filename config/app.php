@@ -22,6 +22,7 @@ return [
     'sanctum_access_token_expiry' => env('APP_SANCTUM_ACCESS_TOKEN_EXPIRY', 1),
     'tokens_length' => env('APP_TOKENS_LENGTH', 40),
     'magic_link_token_expiry' => env('APP_MAGIC_LINK_TOKEN_EXPIRY', 1),
+    'max_request_per_minute' => env('APP_MAX_REQUEST_PER_MINUTE', 60),
 
 
 
