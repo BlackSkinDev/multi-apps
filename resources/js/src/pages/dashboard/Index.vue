@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {APP_NAME} from "../../constants/constants";
+
 export default {
     data() {
         return {
@@ -21,7 +23,11 @@ export default {
                 { name: 'Manage Project Stages',route:'homepage' },
                 { name: 'Other',route:'homepage'},
             ],
+            app_name:APP_NAME
         };
+    },
+    mounted() {
+        document.title = `${this.app_name} | Dashboard`;
     },
 };
 </script>
