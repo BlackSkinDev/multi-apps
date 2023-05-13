@@ -1,54 +1,37 @@
-# Base image
-FROM php:7.4-fpm
+# base image
+FROM php:8.1-fpm-alpine
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libonig-dev \
-    libzip-dev \
-    zip \
-    unzip \
-    git \
-    nodejs \
-    npm \
-    libmcrypt-dev \
-    libicu-dev \
-    libxml2-dev \
-    zlib1g-dev \
-    libpq-dev
-
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install mbstring pdo pdo_mysql zip intl xml opcache bcmath soap pcntl
-
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Set working directory
+# set working directory
 WORKDIR /var/www/html
 
-# Copy source code
-COPY . /var/www/html
+# install dependencies
+RUN apk update && apk add --no-cache \
+    bash \
+    libzip-dev \
+    zip \
+    libpng-dev \
+    npm \
+    yarn \
+    && docker-php-ext-install pdo_mysql zip gd \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install dependencies
-RUN composer install --no-interaction --optimize-autoloader
+# copy source code
+COPY . .
 
-# Install NPM packages
-RUN npm install
+# install composer dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Build the Vue app
-RUN npm run prod
+# install npm dependencies
+RUN npm install && npm run dev
 
-# Run database migrations
-RUN php artisan migrate
+# run migrations
+RUN php artisan migrate --force
 
-# Expose port
+# set permissions for storage and cache directories
+RUN chmod -R 777 storage bootstrap/cache
+
+# expose port 9000 (for PHP-FPM)
 EXPOSE 9000
 
-# Start PHP-FPM server
+# start PHP-FPM
 CMD ["php-fpm"]
