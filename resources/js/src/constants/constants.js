@@ -7,5 +7,5 @@ export const TINYMCE_MEDIA_UPLOAD_URL          = `${import.meta.env.VITE_API_URL
 export const FIRST_DEV_STAGE_NAME              = "To Do"
 export const CREATE_PROJECT_SUCCESS_MESSAGE    = 'Project created successfully'
 export const UNAUTHORIZED_CODE                 = 401
-export const REGISTRATION_SUCCESS_MESSAGE      = "Registration successful! Redirecting to login";
+export const REGISTRATION_SUCCESS_MESSAGE      = "Registration successful! An email verification link has been sent";
 export const APP_NAME                          = `${import.meta.env.VITE_APP_NAME}`
