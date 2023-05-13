@@ -18,11 +18,13 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $user    = User::inRandomOrder()->first() ?? User::factory()->create();
+        $company = Company::factory()->create();
+        $user    = User::inRandomOrder()->first() ?? User::factory()->create(['company_id'=>$company->id]);
+
         return [
             'name'              => fake()->unique()->text(7),
             'description'       => fake()->text(7),
-            'company_id'        => $user->company_id,
+            'company_id'        => $user->company_id ?? $company->id,
             'project_lead_id'   => $user->id
         ];
     }
