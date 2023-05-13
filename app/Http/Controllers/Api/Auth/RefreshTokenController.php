@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\auth\RefreshTokenRequest;
-use App\Services\AuthService;
+use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Services\RefreshTokenService;
 use Illuminate\Http\JsonResponse;
 

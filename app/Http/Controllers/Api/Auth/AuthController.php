@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\auth\LoginRequest;
-use App\Http\Requests\auth\RegisterRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\AuthService;
-use App\Services\EmailVerificationService;
 use Illuminate\Http\JsonResponse;
 
 
