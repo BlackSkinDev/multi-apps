@@ -1,41 +1,51 @@
+# Use an official PHP runtime as a parent image
 FROM php:8.1-fpm-alpine
 
-RUN apt-get update && apt-get install -y nodejs npm
+# Set the working directory to /var/www/html
+WORKDIR /var/www/html
+
+# Install system dependencies
+RUN apk add --no-cache \
+    bash \
+    nginx \
+    supervisor \
+    nodejs \
+    npm \
+    yarn
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql
+
+# Copy nginx config file
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+
+# Copy supervisor config files
+COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy application files
+COPY . /var/www/html/
+
+# Install composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install composer dependencies
+RUN composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+# Build Vue.js assets
+RUN yarn install --frozen-lockfile
+RUN yarn production
 
 # Set Laravel environment variables
 ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
-# Install additional dependencies
-RUN apk add --no-cache \
-    bash \
-    libzip-dev \
-    zip \
-    libpng-dev \
-    npm \
-    yarn \
-    && docker-php-ext-install pdo_mysql zip gd
+# Copy entrypoint script
+COPY ./docker/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Copy application files
-COPY . /var/www/html/
+# Expose ports
+EXPOSE 80
 
-COPY package*.json /var/www/html/
-RUN cd /var/www/html/ && npm install
-
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-# Run any additional commands you need to prepare the environment (e.g. install dependencies)
-RUN composer install --no-dev --optimize-autoloader
-
-# Expose port 9000 (for PHP-FPM)
-EXPOSE 9000
-
-# Start PHP-FPM
-CMD ["php-fpm"]
-
-CMD cd /var/www/html && npm run dev
+# Run supervisord
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
