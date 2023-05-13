@@ -46,7 +46,7 @@ class AuthService
             try {
 
                 $this->emailService->sendWelcomeEmail($user);
-
+                $this->emailVerificationService->sendVerificationEmail($user->email);
                 DB::commit();;
 
                 return $user;
