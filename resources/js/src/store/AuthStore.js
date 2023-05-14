@@ -24,10 +24,38 @@ export const useAuthStore = defineStore('AuthStore', {
             }
         },
 
-        async login(userData) {
+        async loginWithPassword(userData) {
             this.processingAuthRequest = true
             try {
                 const {data:{data}} = await authApi.login(userData)
+                const { email, name,refresh_token,is_admin } = data;
+                this.user = {email, name,is_admin}
+                localStorage.setItem('logged_in',true)
+                localStorage.setItem('refresh_token',refresh_token)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingAuthRequest = false
+            }
+        },
+
+        async sendUserMagicLink(email) {
+            this.processingAuthRequest = true
+            try {
+                await authApi.sendMagicLink(email)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingAuthRequest = false
+            }
+        },
+
+        async loginWithMagicLink(token) {
+            this.processingAuthRequest = true
+            try {
+                const {data:{data}} = await authApi.loginWithMagicLink(token)
                 const { email, name,refresh_token,is_admin } = data;
                 this.user = {email, name,is_admin}
                 localStorage.setItem('logged_in',true)

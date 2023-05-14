@@ -40,7 +40,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('magic-login')->group(function () {
             Route::post('',[MagicAuthController::class,'store']);
-            Route::post('verify',[MagicAuthController::class,'update'])->name('magic_login');
+            Route::post('verify',[MagicAuthController::class,'update']);
         });
 
         Route::middleware('auth:sanctum')->group(function () {
@@ -50,7 +50,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('email')->group(function () {
 
-            Route::post('verify',[EmailVerificationController::class,'update'])->name('email_verification');
+            Route::post('verify',[EmailVerificationController::class,'update']);
             Route::post('resend',[EmailVerificationController::class,'store']);
 
         });

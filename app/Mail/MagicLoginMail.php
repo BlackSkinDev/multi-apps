@@ -44,7 +44,7 @@ class MagicLoginMail extends Mailable
      */
     public function content(): Content
     {
-        $magic_link = config('app.url').config('frontend.login_url').$this->token;
+        $magic_link = config('app.url').config('frontend.login_url')."?token=".$this->token;
 
         return new Content(
             markdown: 'emails.magic_login_mail',

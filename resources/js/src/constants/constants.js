@@ -10,4 +10,6 @@ export const UNAUTHORIZED_CODE                          = 401
 export const REGISTRATION_SUCCESS_MESSAGE               = "Registration successful! An email verification link has been sent";
 export const APP_NAME                                   = `${import.meta.env.VITE_APP_NAME}`
 export const EMAIL_VERIFICATION_SUCCESS_MESSAGE         = "Verification successful! Please sign in";
-export const EMAIL_VERIFICATION_RESEND_SUCCESS_MESSAGE  = "Verification link was resent successfully!";
+export const EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE  = "Verification link was resent successfully!";
+export const MAGIC_LINK_SENT_SUCCESS_MESSAGE            = "Magic link was sent to your mail  successfully!";
+export const MAGIC_LOGIN_SUCCESS_MESSAGE                = "Welcome back!";

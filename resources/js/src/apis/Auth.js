@@ -7,9 +7,19 @@ export default {
     register(userData){
         return publicApi.post(`${ENDPOINT}/register`,userData)
     },
+
     login(credentials){
         return publicApi.post(`${ENDPOINT}/login`,credentials)
     },
+
+    sendMagicLink(email){
+        return Api.post(`${ENDPOINT}/magic-login`,{email})
+    },
+
+    loginWithMagicLink(token){
+        return Api.post(`${ENDPOINT}/magic-login/verify`,{token})
+    },
+
     logout(){
         return Api.post(`${ENDPOINT}/logout`)
     },
@@ -24,7 +34,6 @@ export default {
     resendEmail(email){
         return Api.post(`${ENDPOINT}/email/resend`,{email})
     }
-
 
 
 

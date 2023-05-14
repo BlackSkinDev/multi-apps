@@ -16,7 +16,10 @@ import {useAuthStore} from "../../store/AuthStore";
 import {mapActions} from "pinia";
 import SquareLoader from "vue-spinner/src/SquareLoader.vue";
 import {TriggerPiniaAction} from "../../util";
-import {EMAIL_VERIFICATION_RESEND_SUCCESS_MESSAGE, EMAIL_VERIFICATION_SUCCESS_MESSAGE} from "../../constants/constants";
+import {
+    EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE,
+    EMAIL_VERIFICATION_SUCCESS_MESSAGE
+} from "../../constants/constants";
 import Button from "../../components/ui/button.vue";
 import Input from "../../components/ui/input.vue";
 
@@ -38,7 +41,7 @@ export default {
     methods:{
         ...mapActions(useAuthStore,['verifyEmail','resendEmail']),
         async resendVerificationEmail() {
-            const res = await TriggerPiniaAction(this.resendEmail(this.email), EMAIL_VERIFICATION_RESEND_SUCCESS_MESSAGE, true)
+            const res = await TriggerPiniaAction(this.resendEmail(this.email), EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE, true)
             if (res) {
                 this.$router.push('/signin')
             }
