@@ -15,18 +15,17 @@ export default {
     },
 
     data() {
-        return {
-            isOnline: navigator.onLine,
-            app_env:import.meta.env.APP_ENV
-        };
-    },
-    created() {
+         return {
+                isOnline: navigator.onLine,
+                app_env:import.meta.env.VITE_APP_ENV
+         };
+     },
+     created() {
         if (this.app_env === 'production'){
             window.addEventListener('online', this.handleNetworkChange);
             window.addEventListener('offline', this.handleNetworkChange);
         }
-    },
-
+     },
 
     methods: {
         handleNetworkChange() {

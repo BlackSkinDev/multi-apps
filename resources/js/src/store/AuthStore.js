@@ -64,6 +64,25 @@ export const useAuthStore = defineStore('AuthStore', {
             }
         },
 
+
+        async verifyEmail(token) {
+            try {
+                await authApi.verifyEmail(token)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
+        async resendEmail(email) {
+            try {
+                await authApi.resendEmail(email)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
     },
 
 })

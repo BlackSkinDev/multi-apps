@@ -17,6 +17,14 @@ export default {
         return Api.get(`${ENDPOINT}/user`)
     },
 
+    verifyEmail(token){
+        return Api.post(`${ENDPOINT}/email/verify`,{token})
+    },
+
+    resendEmail(email){
+        return Api.post(`${ENDPOINT}/email/resend`,{email})
+    }
+
 
 
 

@@ -17,6 +17,7 @@ class AdminSeeder extends Seeder
             'name'              => 'Afeez Azeez',
             'email'             => 'azeezafeez212@gmail.com',
             'username'          => 'afeez_dev',
+            'is_admin'          => 1,
             'company_id'        => null,
             'email_verified_at' => now(),
             'password' => '123456',

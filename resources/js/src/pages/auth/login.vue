@@ -52,8 +52,6 @@
             </div>
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -103,12 +101,7 @@ export default {
             }
         },
         clearInputErrors(){
-            this.inputKey += 1
-            // this.$children.forEach(child => {
-            //     if (child.$refs.input && typeof child.setError === 'function') {
-            //         child.clearError('')
-            //     }
-            // })
+            this.inputKey += 1;
         }
     },
     computed:{

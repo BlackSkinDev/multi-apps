@@ -48,14 +48,16 @@ Route::prefix('v1')->group(function () {
             Route::post('logout', [AuthController::class,'delete']);
         });
 
+        Route::prefix('email')->group(function () {
+
+            Route::post('verify',[EmailVerificationController::class,'update'])->name('email_verification');
+            Route::post('resend',[EmailVerificationController::class,'store']);
+
+        });
+
     });
 
-    Route::prefix('email')->group(function () {
 
-        Route::post('verify',[EmailVerificationController::class,'update'])->name('email_verification');
-        Route::post('resend',[EmailVerificationController::class,'store']);
-
-    });
 
     Route::prefix('password-reset')->group(function () {
 

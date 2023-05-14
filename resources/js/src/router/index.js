@@ -6,6 +6,13 @@ import {createRouter, createWebHistory}  from 'vue-router'
 const routes = [
 
     {
+        path:'/test',
+        name:"test",
+        component:()=>import('../components/Test.vue'),
+    },
+
+
+    {
         path:'/',
         name:"homepage",
         component:()=>import('../pages/Index.vue'),
@@ -15,15 +22,18 @@ const routes = [
     },
 
     {
-        path:'/test',
-        name:"test",
-        component:()=>import('../components/Test.vue'),
-    },
-
-    {
         path:'/signin',
         name:"signin",
         component:()=>import('../pages/auth/login.vue'),
+        meta: {
+            redirectIfAuthenticated: true
+        }
+    },
+
+    {
+        path:'/email/verify/:token',
+        name:"verify-email",
+        component:()=>import('../pages/auth/verify-email.vue'),
         meta: {
             redirectIfAuthenticated: true
         }
