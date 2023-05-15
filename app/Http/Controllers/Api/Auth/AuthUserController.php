@@ -14,10 +14,13 @@ class AuthUserController extends Controller
      */
     public function show(): JsonResponse
     {
+        $user  = auth()->user();
+
         $data = [
-            'name'       => auth()->user()->name,
-            'email'      => auth()->user()->email,
-            'is_admin'   => (bool) auth()->user()->is_admin
+            'name'        => $user->firstname,
+            'email'       => $user->email,
+            'is_admin'    => (bool) $user->is_admin,
+            'has_company' => (bool) $user->company_id,
         ];
         return httpResponse(true,$data);
     }

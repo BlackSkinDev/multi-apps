@@ -69,7 +69,6 @@ class AuthService
     {
         $user = $this->userRepository->findByEmail($request['email']);
 
-
         if (! password_verify($request['password'],$user->password)) {
             throw new ClientErrorException('Incorrect password!');
         }
@@ -146,7 +145,6 @@ class AuthService
             throw new ClientErrorException('Please verify your account. A verification link has been sent to your email!');
         }
 
-
         if($magic_token->expired_at->lt(now())){
             throw new ClientErrorException('Magic link has expired! try requesting again');
         }
@@ -157,8 +155,6 @@ class AuthService
 
 
     }
-
-
 
     /**
      * Log out
@@ -176,18 +172,17 @@ class AuthService
     {
         $access_token = $this->userRepository->createUserToken($user);
 
-
         $cookie = cookie('access_token', $access_token->plainTextToken, null, null, null, false, true);
-
 
         $refresh_token = $this->refreshTokenRepository->create(['personal_access_token_id' => $access_token->accessToken->id]);
 
         return [
-            'name' => $user->name,
-            'email' => $user->email,
-            'is_admin' => (bool)$user->is_admin,
-            'refresh_token' => $refresh_token->token,
-            'cookie' => $cookie
+            'name'             => $user->name,
+            'email'            => $user->email,
+            'is_admin'         => (bool)$user->is_admin,
+            'has_company'      => $user->company_id,
+            'refresh_token'    => $refresh_token->token,
+            'cookie'           => $cookie
         ];
     }
 
