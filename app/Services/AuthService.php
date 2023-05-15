@@ -182,7 +182,8 @@ class AuthService
             'is_admin'         => (bool)$user->is_admin,
             'has_company'      => $user->company_id,
             'refresh_token'    => $refresh_token->token,
-            'cookie'           => $cookie
+            'cookie'           => $cookie,
+            'photo'            => url("/").'/images/avatar.png'
         ];
     }
 

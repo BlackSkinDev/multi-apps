@@ -28,8 +28,9 @@ export const useAuthStore = defineStore('AuthStore', {
             this.processingAuthRequest = true
             try {
                 const {data:{data}} = await authApi.login(userData)
-                const { email, name,refresh_token,is_admin } = data;
-                this.user = {email, name,is_admin}
+                const { email, name,refresh_token,is_admin,photo } = data;
+                console.log(data)
+                this.user = {email, name,is_admin,photo}
                 localStorage.setItem('logged_in',true)
                 localStorage.setItem('refresh_token',refresh_token)
                 return API_SUCCESS_MESSAGE
@@ -56,8 +57,8 @@ export const useAuthStore = defineStore('AuthStore', {
             this.processingAuthRequest = true
             try {
                 const {data:{data}} = await authApi.loginWithMagicLink(token)
-                const { email, name,refresh_token,is_admin } = data;
-                this.user = {email, name,is_admin}
+                const { email, name,refresh_token,is_admin,photo } = data;
+                this.user = {email, name,is_admin,photo}
                 localStorage.setItem('logged_in',true)
                 localStorage.setItem('refresh_token',refresh_token)
                 return API_SUCCESS_MESSAGE
@@ -71,8 +72,7 @@ export const useAuthStore = defineStore('AuthStore', {
         async fetchAuthUser() {
             try {
                 const {data:{data}} = await authApi.getAuthUser()
-                const { email, name,is_admin } = data;
-                this.user = {email, name,is_admin}
+                this.user = {...data}
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

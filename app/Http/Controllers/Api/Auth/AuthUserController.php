@@ -21,6 +21,7 @@ class AuthUserController extends Controller
             'email'       => $user->email,
             'is_admin'    => (bool) $user->is_admin,
             'has_company' => (bool) $user->company_id,
+            'photo'       => url("/").'/images/avatar.png'
         ];
         return httpResponse(true,$data);
     }
