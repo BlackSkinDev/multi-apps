@@ -22,20 +22,20 @@ class PasswordResetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token'         => ['required','exists:password_reset_tokens,token'],
-            'old_password'  => ['required'],
-            'new_password'  => ['required','min:6','different:old_password']
+            'token'                 => ['required','exists:password_reset_tokens,token'],
+            'new_password'          => ['required','min:6'],
+            'confirm_new_password'  => ['required','min:6','same:new_password']
         ];
     }
 
     public function messages(): array
     {
         return [
-            'token.required'         => "Password reset token wasn't detected, try requesting link again!",
-            'token.exists'           => 'Invalid password reset link, try requesting link again!',
-            'old_password.required'  => 'Old password is required',
-            'new_password.required'  => 'New password is required',
-            'new_password.different' => 'The new password must be different from the old password',
+            'token.required'                 => "Password reset token wasn't detected, try requesting link again!",
+            'token.exists'                   => 'Invalid password reset link, try requesting link again!',
+            'new_password.required'          => 'New password is required',
+            'confirm_new_password.required'  => 'Confirm new password',
+            'confirm_new_password.same'      => 'Passwords do not match',
         ];
     }
 }

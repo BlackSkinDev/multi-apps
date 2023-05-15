@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col md:flex-row">
-        <div class="w-full md:w-2/3 h-screen bg-gray-200 md:bg-transparent hidden md:block">
+    <div class="flex flex-col md:flex-row ">
+        <div class="w-full md:w-2/3 min-h-screen bg-gray-200 md:bg-transparent hidden md:block">
             <img class="w-full h-full object-cover" :src="team_image" alt="Image">
         </div>
         <div class="flex flex-col justify-center items-center w-full md:w-1/3 px-8 py-6">

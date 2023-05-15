@@ -33,7 +33,15 @@ export default {
 
     resendEmail(email){
         return Api.post(`${ENDPOINT}/email/resend`,{email})
-    }
+    },
+
+    requestPasswordResetLink(email){
+        return Api.post(`${ENDPOINT}/password-reset`,{email})
+    },
+
+    resetPassword(data){
+        return Api.post(`${ENDPOINT}/password-reset/reset`,data)
+    },
 
 
 

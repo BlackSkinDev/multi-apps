@@ -13,3 +13,7 @@ export const EMAIL_VERIFICATION_SUCCESS_MESSAGE         = "Verification successf
 export const EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE  = "Verification link was resent successfully!";
 export const MAGIC_LINK_SENT_SUCCESS_MESSAGE            = "Magic link was sent to your mail  successfully!";
 export const MAGIC_LOGIN_SUCCESS_MESSAGE                = "Welcome back!";
+export const PASSWORD_RESET_LINK_SENT_SUCCESS_MESSAGE   = "Link was sent successfully!";
+export const PASSWORD_RESET_SUCCESS_MESSAGE             = "Password has been reset successfully!";
+
+

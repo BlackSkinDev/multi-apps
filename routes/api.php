@@ -26,13 +26,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+         // Extract each api route into seperate file
 
 
 Route::prefix('v1')->group(function () {
 
 
     Route::prefix('auth')->group(function () {
+
+        Route::prefix('password-reset')->group(function () {
+            Route::post('',[PasswordResetController::class,'store'])->name('password_reset');
+            Route::post('reset',[PasswordResetController::class,'update']);
+        });
+
+        Route::prefix('email')->group(function () {
+            Route::post('verify',[EmailVerificationController::class,'update']);
+            Route::post('resend',[EmailVerificationController::class,'store']);
+        });
 
         Route::post('register',[AuthController::class,'store']);
         Route::post('login',[AuthController::class,'show'])->name('login');
@@ -48,23 +58,12 @@ Route::prefix('v1')->group(function () {
             Route::post('logout', [AuthController::class,'delete']);
         });
 
-        Route::prefix('email')->group(function () {
-
-            Route::post('verify',[EmailVerificationController::class,'update']);
-            Route::post('resend',[EmailVerificationController::class,'store']);
-
-        });
 
     });
 
 
 
-    Route::prefix('password-reset')->group(function () {
 
-        Route::post('',[PasswordResetController::class,'store'])->name('password_reset');
-        Route::post('reset',[PasswordResetController::class,'update']);
-
-    });
 
 
 

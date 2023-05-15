@@ -79,8 +79,6 @@ export const useAuthStore = defineStore('AuthStore', {
             }
         },
 
-
-
         async logout() {
             try {
                 await authApi.logout()
@@ -92,7 +90,6 @@ export const useAuthStore = defineStore('AuthStore', {
             }
         },
 
-
         async verifyEmail(token) {
             try {
                 await authApi.verifyEmail(token)
@@ -103,11 +100,38 @@ export const useAuthStore = defineStore('AuthStore', {
         },
 
         async resendEmail(email) {
+            this.processingAuthRequest = true
             try {
                 await authApi.resendEmail(email)
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
+            }finally {
+                this.processingAuthRequest = false
+            }
+        },
+
+        async  requestPasswordResetLink(email) {
+            this.processingAuthRequest = true
+            try {
+                await authApi.requestPasswordResetLink(email)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }finally {
+                this.processingAuthRequest = false
+            }
+        },
+
+        async resetPassword(data) {
+            this.processingAuthRequest = true
+            try {
+                await authApi.resetPassword(data)
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }finally {
+                this.processingAuthRequest = false
             }
         },
 

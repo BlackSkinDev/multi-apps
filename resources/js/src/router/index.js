@@ -40,6 +40,15 @@ const routes = [
     },
 
     {
+        path:'/password-reset/request',
+        name:"password-reset-request",
+        component:()=>import('../pages/auth/password-reset.vue'),
+        meta: {
+            redirectIfAuthenticated: true
+        }
+    },
+
+    {
         path:'/dashboard',
         name:"dashboard",
         component:()=>import('../pages/dashboard/Index.vue'),

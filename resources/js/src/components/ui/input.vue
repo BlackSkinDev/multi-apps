@@ -41,17 +41,17 @@ export default {
         },
         validate(){
             if (this.input_type === 'email'){
-                if(!ValidateEmail(this.modelValue))this.error = "Please enter a valid email address"
+                if(!ValidateEmail(this.modelValue) && this.modelValue !== '')this.error = "Please enter a valid email address"
                 else this.error = ""
             }
 
             if (this.name === 'password' || this.isPassword){
-                if(!ValidatePassword(this.modelValue))this.error = "Password cannot be less than 6 characters"
+                if(!ValidatePassword(this.modelValue) && this.modelValue !== '')this.error = "Password cannot be less than 6 characters"
                 else this.error = ""
             }
 
             if (this.name === 'username'){
-                if(!ValidateUsername(this.modelValue))this.error = "Username cannot be less than 6 characters"
+                if(!ValidateUsername(this.modelValue) && this.modelValue !== '')this.error = "Username cannot be less than 6 characters"
                 else this.error = ""
             }
         },

@@ -42,7 +42,7 @@ class PasswordResetMail extends Mailable
      */
     public function content(): Content
     {
-        $reset_link = config('app.url').config('frontend.password_reset_url').$this->token;
+        $reset_link = config('app.url').config('frontend.password_reset_url')."?token=".$this->token;
 
         return new Content(
             markdown: 'emails.password_reset',

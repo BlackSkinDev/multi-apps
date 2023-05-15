@@ -1,22 +1,21 @@
 <template>
-
-        <div class="w-full bg-white rounded-lg shadow sm:max-w-md p-10 mx-auto mt-40">
-            <div v-if="verificationStatus === 'failed'" >
-                <Input v-model="email" type="email" label="Email" placeholder="name@company.com" class="mt-4"/>
-                <router-link to="#" class="mt-10">
-                    <Button :text="'Request new link'"  :disabled="disabled" @click="resendVerificationEmail"  class="mt-4"/>
-                </router-link>
-            </div>
-        </div>
-
+    <div class="w-full bg-white rounded-lg shadow sm:max-w-md p-10 mx-auto mt-40">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            Verify Email
+        </h1>
+        <Input v-model="email" type="email" label="Email" placeholder="name@company.com" class="mt-6"/>
+        <router-link to="#" class="mt-10">
+            <Button :text="'Request new link'"  :disabled="disabled" :loading="loading" @click="resendVerificationEmail"  class="mt-4"/>
+        </router-link>
+    </div>
 </template>
 
 <script>
 import {useAuthStore} from "../../store/AuthStore";
-import {mapActions} from "pinia";
-import SquareLoader from "vue-spinner/src/SquareLoader.vue";
+import {mapActions,mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
 import {
+    APP_NAME,
     EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE,
     EMAIL_VERIFICATION_SUCCESS_MESSAGE
 } from "../../constants/constants";
@@ -25,18 +24,17 @@ import Input from "../../components/ui/input.vue";
 
 export default {
     name: "verify-email",
-    components:{Button,SquareLoader,Input},
+    components:{Button,Input},
     data() {
         return {
-            verificationStatus: '',
             email:""
         }
     },
     async mounted() {
+        document.title = `${APP_NAME} | Verify Email`;
         const token = this.$route.params.token
         const res = await TriggerPiniaAction(this.verifyEmail(token),EMAIL_VERIFICATION_SUCCESS_MESSAGE,true);
         if(res) this.$router.push('/signin')
-        else    this.verificationStatus = 'failed'
     },
     methods:{
         ...mapActions(useAuthStore,['verifyEmail','resendEmail']),
@@ -49,6 +47,9 @@ export default {
         },
     },
     computed:{
+        ...mapState(useAuthStore,{
+           loading:(state)  => state.processingAuthRequest
+        }),
         disabled(){
             return this.email === ''
         },

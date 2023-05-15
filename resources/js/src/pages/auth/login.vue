@@ -27,7 +27,7 @@
                         <Button :text="'Sign in'"  :disabled="disabled" :loading="loading"/>
                     </form>
                     <span class="flex justify-end text-gray-700 text-center text-sm">
-                        <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700 mt-2 ">Forgot password?</router-link>
+                        <router-link :to="{name:'password-reset-request'}" class="text-blue-500 hover:text-blue-700 mt-2 ">Forgot password?</router-link>
                     </span>
                 </div>
                 <!--  Login Form for Password Method-->
@@ -83,11 +83,10 @@ export default {
             },
             sign_in_method:'password',
             inputKey:0,
-            app_name:APP_NAME
         }
     },
     async mounted() {
-        document.title = `${this.app_name} | Sign in`;
+        document.title = `${APP_NAME} | Sign in`;
         const token = this.$route.query.token
         if (token) {
             const res = await TriggerPiniaAction(this.loginWithMagicLink(token),MAGIC_LOGIN_SUCCESS_MESSAGE,true)
