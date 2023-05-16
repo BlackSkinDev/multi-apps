@@ -30,7 +30,8 @@ class RefreshTokenRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'refresh_token.exists' => 'Invalid refresh token was detected!.'
+            'refresh_token.exists'    => 'Invalid refresh token was detected! Login again.',
+             'refresh_token.required' => 'Session expired! Login again.'
         ];
     }
 }
