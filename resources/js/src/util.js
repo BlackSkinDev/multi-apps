@@ -15,6 +15,11 @@ export const TriggerPiniaAction = async (action, message = null, triggerSuccessT
     return response === API_SUCCESS_MESSAGE;
 };
 
+export const authCheck = () => {
+    if (localStorage.getItem('logged_in')) return true
+    return false
+}
+
 
 
 export const ValidateEmail =  (email) => {

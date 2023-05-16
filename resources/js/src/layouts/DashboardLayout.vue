@@ -13,9 +13,9 @@
 
 <script>
 import AppHeader from "../components/App-Header.vue";
-import {TriggerPiniaAction} from "../util";
+import {authCheck, TriggerPiniaAction} from "../util";
 import {useAuthStore} from "../store/AuthStore";
-import {mapActions} from "pinia";
+import {mapActions, mapState} from "pinia";
 import LeftSideBar from "../components/LeftSideBar.vue";
 import RightSideBar from "../components/RightSideBar.vue";
 export default {
@@ -24,9 +24,23 @@ export default {
     async created() {
         const res = await TriggerPiniaAction(this.fetchAuthUser())
         if(!res)this.$router.push("/signin");
+
+        if (authCheck()){
+            if (this.$route.name === "dashboard") {
+                console.log(this.user)
+                if (this.user.is_admin && !this.user.has_company){
+                   this.$router.push('/company/create');
+                }
+            }
+        }
     },
     methods:{
-        ...mapActions(useAuthStore,['fetchAuthUser'])
+        ...mapActions(useAuthStore,['fetchAuthUser']),
+    },
+    computed:{
+        ...mapState(useAuthStore,{
+            user:(state)        => state.user,
+        })
     }
 };
 </script>

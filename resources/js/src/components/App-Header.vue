@@ -77,7 +77,7 @@ export default {
     },
     data(){
         return{
-            active_link:"tasks",
+            active_link:"dashboard",
             logo:logo,
             app_name:APP_NAME,
             showMenu: false,

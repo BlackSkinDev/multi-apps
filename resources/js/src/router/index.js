@@ -58,6 +58,16 @@ const routes = [
     },
 
 
+    {
+        path:'/company/create',
+        name:"create-company",
+        component:()=>import('../pages/company/Create.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+
 
 ]
 

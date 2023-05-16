@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white w-64 px-6 py-8 border-r">
+    <div class="hidden md:block bg-white w-64 px-6 py-8 border-r">
         <!-- Sidebar content -->
     </div>
 </template>
