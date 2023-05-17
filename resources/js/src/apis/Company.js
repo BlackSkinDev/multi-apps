@@ -1,5 +1,7 @@
 import {Api} from "./Api";
 
+const BASE_ENPOINT = 'users/companies'
+
 export default {
 
     createUserCompany(companyData) {
@@ -8,8 +10,13 @@ export default {
             Accept: 'application/json',
         };
 
-        return Api.post(`users/companies`, companyData, { headers });
+        return Api.post(`${BASE_ENPOINT}`, companyData, { headers });
     },
+
+    getUserCompany(truncate){
+
+        return Api.get(`${BASE_ENPOINT}?truncate=${truncate}`);
+    }
 }
 
 

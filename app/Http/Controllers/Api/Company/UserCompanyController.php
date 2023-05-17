@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Company;
 use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\CreateCompanyRequest;
+use App\Http\Resources\Company\CompanyResource;
 use App\Models\Company;
 use App\Services\CompanyService;
 use Illuminate\Http\JsonResponse;
@@ -29,11 +30,14 @@ class UserCompanyController extends Controller
     }
 
     /**
-     * Fetch user company details
+     * Fetch logged in user company details
      */
-    public function show(Company $company)
+    public function show()
     {
-        //
+        $truncate  = request('truncate');
+        $company = $this->companyService->fetchAuthUserCompany();
+        if ($truncate)$company->truncate = true;
+        return httpResponse(true,CompanyResource::make($company));
     }
 
     /**

@@ -21,7 +21,6 @@ export const authCheck = () => {
 }
 
 
-
 export const ValidateEmail =  (email) => {
     let emailPattern = /\S+@\S+\.\S+/;
     return emailPattern.test(email);

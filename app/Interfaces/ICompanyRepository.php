@@ -7,6 +7,5 @@ use App\Models\Company;
 interface ICompanyRepository
 {
     public function create(array $data);
-//    public function findById(Company $company);
-//    public function delete(Company $token);
+    public function findById(int $id);
 }

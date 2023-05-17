@@ -6,6 +6,7 @@ export const useCompanyStore = defineStore('CompanyStore', {
     state: () => {
         return {
             processingRequest:false,
+            company:{}
         }
     },
 
@@ -21,6 +22,17 @@ export const useCompanyStore = defineStore('CompanyStore', {
                 this.processingRequest = false
             }
         },
+
+        async fetchUserCompany(truncate) {
+            try {
+                const {data:{data}} = await companyApi.getUserCompany(truncate)
+                this.company = data
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
     },
 
 })

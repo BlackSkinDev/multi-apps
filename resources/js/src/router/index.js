@@ -59,7 +59,7 @@ const routes = [
 
 
     {
-        path:'/company/create',
+        path:'/dashboard/company/create',
         name:"create-company",
         component:()=>import('../pages/company/Create.vue'),
         meta: {

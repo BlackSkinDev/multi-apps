@@ -22,4 +22,12 @@ class CompanyRepository implements ICompanyRepository
     {
         return $this->model->create($data);
     }
+
+    /**
+     * Find company by id
+     */
+    public function findById(int $id)
+    {
+        return $this->model->where('id',$id)->first();
+    }
 }

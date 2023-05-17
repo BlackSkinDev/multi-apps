@@ -24,7 +24,7 @@ class CompanyService
     }
 
     /**
-     * Refresh access token
+     * Create user company
      * @param array $data
      * @return Company
      * @throws ClientErrorException
@@ -60,5 +60,13 @@ class CompanyService
     }
 
 
+    /**
+     * Create user company
+     * @return Company
+     */
+    public function fetchAuthUserCompany(): Company
+    {
+        return  $this->companyRepository->findById(auth()->user()->company_id);
+    }
 
 }

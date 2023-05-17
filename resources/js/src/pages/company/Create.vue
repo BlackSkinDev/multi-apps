@@ -1,7 +1,7 @@
 <template>
-    <div class="mt-28">
-        <h2 class="text-xl text-center ">Hi {{user.name}}, Plese create your company to get started</h2>
-        <div class="max-w-xl mx-auto  shadow-lg bg-white rounded p-8 mt-4 ">
+    <div class="mt-4">
+        <h2 class="text-xl text-center ">Hi {{user.name}}, Please create your company to get started</h2>
+        <div class="max-w-xl mx-auto  shadow-lg  rounded p-8 mt-4 ">
             <form @submit.prevent="submitForm" class="space-y-8">
                 <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
                 <RichEditor label="Company Description" @editor-text="setEditorValue"/>
@@ -42,7 +42,7 @@ export default {
             companyData.append('description',this.company.description)
             const res = await TriggerPiniaAction(this.createUserCompany(companyData),CREATE_COMPANY_SUCCESS_MESSAGE,true);
             if (res){
-                this.$router.push('/dashboard')
+                this.$router.push({ name: "dashboard" });
             }
         },
         handleLogoChange(file) {

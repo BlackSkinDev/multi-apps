@@ -63,7 +63,12 @@ Route::prefix('v1')->group(function () {
 
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('users/companies', [UserCompanyController::class,'store']);
+
+        Route::prefix('users/companies')->group(function () {
+            Route::post('', [UserCompanyController::class,'store']);
+            Route::get('', [UserCompanyController::class,'show']);
+        });
+
     });
 
 

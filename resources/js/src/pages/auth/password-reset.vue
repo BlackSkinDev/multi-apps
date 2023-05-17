@@ -62,7 +62,7 @@ export default {
         async sendRequestLink() {
             const res = await TriggerPiniaAction(this.requestPasswordResetLink(this.email), PASSWORD_RESET_LINK_SENT_SUCCESS_MESSAGE, true)
             if (res) {
-                this.$router.push('/signin')
+                this.$router.push({ name: "signin" });
             }
             this.email = ""
         },
