@@ -13,7 +13,7 @@
             </div>
             <div class="absolute md:static left-0 top-full md:left-[unset] md:top-[unset] h-max w-full bg-gray-300 md:bg-transparent md:flex md:items-center md:justify-between" :class="{ 'hidden': !showMenu }">
                 <div class="md:flex md:items-center" >
-                    <a href="#" :class="active_link === 'tasks'  ? 'text-blue-600' : '' " @click="active_link='tasks'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
+                    <a href="#" :class="active_link === 'tasks'  ? 'text-blue-600' : '' "   @click="active_link='tasks'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
                        Your tasks
                     </a>
                     <a href="#" :class="active_link === 'dashboard'  ? 'text-blue-600' : '' " @click="active_link='dashboard'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">

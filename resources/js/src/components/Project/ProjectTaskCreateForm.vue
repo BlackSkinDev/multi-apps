@@ -23,7 +23,7 @@ import {useProjectStore} from "../../store/ProjectStore";
 import {mapState} from "pinia";
 import Modal from "../ui/Modal.vue";
 import RichEditor from "../ui/RichEditor.vue";
-import TextInput from "../ui/input.vue";
+import TextInput from "../ui/TextInput.vue";
 import Select from "../ui/Select.vue";
 import {UserCircleIcon} from "@heroicons/vue/solid"
 import AutoCompleteInput from "../ui/AutoCompleteInput.vue";

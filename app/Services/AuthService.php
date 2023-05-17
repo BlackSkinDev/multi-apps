@@ -94,6 +94,7 @@ class AuthService
     /**
      * Send  magic login link to user
      * @param array $request
+     * @throws ClientErrorException
      */
     public function sendMagicLink(array $request): void
     {
@@ -112,7 +113,7 @@ class AuthService
         } catch (\Exception $e){
             DB::rollBack();
             Log::error($e);
-            throw new Exception(__('validation.error_occurred'));
+            throw new ClientErrorException(__('validation.error_occurred'));
         }
 
     }
@@ -183,7 +184,7 @@ class AuthService
             'has_company'      => $user->company_id,
             'refresh_token'    => $refresh_token->token,
             'cookie'           => $cookie,
-            'photo'            => url("/").'/images/avatar.png'
+            'photo'            => $user->photo
         ];
     }
 

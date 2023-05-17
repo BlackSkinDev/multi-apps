@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -65,6 +66,22 @@ class User extends Authenticatable
     public function getFirstnameAttribute(): string
     {
         return (explode(" ",$this->name))[0];
+    }
+
+    /**
+     * get user photo
+     *
+     */
+    public function getPhotoAttribute(): string
+    {
+        $defaultLogoPath = url('/images/avatar.png');
+        $logoFolder = 'user-images';
+
+        if ($this->image && Storage::exists($logoFolder . '/' . $this->image)) {
+            return Storage::url($logoFolder . '/' . $this->image);
+        } else {
+            return $defaultLogoPath;
+        }
     }
 
     /**

@@ -62,8 +62,8 @@ import {mapActions,mapState} from "pinia";
 import {Util} from "../../util";
 import {Popover, PopoverButton, PopoverOverlay, PopoverPanel} from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-import Input from "../../components/ui/input.vue";
-import Button from "../../components/ui/button.vue";
+import Input from "../../components/ui/TextInput.vue";
+import Button from "../../components/ui/Button.vue";
 import {CREATE_PROJECT_SUCCESS_MESSAGE} from "../../constants/constants";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 

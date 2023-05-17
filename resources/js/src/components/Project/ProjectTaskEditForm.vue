@@ -29,7 +29,7 @@ import {useProjectStore} from "../../store/ProjectStore";
 import {mapState,mapActions} from "pinia";
 import Modal from "../ui/Modal.vue";
 import RichEditor from "../ui/RichEditor.vue";
-import TextInput from "../ui/input.vue";
+import TextInput from "../ui/TextInput.vue";
 import AutoCompleteInput from "../ui/AutoCompleteInput.vue";
 
 export default {

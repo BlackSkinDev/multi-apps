@@ -71,4 +71,11 @@ class UserRepository implements IUserRepository
         $user->tokens()->delete();
     }
 
+    /**
+     * attach company to user
+     */
+    public function attachCompany(User $user,$company_id){
+        $user->update(['company_id'=>$company_id]);
+    }
+
 }

@@ -75,6 +75,7 @@ export const useAuthStore = defineStore('AuthStore', {
                 this.user = {...data}
                 return API_SUCCESS_MESSAGE
             } catch (error) {
+                await this.logout();
                 return error.response?.data?.message
             }
         },
@@ -84,6 +85,7 @@ export const useAuthStore = defineStore('AuthStore', {
                 await authApi.logout()
                 localStorage.removeItem('logged_in')
                 localStorage.removeItem('refresh_token')
+                this.user = {}
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import {APP_NAME} from "../../constants/constants";
+
 export default {
     data() {
         return {
@@ -12,6 +14,9 @@ export default {
     methods: {
 
     },
+    mounted() {
+        document.title = `${APP_NAME} | Dashboard`;
+    }
 };
 </script>
 

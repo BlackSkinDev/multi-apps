@@ -38,8 +38,8 @@ import {TriggerPiniaAction} from "../../util";
 import {
     APP_NAME, PASSWORD_RESET_LINK_SENT_SUCCESS_MESSAGE, PASSWORD_RESET_SUCCESS_MESSAGE,
 } from "../../constants/constants";
-import Button from "../../components/ui/button.vue";
-import Input from "../../components/ui/input.vue";
+import Button from "../../components/ui/Button.vue";
+import Input from "../../components/ui/TextInput.vue";
 
 
 export default {

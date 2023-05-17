@@ -15,5 +15,6 @@ export const MAGIC_LINK_SENT_SUCCESS_MESSAGE            = "Magic link was sent t
 export const MAGIC_LOGIN_SUCCESS_MESSAGE                = "Welcome back!";
 export const PASSWORD_RESET_LINK_SENT_SUCCESS_MESSAGE   = "Link was sent successfully!";
 export const PASSWORD_RESET_SUCCESS_MESSAGE             = "Password has been reset successfully!";
+export const CREATE_COMPANY_SUCCESS_MESSAGE             = "Your company has been created successfully!";
 
 

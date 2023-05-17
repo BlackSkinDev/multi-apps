@@ -19,8 +19,8 @@ import {
     EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE,
     EMAIL_VERIFICATION_SUCCESS_MESSAGE
 } from "../../constants/constants";
-import Button from "../../components/ui/button.vue";
-import Input from "../../components/ui/input.vue";
+import Button from "../../components/ui/Button.vue";
+import Input from "../../components/ui/TextInput.vue";
 
 export default {
     name: "verify-email",

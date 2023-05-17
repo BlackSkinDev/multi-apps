@@ -29,7 +29,7 @@ export default {
             if (this.$route.name === "dashboard") {
                 console.log(this.user)
                 if (this.user.is_admin && !this.user.has_company){
-                   this.$router.push('/company/create');
+                   this.$router.push('company/create');
                 }
             }
         }

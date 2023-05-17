@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\MagicAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RefreshTokenController;
+use App\Http\Controllers\Api\Company\UserCompanyController;
 use App\Http\Controllers\Api\Project\ProjectController;
 use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
 use App\Http\Controllers\Api\Project\ProjectTaskController;
@@ -58,7 +59,11 @@ Route::prefix('v1')->group(function () {
             Route::post('logout', [AuthController::class,'delete']);
         });
 
+    });
 
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('users/companies', [UserCompanyController::class,'store']);
     });
 
 

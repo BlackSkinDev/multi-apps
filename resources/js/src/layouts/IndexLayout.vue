@@ -1,27 +1,29 @@
 <template>
-    <div class="">
-        <AppHeader/>
-        <div>
-            <router-view/>
-        </div>
-    </div>
+    <router-view/>
 </template>
 
 <script>
 import AppHeader from "../components/App-Header.vue";
-import {TriggerPiniaAction} from "../util";
-import {mapActions} from "pinia/dist/pinia";
 import {useAuthStore} from "../store/AuthStore";
+import {mapActions, mapState} from "pinia/dist/pinia";
+import {authCheck, TriggerPiniaAction} from "../util";
 export default {
     name: "IndexLayout.vue",
     components:{AppHeader},
-    async created() {
-        const res = await TriggerPiniaAction(this.fetchAuthUser())
-        if(!res)this.$router.push("/signin");
+    async mounted() {
+        if (authCheck()){
+            const res = await TriggerPiniaAction(this.fetchAuthUser())
+            if(!res)this.$router.push("/signin");
+        }
     },
     methods:{
         ...mapActions(useAuthStore,['fetchAuthUser']),
     },
+    computed:{
+        ...mapState(useAuthStore,{
+            user:(state)        => state.user,
+        })
+    }
 }
 </script>
 

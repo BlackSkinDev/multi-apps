@@ -1,50 +1,69 @@
 <template>
-    <div>
-        <h2 class="text-2xl font-bold mb-4">Create Company</h2>
-        <form @submit.prevent="submitForm" class="max-w-md mx-auto">
-            <div class="mb-4">
-                <label for="name" class="block mb-2 text-sm font-medium">Company Name</label>
-                <input v-model="company.name" type="text" id="name" name="name" placeholder="Enter company name"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </div>
-            <div class="mb-4">
-                <label for="description" class="block mb-2 text-sm font-medium">Description</label>
-                <textarea v-model="company.description" id="description" name="description" rows="4" placeholder="Enter company description"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-            </div>
-            <div class="mb-4">
-                <label for="logo" class="block mb-2 text-sm font-medium">Logo</label>
-                <input type="file" id="logo" name="logo" accept="image/*" @change="handleLogoChange"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </div>
-            <div>
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600">Create</button>
-            </div>
+    <div class="mt-28">
+        <form @submit.prevent="submitForm" class="p-4 max-w-xl mx-auto mt-2 space-y-8">
+            <h2 class="text-xl text-center ">Hi {{user.name}}, Plese create your company to get started</h2>
+            <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
+            <RichEditor label="Company Description" @editor-text="setEditorValue"/>
+            <FileInput label="Company Logo" placeholder="Company Logo" v-model="company.logo" @file-selected="handleLogoChange"/>
+            <Button :text="'Create company'"  :disabled="disabled" :loading="loading"/>
         </form>
     </div>
 </template>
 
 <script>
+import {useCompanyStore} from "../../store/CompanyStore";
+import {mapState,mapActions} from "pinia";
+import RichEditor from "../../components/ui/RichEditor.vue";
+import TextInput from "../../components/ui/TextInput.vue";
+import Button from "../../components/ui/Button.vue";
+import FileInput from "../../components/ui/FileInput.vue";
+import {useAuthStore} from "../../store/AuthStore";
+import {APP_NAME, CREATE_COMPANY_SUCCESS_MESSAGE} from "../../constants/constants";
+import {TriggerPiniaAction} from "../../util";
 export default {
+    components:{RichEditor,TextInput,Button,FileInput},
     data() {
         return {
             company: {
                 name: '',
                 description: '',
-                logo: null
-            }
+                logo: ''
+            },
         };
     },
     methods: {
-        submitForm() {
-            // Handle form submission
-            // Access form data via 'this.company'
-            // Send data to backend or perform necessary actions
+        ...mapActions(useCompanyStore,['createUserCompany']),
+        async submitForm() {
+            const companyData = new FormData()
+            companyData.append('logo',this.company.logo)
+            companyData.append('name',this.company.name)
+            companyData.append('description',this.company.description)
+            const res = await TriggerPiniaAction(this.createUserCompany(companyData),CREATE_COMPANY_SUCCESS_MESSAGE,true);
+            if (res){
+                this.$router.push('/dashboard')
+            }
         },
-        handleLogoChange(event) {
-            const file = event.target.files[0];
-            // Handle file upload
-            // Assign 'file' to 'this.company.logo'
+        handleLogoChange(file) {
+           this.company.logo = file
+        },
+        setEditorValue(value){
+            this.company.description =  value
+        },
+    },
+    mounted() {
+        document.title = `${APP_NAME} | Create Company`;
+    },
+    computed:{
+        ...mapState(useCompanyStore,{
+            loading:(state)  => state.processingRequest
+        }),
+        ...mapState(useAuthStore,{
+            user:(state)  => state.user,
+        }),
+        disabled(){
+            return this.company.name        === '' ||
+                   this.company.description === '' ||
+                   this.company.logo        === ''
         }
     }
 };
