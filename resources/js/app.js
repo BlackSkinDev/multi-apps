@@ -3,8 +3,8 @@ import {createPinia} from 'pinia';
 import {createApp} from 'vue'
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import CKEditor from '@ckeditor/ckeditor5-vue';
-
+import Vue3Tour from 'vue3-tour';
+import 'vue3-tour/dist/vue3-tour.css'
 
 
 import router from './src/router/index.js'
@@ -18,5 +18,5 @@ createApp(App)
         position: POSITION.TOP_RIGHT,
         timeout: 1500,
     })
-    .use( CKEditor )
+    .use(Vue3Tour)
     .mount("#app")

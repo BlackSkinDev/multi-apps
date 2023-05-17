@@ -1,9 +1,22 @@
 <template>
-    <div>
-        <div v-show="loading" class="h-1 bg-gray-200">
-            <div :style="{ width: progress + '%' }" class="h-1 bg-red-500"></div>
+    <div class="relative">
+        <!-- Render the target elements -->
+        <div v-for="(step, index) in tourSteps" :key="index" :id="'target-' + index" class="w-16 h-16 bg-red-500 m-4 absolute">
+            <!-- Target element content -->
         </div>
-        <p v-if="loading"></p>
+
+        <!-- Render the tour content -->
+        <div v-if="currentStep !== null" class="absolute top-8 left-8 bg-white shadow p-4">
+            <h3 class="text-xl font-bold">{{ tourSteps[currentStep].title }}</h3>
+            <p class="">{{ tourSteps[currentStep].content }}</p>
+
+            <!-- Navigation buttons -->
+            <div class="mt-4">
+                <button @click="prevStep" :disabled="currentStep === 0" class="px-4 py-2 bg-black text-white mr-2 cursor-pointer">Previous</button>
+                <button @click="nextStep" :disabled="currentStep === tourSteps.length - 1" class="px-4 py-2 bg-black text-white mr-2 cursor-pointer">Next</button>
+                <button @click="endTour" class="px-4 py-2 bg-black text-white cursor-pointer">End Tour</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -11,37 +24,47 @@
 export default {
     data() {
         return {
-            loading: false,
-            progress: 0,
+            currentStep: null,
+            tourSteps: [
+                {
+                    title: 'Step 1',
+                    content: 'This is the first step of the tour.',
+                },
+                {
+                    title: 'Step 2',
+                    content: 'This is the second step of the tour.',
+                },
+                {
+                    title: 'Step 3',
+                    content: 'This is the third step of the tour.',
+                },
+            ],
         };
     },
-    mounted() {
-        this.simulateLoading();
-        window.addEventListener('load', () => {
-            this.loading = false;
-        });
-    },
     methods: {
-        simulateLoading() {
-            this.loading = true;
-            this.progress = 0;
-
-            // get the total page load time from performance.timing
-            const pageLoadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-
-            // set the interval time based on the total page load time
-            const intervalTime = Math.floor(pageLoadTime / 100);
-
-            const interval = setInterval(() => {
-                this.progress += 1;
-                if (this.progress >= 100) {
-                    clearInterval(interval);
-                    this.progress = 100;
-                    this.loading = false;
-                }
-            }, intervalTime);
-
+        nextStep() {
+            this.currentStep++;
         },
+        prevStep() {
+            this.currentStep--;
+        },
+        endTour() {
+            this.currentStep = null;
+        },
+    },
+    mounted() {
+        this.currentStep = 0;
+
+        // Randomly position the target elements
+        this.tourSteps.forEach((step, index) => {
+            const targetElement = document.getElementById(`target-${index}`);
+            if (targetElement) {
+                const top = Math.random() * (window.innerHeight - 100);
+                const left = Math.random() * (window.innerWidth - 100);
+                targetElement.style.top = `${top}px`;
+                targetElement.style.left = `${left}px`;
+            }
+        });
     },
 };
 </script>

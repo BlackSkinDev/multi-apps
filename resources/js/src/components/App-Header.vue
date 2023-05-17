@@ -30,7 +30,7 @@
                     <Menu as="div" class="z-50 relative hidden md:block">
                         <MenuButton>
                             <div class="rounded-full w-10 h-10 cursor-pointer overflow-hidden" v-if="user.photo">
-                                <img :src="user.photo" alt="User Image" class="w-full h-full object-cover">
+                                <img :src="user.photo" alt="User Image" class="w-full h-full object-cover" id="v-step-2">
                             </div>
                         </MenuButton>
                         <transition

@@ -8,6 +8,9 @@
             </div>
         </div>
        <RightSideBar v-if="user.has_company"/>
+        <div class="starters-tour-guide">
+            <v-tour name="myTour" :steps="steps" :options="myOptions"/>
+        </div>
     </div>
 </template>
 
@@ -22,6 +25,46 @@ import RightSideBar from "../components/RightSideBar.vue";
 export default {
     name: "DashboardLayout",
     components:{AppHeader,LeftSideBar,RightSideBar},
+    data() {
+        return {
+            steps: [
+                {
+                    target: '#v-step-0',
+                    header: {
+                        title: 'Manage Project',
+                    },
+                    content: 'Create, organize, and track project progress!',
+
+                },
+                {
+                    target: '#v-step-1',
+                    header: {
+                        title: 'Manage Backlogs',
+                    },
+                    content:'Prioritize and track project tasks!',
+                },
+                {
+                    target: '#v-step-2',
+                    header: {
+                        title: 'Account Update',
+                    },
+                    content:'Customize and update your account!',
+                    params: {
+                        //placement: 'top' //
+                    }
+                }
+            ],
+            myOptions: {
+                useKeyboardNavigation: true,
+                labels: {
+                    buttonSkip: 'Skip',
+                    buttonPrevious: 'Previous',
+                    buttonNext: 'Next',
+                    buttonStop: 'Finish'
+                }
+            },
+        };
+    },
     async created() {
         const res = await TriggerPiniaAction(this.fetchAuthUser())
         if (res) {
@@ -43,6 +86,11 @@ export default {
             }
         }
     },
+    mounted() {
+        setTimeout(() => {
+            this.$tours['myTour'].start();
+        }, 500);
+    },
     methods:{
         ...mapActions(useAuthStore,['fetchAuthUser']),
         ...mapActions(useCompanyStore,['fetchUserCompany']),
@@ -58,6 +106,24 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
+.starters-tour-guide .v-step__header,.v-step__arrow--dark[data-v-da2d894c]:before{
+    background:#0039a6 !important;
+}
+.starters-tour-guide .v-step{
+    background:#0039a6 !important;
+    width:200px!important;
+}
+.starters-tour-guide .v-step__header div{
+    font-size: 13px !important;
+    width: 100%;
+}
+.starters-tour-guide .v-step__content div{
+    font-size: 11px;
+    width: 100%;
+}
+.starters-tour-guide .v-step__buttons{
+    margin-top: 20px !important;
+}
 
 </style>
