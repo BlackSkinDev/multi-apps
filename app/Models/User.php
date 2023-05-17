@@ -75,10 +75,10 @@ class User extends Authenticatable
     public function getPhotoAttribute(): string
     {
         $defaultLogoPath = url('/images/avatar.png');
-        $logoFolder = 'user-images';
+        $logoFolder = 'public/user-images';
 
         if ($this->image && Storage::exists($logoFolder . '/' . $this->image)) {
-            return Storage::url($logoFolder . '/' . $this->image);
+            return url(Storage::url($logoFolder . '/' . $this->image));
         } else {
             return $defaultLogoPath;
         }
@@ -102,6 +102,15 @@ class User extends Authenticatable
 
     public function scopeEnabled($query){
         return $query->where('enabled',true);
+    }
+
+
+    /**
+     * get user company
+     *
+     */
+    public function company(){
+        return $this->belongsTo(Company::class);
     }
 
 }

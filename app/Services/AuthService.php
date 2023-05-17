@@ -181,7 +181,7 @@ class AuthService
             'name'             => $user->name,
             'email'            => $user->email,
             'is_admin'         => (bool)$user->is_admin,
-            'has_company'      => $user->company_id,
+            'has_company'      => (bool)$user->company,
             'refresh_token'    => $refresh_token->token,
             'cookie'           => $cookie,
             'photo'            => $user->photo

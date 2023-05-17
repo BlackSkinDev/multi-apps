@@ -13,7 +13,7 @@ class FileService
     public function uploadCompanyLogo($file): string
     {
         $file_name = md5($file->get()) . '.' . $file->extension();
-        $file->storeAs('company-logos', $file_name);
+        $file->storeAs('public/company-logos', $file_name);
         return $file_name;
     }
 

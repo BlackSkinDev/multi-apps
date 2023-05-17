@@ -21,7 +21,7 @@ class AuthUserController extends Controller
             'name'        => $user->firstname,
             'email'       => $user->email,
             'is_admin'    => (bool) $user->is_admin,
-            'has_company' => (bool) $user->company_id,
+            'has_company' => (bool) $user->company,
             'photo'       => $user->photo
         ];
         return httpResponse(true,$data);

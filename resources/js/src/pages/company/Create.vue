@@ -1,12 +1,14 @@
 <template>
     <div class="mt-28">
-        <form @submit.prevent="submitForm" class="p-4 max-w-xl mx-auto mt-2 space-y-8">
-            <h2 class="text-xl text-center ">Hi {{user.name}}, Plese create your company to get started</h2>
-            <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
-            <RichEditor label="Company Description" @editor-text="setEditorValue"/>
-            <FileInput label="Company Logo" placeholder="Company Logo" v-model="company.logo" @file-selected="handleLogoChange"/>
-            <Button :text="'Create company'"  :disabled="disabled" :loading="loading"/>
-        </form>
+        <h2 class="text-xl text-center ">Hi {{user.name}}, Plese create your company to get started</h2>
+        <div class="max-w-xl mx-auto  shadow-lg bg-white rounded p-8 mt-4 ">
+            <form @submit.prevent="submitForm" class="space-y-8">
+                <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
+                <RichEditor label="Company Description" @editor-text="setEditorValue"/>
+                <FileInput label="Company Logo" placeholder="Company Logo" v-model="company.logo" @file-selected="handleLogoChange"/>
+                <Button :text="'Create company'"  :disabled="disabled" :loading="loading"/>
+            </form>
+        </div>
     </div>
 </template>
 

@@ -32,7 +32,7 @@ class CreateCompanyRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'  => 'Name entered is already associated with a company',
+            'name.unique'    => 'Name entered is already associated with a company',
             'logo.file'      => 'Logo must be a file',
             'logo.mimes'     => 'Only png,jpg and jpeg format are allowed',
             'logo.max'       => 'Max size allowed for logo is 1mb'
