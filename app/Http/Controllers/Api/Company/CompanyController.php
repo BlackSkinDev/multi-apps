@@ -11,7 +11,7 @@ use App\Services\CompanyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class UserCompanyController extends Controller
+class CompanyController extends Controller
 {
     public function __construct(CompanyService $companyService)
     {

@@ -31,6 +31,12 @@ class CompanyService
      */
     public function createCompany(array $data): Company
     {
+        $user = auth()->user();
+
+        if ($user->company){
+            throw  new ClientErrorException("You have already created your company!");
+        }
+
         DB::beginTransaction();
 
         try {
@@ -45,7 +51,7 @@ class CompanyService
 
             $company =  $this->companyRepository->create($companyData);
 
-            $this->userRepository->attachCompany(auth()->user(),$company->id);
+            $this->userRepository->attachCompany($user,$company->id);
 
             DB::commit();
 

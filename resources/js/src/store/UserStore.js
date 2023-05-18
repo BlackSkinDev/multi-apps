@@ -13,27 +13,19 @@ export const useUserStore = defineStore('UserStore', {
 
     },
     actions: {
-        async fetchUsers(q) {
-
+        async uploadProfilePicture(formData) {
+            this.processingRequest = true
             try {
-                const {data:{data}} = await UserApi.getUsers(q)
+                const {data:{data}} = await UserApi.uploadProfilePicture(formData)
                 this.users = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
+            } finally {
+                this.processingRequest = false
             }
         },
 
-        async fetchUser(id) {
-
-            try {
-                const {data:{data}} = await UserApi.getUser(id)
-                this.user = data
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            }
-        },
     },
 
 })

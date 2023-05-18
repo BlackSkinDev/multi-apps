@@ -29,8 +29,9 @@
                     </div>
                     <Menu as="div" class="z-50 relative hidden md:block">
                         <MenuButton>
-                            <div class="rounded-full w-10 h-10 cursor-pointer overflow-hidden" v-if="user.photo">
-                                <img :src="user.photo" alt="User Image" class="w-full h-full object-cover" id="v-step-2">
+                            <div class="rounded-full w-10 h-10 cursor-pointer overflow-hidden" v-if="user.photo"  :class="loading ? 'opacity-20' : '' ">
+                                <img :src="src || user.photo" alt="User Image" class="w-full h-full object-cover" id="v-step-2">
+                                <moon-loader :loading="loading" class="-mt-10 " :size="'40px'"></moon-loader>
                             </div>
                         </MenuButton>
                         <transition
@@ -41,7 +42,13 @@
                             leave-from-class="opacity-100 scale-100"
                             leave-to-class="opacity-0 scale-90"
                         >
-                            <MenuItems class="origin-top-left mt-1.5 focus:outline-none absolute -right-2 bg-white overflow-hidden  shadow border w-32">
+                            <MenuItems class="origin-top-left mt-1.5 focus:outline-none absolute -right-2 bg-white overflow-hidden  shadow border w-44">
+                                <MenuItem v-slot="{active}">
+                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-g-700" @click="browse">
+                                        Upload Picture
+                                        <input type="file" ref="profile_picuture" @change="handleFileChange" class="hidden">
+                                    </a>
+                                </MenuItem>
                                 <MenuItem v-slot="{active}">
                                     <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-g-700" @click="isEditFormOpen=true">Edit</a>
                                 </MenuItem>
@@ -61,10 +68,13 @@
 <script>
 import {TriggerPiniaAction} from "../util";
 import {useAuthStore} from "../store/AuthStore";
+import {useUserStore} from "../store/UserStore";
 import {mapActions,mapState} from "pinia";
 import logo from "../assests/images/pro.png"
-import {APP_NAME} from "../constants/constants";
+import {APP_NAME, PROFILE_PICTURE_UPLOAD_SUCCESS_MESSAGE} from "../constants/constants";
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import MoonLoader from 'vue-spinner/src/MoonLoader.vue';
+
 
 
 export default {
@@ -74,6 +84,7 @@ export default {
         MenuButton,
         MenuItem,
         MenuItems,
+        MoonLoader
     },
     data(){
         return{
@@ -81,9 +92,12 @@ export default {
             logo:logo,
             app_name:APP_NAME,
             showMenu: false,
+            src:""
         }
     },
     methods:{
+        ...mapActions(useAuthStore,['logout']),
+        ...mapActions(useUserStore,['uploadProfilePicture']),
         async logoutUser(){
             const res = await TriggerPiniaAction(this.logout());
             if (res) this.$router.push('/signin')
@@ -91,11 +105,28 @@ export default {
         toggleMenu() {
             this.showMenu = !this.showMenu;
         },
-        ...mapActions(useAuthStore,['logout'])
+        browse(){
+            this.$refs.profile_picuture.click()
+        },
+        async handleFileChange(event) {
+            let reader = new FileReader()
+            reader.readAsDataURL(event.target.files[0]
+        );
+            reader.onload = (event) => {
+                this.src = event.target.result
+            }
+            let formData = new FormData();
+            formData.append('file', event.target.files[0]);
+            await TriggerPiniaAction(this.uploadProfilePicture(formData), PROFILE_PICTURE_UPLOAD_SUCCESS_MESSAGE, true)
+        },
+
     },
     computed:{
         ...mapState(useAuthStore,{
             user:(state)      => state.user
+        }),
+        ...mapState(useUserStore,{
+            loading:(state)      => state.processingRequest
         })
     }
 

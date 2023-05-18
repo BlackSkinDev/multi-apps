@@ -2,7 +2,6 @@
 
 namespace App\Interfaces;
 
-use App\Models\Company;
 use App\Models\User;
 
 interface IUserRepository
@@ -15,4 +14,5 @@ interface IUserRepository
     public function createUserToken(User $user);
     public function deleteTokens(User $user);
     public function attachCompany(User $user,int $company_id);
+    public function attachProfilePicture(User $user,$filepath);
 }

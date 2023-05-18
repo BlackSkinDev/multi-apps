@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\Account\ProfilePictureController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\AuthUserController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\MagicAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RefreshTokenController;
-use App\Http\Controllers\Api\Company\UserCompanyController;
+use App\Http\Controllers\Api\Company\CompanyController;
 use App\Http\Controllers\Api\Project\ProjectController;
 use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
 use App\Http\Controllers\Api\Project\ProjectTaskController;
@@ -64,10 +65,16 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
 
-        Route::prefix('users/companies')->group(function () {
-            Route::post('', [UserCompanyController::class,'store']);
-            Route::get('', [UserCompanyController::class,'show']);
+        Route::prefix('users')->group(function () {
+
+            Route::post('profile-picture', [ProfilePictureController::class,'update']);
+
+            Route::prefix('/companies')->group(function () {
+                Route::post('', [CompanyController::class,'store']);
+                Route::get('', [CompanyController::class,'show']);
+            });
         });
+
 
     });
 

@@ -1,22 +1,16 @@
-import {KinbanAppApi} from "./Api";
+import {Api} from "./Api";
 
-const BASE_ENDOINT = 'users'
+const BASE_ENPOINT = 'users'
 
 export default {
 
+    uploadProfilePicture(formData) {
+        const headers = {
+            'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
+        };
 
-    getUsers(q){
-        const params =  { ...(q && { q })};
-        return KinbanAppApi.get(`${BASE_ENDOINT}`,{params})
+        return Api.post(`${BASE_ENPOINT}/profile-picture`, formData,{ headers });
     },
-
-
-    getUser(id){
-        return KinbanAppApi.get(`${BASE_ENDOINT}/${id}`)
-    },
-
-
-
-
 
 }

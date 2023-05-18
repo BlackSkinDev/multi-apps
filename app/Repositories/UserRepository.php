@@ -78,4 +78,12 @@ class UserRepository implements IUserRepository
         $user->update(['company_id'=>$company_id]);
     }
 
+    /**
+     * attach profile picture to user
+     */
+    public function attachProfilePicture(User $user,$filepath){
+        $user->update(['image'=>$filepath]);
+    }
+
+
 }
