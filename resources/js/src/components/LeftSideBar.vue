@@ -2,7 +2,7 @@
     <div class="hidden md:block bg-white w-64 py-8 border-r bg-zinc-50 mt-16">
         <div class="flex items-center justify-start space-x-1 px-2">
             <div>
-                <img :src="company.image" alt="Company Logo" class="h-10 w-14">
+                <img :src="company.image" v-if="company.image" alt="Company Logo" class="h-10 w-14">
             </div>
             <div class="space-y-1">
                 <h2 class="text-lg font-bold">{{company.name}}</h2>

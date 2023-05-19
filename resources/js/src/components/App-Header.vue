@@ -27,11 +27,14 @@
                     <div class="w-full">
                         <input type="text" class="border border-gray-300 px-4 py-2 md:w-64 w-full rounded" placeholder="Search...">
                     </div>
-                    <Menu as="div" class="z-50 relative hidden md:block">
+                    <Menu as="div" class="z-50 relative hidden md:block" v-slot="{ close }">
                         <MenuButton>
-                            <div class="rounded-full w-10 h-10 cursor-pointer overflow-hidden" v-if="user.photo"  :class="loading ? 'opacity-20' : '' ">
-                                <img :src="src || user.photo" alt="User Image" class="w-full h-full object-cover" id="v-step-2">
-                                <moon-loader :loading="loading" class="-mt-10 " :size="'40px'"></moon-loader>
+                            <div class="w-10 h-10 cursor-pointer overflow-hidden relative" v-if="user.photo" :class="loading ? 'opacity-20' : ''">
+                                <img :src="src || user.photo" alt="User Image" class="w-full h-full object-cover rounded-full" id="v-step-2">
+                                <moon-loader :loading="loading" class="-mt-10" :size="'40px'"></moon-loader>
+                                <div class="absolute inset-0 flex items-center justify-center transition duration-300">
+                                    <div class="w-full h-full rounded-full border-4 border-transparent hover:border-blue-100"></div>
+                                </div>
                             </div>
                         </MenuButton>
                         <transition
@@ -42,16 +45,43 @@
                             leave-from-class="opacity-100 scale-100"
                             leave-to-class="opacity-0 scale-90"
                         >
-                            <MenuItems class="origin-top-left mt-1.5 focus:outline-none absolute -right-2 bg-white overflow-hidden  shadow border w-44">
+                            <MenuItems class="origin-top-left mt-1.5 focus:outline-none absolute -right-2 bg-white overflow-hidden  shadow border w-50">
+
+                                <div class="px-4 mt-4 mb-3">
+                                    <h1 class="font-bold text-sm text-gray-600">Account</h1>
+                                    <div class="flex items-center justify-start space-x-1 mt-4">
+                                        <div>
+                                            <div class="w-8 h-8 cursor-pointer overflow-hidden relative" v-if="user.photo" >
+                                                <img :src="src || user.photo" alt="User Image" class="w-full h-full object-cover rounded-full">
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <h2 class="text-sm">{{user.name}}</h2>
+                                            <p class="text-gray-500" :style="{fontSize:'12px'}">{{user.email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-g-700" @click="browse">
+                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600" @click="browse">
                                         Upload Picture
                                         <input type="file" ref="profile_picuture" @change="handleFileChange" class="hidden">
                                     </a>
                                 </MenuItem>
-                                <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-g-700" @click="isEditFormOpen=true">Edit</a>
-                                </MenuItem>
+                                <router-link
+                                    v-slot="{ isActive, href, navigate }"
+                                    :to="{name:'company'}">
+                                    <MenuItem  v-slot="{active}">
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Account</a>
+                                    </MenuItem>
+                                </router-link>
+                                <router-link
+                                    v-slot="{ isActive, href, navigate }"
+                                    :to="{name:'company'}">
+                                    <MenuItem  v-slot="{active}">
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Company</a>
+                                    </MenuItem>
+                                </router-link>
                                 <MenuItem v-slot="{active}">
                                     <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-red-500" @click="logoutUser()">Log out</a>
                                 </MenuItem>
@@ -92,7 +122,7 @@ export default {
             logo:logo,
             app_name:APP_NAME,
             showMenu: false,
-            src:""
+            src:"",
         }
     },
     methods:{
