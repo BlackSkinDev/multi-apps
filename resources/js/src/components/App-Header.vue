@@ -63,27 +63,27 @@
                                 </div>
 
                                 <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600" @click="browse">
+                                    <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600" @click="browse">
                                         Upload Picture
                                         <input type="file" ref="profile_picuture" @change="handleFileChange" class="hidden">
                                     </a>
                                 </MenuItem>
                                 <router-link
                                     v-slot="{ isActive, href, navigate }"
-                                    :to="{name:'company'}">
+                                    :to="{name:'dashboard'}">
                                     <MenuItem  v-slot="{active}">
-                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Account</a>
+                                        <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Account</a>
                                     </MenuItem>
                                 </router-link>
                                 <router-link
                                     v-slot="{ isActive, href, navigate }"
                                     :to="{name:'company'}">
                                     <MenuItem  v-slot="{active}">
-                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Company</a>
+                                        <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Company</a>
                                     </MenuItem>
                                 </router-link>
                                 <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-1.5 text-sm text-red-500" @click="logoutUser()">Log out</a>
+                                    <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-red-500" @click="logoutUser()">Log out</a>
                                 </MenuItem>
                             </MenuItems>
                         </transition>
