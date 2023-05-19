@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4">
-        <h2 class="text-xl text-center ">Hi {{user.name}}, Please create your company to get started</h2>
-        <div class="max-w-xl mx-auto  shadow-lg  rounded p-8 mt-4 ">
+        <h2 class="text-xl text-center ">Hi {{user.firstname}}, Please create your company to get started</h2>
+        <div class="max-w-xl mx-auto  p-8 mt-4 ">
             <form @submit.prevent="submitForm" class="space-y-8">
                 <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
                 <RichEditor label="Company Description" @editor-text="setEditorValue"/>

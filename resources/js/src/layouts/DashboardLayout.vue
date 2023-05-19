@@ -77,7 +77,9 @@ export default {
     async created() {
         const res = await TriggerPiniaAction(this.fetchAuthUser())
         if (res) {
-            await this.fetchUserCompany(true);
+            if (this.user.has_company){
+                await this.fetchUserCompany(true);
+            }
         }else{
             this.$router.push({ name: "signin" });
         }
@@ -88,6 +90,7 @@ export default {
                     this.$router.push({ name: "create-company" });
                 }
             }
+
             if (this.$route.name === "create-company") {
                 if (this.user.has_company){
                     this.$router.push({ name: "dashboard" });

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import {API_SUCCESS_MESSAGE} from "../constants/constants";
 import companyApi from "../apis/Company";
+import {useAuthStore} from "./AuthStore";
 
 export const useCompanyStore = defineStore('CompanyStore', {
     state: () => {
@@ -15,6 +16,8 @@ export const useCompanyStore = defineStore('CompanyStore', {
             this.processingRequest = true
             try {
                 await companyApi.createUserCompany(companyData)
+                await useAuthStore().fetchAuthUser()
+                await this.fetchUserCompany();
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

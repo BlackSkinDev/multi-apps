@@ -18,7 +18,8 @@ class AuthUserController extends Controller
         $user  = auth()->user();
 
         $data = [
-            'name'        => $user->firstname,
+            'name'        => $user->name,
+            'firstname'   => $user->firstname,
             'email'       => $user->email,
             'is_admin'    => (bool) $user->is_admin,
             'has_company' => (bool) $user->company,
