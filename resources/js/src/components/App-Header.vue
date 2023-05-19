@@ -63,7 +63,7 @@
                                 </div>
 
                                 <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600" @click="browse">
+                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600 border-t-2" @click="browse">
                                         Upload Picture
                                         <input type="file" ref="profile_picuture" @change="handleFileChange" class="hidden">
                                     </a>
@@ -72,18 +72,19 @@
                                     v-slot="{ isActive, href, navigate }"
                                     :to="{name:'dashboard'}">
                                     <MenuItem  v-slot="{active}">
-                                        <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Account</a>
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600">My Account</a>
                                     </MenuItem>
                                 </router-link>
                                 <router-link
+                                    v-if="user.is_admin"
                                     v-slot="{ isActive, href, navigate }"
                                     :to="{name:'company'}">
                                     <MenuItem  v-slot="{active}">
-                                        <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-gray-600">My Company</a>
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600">My Company</a>
                                     </MenuItem>
                                 </router-link>
                                 <MenuItem v-slot="{active}">
-                                    <a href="#" :class="{'bg-blue-100': active}" class="block px-4 py-1.5 text-sm text-red-500" @click="logoutUser()">Log out</a>
+                                    <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-red-500 border-t-2" @click="logoutUser()">Log out</a>
                                 </MenuItem>
                             </MenuItems>
                         </transition>
