@@ -34,9 +34,7 @@ class CompanyController extends Controller
      */
     public function show()
     {
-        $truncate  = request('truncate');
         $company = $this->companyService->fetchAuthUserCompany();
-        if ($truncate)$company->truncate = true;
         return httpResponse(true,CompanyResource::make($company));
     }
 

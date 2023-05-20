@@ -4,7 +4,7 @@
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Request Password Change
             </h1>
-            <Input v-model="email" type="email" label="Email" placeholder="name@company.com" class="mt-6"/>
+            <Input v-model="email" type="email" label="Email" placeholder="name@company.com"  name="email" class="mt-6"/>
             <router-link to="#" class="mt-10">
                 <Button :text="'Request password reset link'"  :disabled="disabled" :loading="loading" @click="sendRequestLink"  class="mt-4"/>
             </router-link>

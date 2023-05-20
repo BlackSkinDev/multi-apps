@@ -17,8 +17,8 @@ class CompanyResource extends JsonResource
     {
         return [
               'name'         => $this?->name,
-              'description'  => $this->truncate ?  Str::limit(strip_tags($this->description), 20, '...') : $this->description ,
-              'image'        => $this->image
+              'description'  => $this?->description ,
+              'image'        => $this?->image
         ];
     }
 }

@@ -2,11 +2,11 @@
     <div class="hidden md:block bg-white w-64 py-8 border-r bg-zinc-50 mt-16">
         <div class="flex items-center justify-start space-x-1 px-2">
             <div>
-                <img :src="company.image" v-if="company.image" alt="Company Logo" class="h-10 w-14">
+                <img :src="user.company_image" v-if="user.company_image" alt="Company Logo" class="h-10 w-14">
             </div>
             <div class="space-y-1">
-                <h2 class="text-lg font-bold">{{company.name}}</h2>
-                <p class="text-gray-500" :style="{fontSize:'12px'}" v-html="company.description"></p>
+                <h2 class="text-lg font-bold">{{user.company_name}}</h2>
+                <p class="text-gray-500" :style="{fontSize:'12px'}" v-html="user.company_description"></p>
             </div>
         </div>
 
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import {useAuthStore} from "../store/AuthStore";
+import {mapState} from "pinia";
 
 export default {
     props:{
@@ -49,7 +51,11 @@ export default {
             ],
         };
     },
-
+    computed:{
+        ...mapState(useAuthStore,{
+            user:(state)        => state.user,
+        })
+    }
 };
 </script>
 

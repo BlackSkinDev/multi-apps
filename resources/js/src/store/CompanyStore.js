@@ -28,7 +28,7 @@ export const useCompanyStore = defineStore('CompanyStore', {
 
         async fetchUserCompany(truncate) {
             try {
-                const {data:{data}} = await companyApi.getUserCompany(truncate)
+                const {data:{data}} = await companyApi.getUserCompany()
                 this.company = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {

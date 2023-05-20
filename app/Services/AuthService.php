@@ -9,6 +9,7 @@ use App\Interfaces\IRefreshTokenRepository;
 use App\Interfaces\IUserRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Mockery\Exception;
 
 
@@ -178,13 +179,16 @@ class AuthService
         $refresh_token = $this->refreshTokenRepository->create(['personal_access_token_id' => $access_token->accessToken->id]);
 
         return [
-            'name'             => $user->name,
-            'email'            => $user->email,
-            'is_admin'         => (bool)$user->is_admin,
-            'has_company'      => (bool)$user->company,
-            'refresh_token'    => $refresh_token->token,
-            'cookie'           => $cookie,
-            'photo'            => $user->photo
+            'name'                 => $user->name,
+            'email'                => $user->email,
+            'is_admin'             => (bool)$user->is_admin,
+            'has_company'          => (bool)$user->company,
+            'refresh_token'        => $refresh_token->token,
+            'cookie'               => $cookie,
+            'photo'                => $user->photo,
+            'company_name'         => $user->company?->name,
+            'company_description'  => Str::limit(strip_tags($user->company?->description), 20, '...'),
+            'company_image'        => $user->company?->image
         ];
     }
 

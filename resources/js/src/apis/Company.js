@@ -13,9 +13,9 @@ export default {
         return Api.post(`${BASE_ENPOINT}`, companyData, { headers });
     },
 
-    getUserCompany(truncate){
+    getUserCompany(){
 
-        return Api.get(`${BASE_ENPOINT}?truncate=${truncate}`);
+        return Api.get(`${BASE_ENPOINT}`);
     }
 }
 

@@ -1,72 +1,123 @@
 <template>
-    <div class="mt-4">
-        <h2 class="text-xl text-center ">Hi {{user.name}}, Please create your company to get started</h2>
-        <div class="max-w-xl mx-auto  shadow-lg  rounded p-8 mt-4 ">
-            <form @submit.prevent="submitForm" class="space-y-8">
-                <TextInput label="Company Name" placeholder="Company Name" v-model="company.name" type="text"/>
-                <RichEditor label="Company Description" @editor-text="setEditorValue"/>
-                <FileInput label="Company Logo" placeholder="Company Logo" v-model="company.logo" @file-selected="handleLogoChange"/>
-                <Button :text="'Create company'"  :disabled="disabled" :loading="loading"/>
-            </form>
+    <div class="flex">
+        <div class="w-2/3 pr-8">
+            <h1 class="text-3xl font-bold mb-8">My Company</h1>
+            <div class="mb-8">
+                <form @submit.prevent="submitForm" class="space-y-4">
+                    <TextInput label="Company Name" placeholder="Company Name" v-model="company_name" type="text" />
+                    <RichEditor label="Company Description" @editor-text="setEditorValue" :defaultValue="company_description" />
+                    <FileInput label="Company Logo" placeholder="Company Logo" @file-selected="handleLogoChange" />
+                    <Button :text="'Save Changes'" :disabled="disabled" :loading="loading" />
+                </form>
+            </div>
+        </div>
+
+        <div class="w-1/3 pl-8">
+            <div class="flex flex-col justify-between h-full">
+                <div>
+                    <div class="mb-4 space-y-4">
+                        <h3 class="text-lg font-bold text-center text-gray-600">{{ company_name }}</h3>
+                        <img :src="company_image" alt="Company Logo" class="w-60 h-40  mb-2" />
+                        <p class="text-sm text-gray-600 text-center text-justify">{{ company_description }}</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4">Invite Team Members</h2>
+                    <form @submit.prevent="inviteMember" class="space-y-4">
+                        <TextInput label="Email" placeholder="Email" v-model="newMember.email" type="email" name="emails" />
+                        <Button :text="'Send Invitation'" :disabled="!isEmailValid(newMember.email)" />
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import {useCompanyStore} from "../../store/CompanyStore";
-import {mapState,mapActions} from "pinia";
 import RichEditor from "../../components/ui/RichEditor.vue";
 import TextInput from "../../components/ui/TextInput.vue";
 import Button from "../../components/ui/Button.vue";
 import FileInput from "../../components/ui/FileInput.vue";
-import {useAuthStore} from "../../store/AuthStore";
-import {APP_NAME, CREATE_COMPANY_SUCCESS_MESSAGE} from "../../constants/constants";
+import {useCompanyStore} from "../../store/CompanyStore";
+import {mapActions, mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
 export default {
-    components:{RichEditor,TextInput,Button,FileInput},
+    components: {
+        TextInput,
+        RichEditor,
+        FileInput,
+        Button,
+    },
     data() {
         return {
-            company: {
-                name: '',
-                description: '',
-                logo: ''
+            companyForm: {
+                name: this.company?.name,
+                description: this.company?.description,
+                logo: null
             },
+            src:'',
+            newMember: {
+                email: '',
+            },
+            disabled: false,
+            loading: false,
         };
     },
+    async created() {
+        await TriggerPiniaAction(this.fetchUserCompany())
+    },
     methods: {
-        ...mapActions(useCompanyStore,['createUserCompany']),
-        async submitForm() {
-            const companyData = new FormData()
-            companyData.append('logo',this.company.logo)
-            companyData.append('name',this.company.name)
-            companyData.append('description',this.company.description)
-            const res = await TriggerPiniaAction(this.createUserCompany(companyData),CREATE_COMPANY_SUCCESS_MESSAGE,true);
-            if (res){
-                this.$router.push({ name: "dashboard" });
-            }
+        ...mapActions(useCompanyStore,['fetchUserCompany']),
+        submitForm() {
+            this.disabled = true;
+            this.loading = true;
+
+            setTimeout(() => {
+                this.disabled = false;
+                this.loading = false;
+            }, 2000);
+        },
+        setEditorValue(text) {
+            this.company.description = text;
         },
         handleLogoChange(file) {
-            this.company.logo = file
+            this.company.logo = file;
         },
-        setEditorValue(value){
-            this.company.description =  value
+        inviteMember() {
+            if (this.isEmailValid(this.newMember.email)) {
+                console.log(`Inviting ${this.newMember.email}`);
+            }
         },
-    },
-    mounted() {
-        document.title = `${APP_NAME} | My Company`;
+        isEmailValid(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        },
     },
     computed:{
-        ...mapState(useCompanyStore,{
-            loading:(state)  => state.processingRequest
-        }),
-        ...mapState(useAuthStore,{
-            user:(state)  => state.user,
-        }),
-        disabled(){
-            return this.company.name        === '' ||
-                this.company.description === '' ||
-                this.company.logo        === ''
-        }
+       company_name:{
+           get(){
+               return useCompanyStore().company.name
+           },
+           set(value){
+               useCompanyStore().company.name = value
+           }
+       },
+        company_description:{
+            get(){
+                return useCompanyStore().company.description
+            },
+            set(value){
+                useCompanyStore().company.description = value
+            }
+        },
+        company_image:{
+            get(){
+                return useCompanyStore().company.image
+            },
+            set(value){
+               // useCompanyStore().company.description = value
+            }
+        },
+
     }
 };
 </script>

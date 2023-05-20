@@ -39,7 +39,7 @@ export default {
                 images_upload_credentials: true
             },
             api_key:import.meta.env.VITE_TINY_MCE_KEY,
-            editorData:this.defaultValue
+            editorData:this.defaultValue??''
         };
     },
     watch:{

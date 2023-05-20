@@ -16,6 +16,7 @@
                             type="email"
                             v-model="passwordLoginFormData.email"
                             :key="inputKey"
+                            name="email"
                         />
                         <Input
                             label="Password"

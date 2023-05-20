@@ -3,7 +3,7 @@
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Verify Email
         </h1>
-        <Input v-model="email" type="email" label="Email" placeholder="name@company.com" class="mt-6"/>
+        <Input v-model="email" type="email" label="Email" placeholder="name@company.com"  name="email" class="mt-6"/>
         <router-link to="#" class="mt-10">
             <Button :text="'Request new link'"  :disabled="disabled" :loading="loading" @click="resendVerificationEmail"  class="mt-4"/>
         </router-link>

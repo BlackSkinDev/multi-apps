@@ -31,6 +31,7 @@
                             placeholder="name@company.com"
                             type="email"
                             v-model="registerFormData.email"
+                            name="email"
                         />
                         <Input
                             label="Password"

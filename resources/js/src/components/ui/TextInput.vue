@@ -40,7 +40,7 @@ export default {
             }
         },
         validate(){
-            if (this.input_type === 'email'){
+            if (this.input_type === 'email' && this.name === 'email'){
                 if(!ValidateEmail(this.modelValue) && this.modelValue !== '')this.error = "Please enter a valid email address"
                 else this.error = ""
             }
@@ -55,9 +55,6 @@ export default {
                 else this.error = ""
             }
         },
-        clearError(){
-            this.error = ''
-        }
 
     },
 
