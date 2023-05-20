@@ -5,7 +5,7 @@
             <div class="mb-8">
                 <form @submit.prevent="submitForm" class="space-y-4">
                     <TextInput label="Company Name" placeholder="Company Name" v-model="company_name" type="text" />
-                    <RichEditor label="Company Description" @editor-text="setEditorValue" :defaultValue="company_description" />
+                    <RichEditor label="Company Description" @editor-text="setEditorValue" :defaultValue="company_description" v-if="company_description" />
                     <FileInput label="Company Logo" placeholder="Company Logo" @file-selected="handleLogoChange" />
                     <Button :text="'Save Changes'" :disabled="disabled" :loading="loading" />
                 </form>
@@ -15,9 +15,9 @@
         <div class="w-1/3 pl-8">
             <div class="flex flex-col justify-between h-full">
                 <div>
-                    <div class="mb-4 space-y-4">
+                    <div class="flex flex-col mb-4 space-y-4 items-center">
                         <h3 class="text-lg font-bold text-center text-gray-600">{{ company_name }}</h3>
-                        <img :src="company_image" alt="Company Logo" class="w-60 h-40  mb-2" />
+                        <img :src="company_image" alt="Company Logo" class="w-60 h-40  mb-2 mt-2" />
                         <p class="text-sm text-gray-600 text-center text-justify">{{ company_description }}</p>
                     </div>
                 </div>

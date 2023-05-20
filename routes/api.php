@@ -75,13 +75,10 @@ Route::prefix('v1')->group(function () {
             });
         });
 
+        Route::post('upload',[MediaController::class,'store']);
+
 
     });
-
-
-
-
-
 
 
 
@@ -106,7 +103,6 @@ Route::prefix('v1')->group(function () {
         Route::get('{user}',[ProjectUserController::class,'show']);
     });
 
-    Route::post('upload',[MediaController::class,'store'])->middleware('auth:sanctum');
 
     Route::prefix('projects-dev-stages')->middleware('auth:sanctum')->group(function () {
         Route::get('',[ProjectDevStageController::class,'index']);
