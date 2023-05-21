@@ -39,6 +39,7 @@ Api.interceptors.response.use(
             } catch (error) {
                 localStorage.removeItem('logged_in');
                 localStorage.removeItem('refresh_token');
+                window.location="/"
                 return Promise.reject(error);
             }
         }

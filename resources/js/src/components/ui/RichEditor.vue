@@ -5,6 +5,8 @@
             :api-key="api_key"
             :init="init"
             v-model="editorData"
+            @keyup="isEditing=true"
+            @blur="isEditing=false"
         />
     </div>
 </template>
@@ -18,7 +20,8 @@ export default {
     components:{Editor},
     props:{
         label:String,
-        defaultValue:String
+        defaultValue:String,
+        isEditing:false
     },
     data() {
         return {
@@ -41,6 +44,11 @@ export default {
             api_key:import.meta.env.VITE_TINY_MCE_KEY,
             editorData:this.defaultValue??''
         };
+    },
+    methods:{
+        isTyping(){
+            console.log(this.editorData)
+        }
     },
     watch:{
         editorData(newVal){

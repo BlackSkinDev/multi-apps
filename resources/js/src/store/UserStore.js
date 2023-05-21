@@ -6,7 +6,8 @@ export const useUserStore = defineStore('UserStore', {
         return {
             processingRequest:false,
             users:[],
-            user:{}
+            user:{},
+            userAccountInfo:{}
         }
     },
     getters: {
@@ -25,6 +26,31 @@ export const useUserStore = defineStore('UserStore', {
                 this.processingRequest = false
             }
         },
+
+        async fetchUserAccountInfo() {
+            try {
+                const {data:{data}} = await UserApi.fetchUserAccountInfo()
+                this.userAccountInfo = data
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            }
+        },
+
+        async updateUserInfo(data) {
+            this.processingRequest = true
+            try {
+                await UserApi.updateUserInfo(data)
+                await this.fetchUserAccountInfo()
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingRequest = false
+            }
+        },
+
+
 
     },
 

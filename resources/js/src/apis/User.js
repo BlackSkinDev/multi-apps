@@ -13,4 +13,18 @@ export default {
         return Api.post(`${BASE_ENPOINT}/profile-picture`, formData,{ headers });
     },
 
+    fetchUserAccountInfo() {
+        return Api.get(`${BASE_ENPOINT}/account`);
+    },
+
+    updateUserInfo(data) {
+        return Api.patch(`${BASE_ENPOINT}/account`,data);
+    },
+
+
+
+
+
+
+
 }

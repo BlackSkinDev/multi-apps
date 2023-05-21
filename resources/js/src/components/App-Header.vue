@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white w-full  py-3 border-b fixed top-0">
+    <div class="bg-white w-full  py-3 border-b fixed top-0 z-10">
 
         <div class="md:flex md:justify-between relative md:px-6">
 
@@ -16,11 +16,11 @@
                     <a href="#" :class="active_link === 'tasks'  ? 'text-blue-600' : '' "   @click="active_link='tasks'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
                        Your tasks
                     </a>
-                    <a href="#" :class="active_link === 'dashboard'  ? 'text-blue-600' : '' " @click="active_link='dashboard'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
+                    <a href="#" :class="active_link === 'teams'  ? 'text-blue-600' : '' " @click="active_link='teams'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
                         Projects
                     </a>
                     <a href="#" :class="active_link === 'projects'  ? 'text-blue-600' : '' " @click="active_link='projects'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
-                        Dashboards
+                        Teams
                     </a>
                 </div>
                 <div class="flex space-x-6  md:flex w-full md:w-auto">
@@ -70,7 +70,7 @@
                                 </MenuItem>
                                 <router-link
                                     v-slot="{ isActive, href, navigate }"
-                                    :to="{name:'dashboard'}">
+                                    :to="{name:'account'}">
                                     <MenuItem  v-slot="{active}">
                                         <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600">My Account</a>
                                     </MenuItem>
@@ -119,7 +119,7 @@ export default {
     },
     data(){
         return{
-            active_link:"dashboard",
+            active_link:"tasks",
             logo:logo,
             app_name:APP_NAME,
             showMenu: false,

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\ClientErrorException;
 use App\Interfaces\IUserRepository;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -19,7 +18,7 @@ class AccountService
     }
 
     /**
-     * Create user company
+     * Upload user profile picture
      * @param string $file
      * @throws ClientErrorException
      */
@@ -42,6 +41,21 @@ class AccountService
         }
 
     }
+
+    /**
+     * Upload user profile picture
+     * @param array $data
+     */
+    public function updateUserInfo(array $data): void
+    {
+        $this->userRepository->update(auth()->user(),$data);
+
+    }
+
+
+
+
+
 
 
 }

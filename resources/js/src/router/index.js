@@ -76,6 +76,15 @@ const routes = [
         }
     },
 
+    {
+        path:'/dashboard/account',
+        name:"account",
+        component:()=>import('../pages/account/Show.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
 
 
 ]

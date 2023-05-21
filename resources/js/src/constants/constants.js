@@ -18,6 +18,7 @@ export const PASSWORD_RESET_SUCCESS_MESSAGE             = "Password has been res
 export const CREATE_COMPANY_SUCCESS_MESSAGE             = "Your company has been created successfully!";
 export const PROFILE_PICTURE_UPLOAD_SUCCESS_MESSAGE     = "Profile picture uploaded successfully!";
 export const UPDATE_COMPANY_SUCCESS_MESSAGE             = "Your company has been updated successfully!";
+export const UPDATE_USER_ACCOUNT_SUCCESS_MESSAGE        = "Your info has been updated successfully!";
 
 
 
