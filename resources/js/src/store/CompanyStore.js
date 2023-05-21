@@ -26,13 +26,27 @@ export const useCompanyStore = defineStore('CompanyStore', {
             }
         },
 
-        async fetchUserCompany(truncate) {
+        async fetchUserCompany() {
             try {
                 const {data:{data}} = await companyApi.getUserCompany()
                 this.company = data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
+            }
+        },
+
+        async updateUserCompany(companyData) {
+            this.processingRequest = true
+            try {
+                await companyApi.updateUserCompany(companyData)
+                await useAuthStore().fetchAuthUser()
+                await this.fetchUserCompany();
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingRequest = false
             }
         },
 

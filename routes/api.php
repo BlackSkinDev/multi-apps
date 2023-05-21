@@ -72,6 +72,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('/companies')->group(function () {
                 Route::post('', [CompanyController::class,'store']);
                 Route::get('', [CompanyController::class,'show']);
+                Route::patch('', [CompanyController::class,'update']);
             });
         });
 

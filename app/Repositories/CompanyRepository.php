@@ -30,4 +30,12 @@ class CompanyRepository implements ICompanyRepository
     {
         return $this->model->where('id',$id)->first();
     }
+
+    /**
+     * Update company
+     */
+    public function update(Company $company, array $data): bool
+    {
+        return $company->update($data);
+    }
 }

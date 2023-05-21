@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\Company;
 use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\CreateCompanyRequest;
+use App\Http\Requests\Company\UpdateCompanyRequest;
 use App\Http\Resources\Company\CompanyResource;
-use App\Models\Company;
 use App\Services\CompanyService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+
 
 class CompanyController extends Controller
 {
@@ -40,10 +40,12 @@ class CompanyController extends Controller
 
     /**
      * Update user company.
+     * @throws ClientErrorException
      */
-    public function update(Request $request, Company $company)
+    public function update(UpdateCompanyRequest $request): JsonResponse
     {
-        //
+        $this->companyService->updateAuthUserCompany($request->validated());
+        return httpResponse(true);
     }
 
 

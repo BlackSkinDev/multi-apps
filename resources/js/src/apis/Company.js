@@ -14,9 +14,18 @@ export default {
     },
 
     getUserCompany(){
-
         return Api.get(`${BASE_ENPOINT}`);
-    }
+    },
+
+    updateUserCompany(companyData) {
+        const headers = {
+            'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
+        };
+
+        return Api.post(`${BASE_ENPOINT}`, companyData, { headers });
+    },
+
 }
 
 

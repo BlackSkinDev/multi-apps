@@ -75,4 +75,44 @@ class CompanyService
         return  $this->companyRepository->findById(auth()->user()->company_id);
     }
 
+    /**
+     * update user company
+     * @param $data
+     * @throws ClientErrorException
+     */
+    public function updateAuthUserCompany($data): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $logo = "";
+
+            if (isset($data['logo'])){
+                $logo = $this->fileService->uploadCompanyLogo($data['logo']);
+            }
+
+            $companyData = [
+                'name'          => $data['name'],
+                'description'   => $data['description'],
+            ];
+
+            if ($logo){
+                $companyData['logo'] = $logo;
+            }
+
+            $this->companyRepository->update(auth()->user()->company,$companyData);
+
+            DB::commit();
+
+        } catch (\Exception $e){
+            DB::rollBack();
+            Log::error($e);
+            throw new ClientErrorException(__('validation.error_occurred'));
+        }
+
+    }
+
+
+
+
 }
