@@ -35,7 +35,7 @@
 
                 <!--  Login Form for Magic Link Method-->
                 <div>
-                    <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="loginUserWithMagicLink" v-show="sign_in_method === 'magic_link'">
+                    <form class="space-y-4 md:space-y-6 mb-6" action="#" @submit.prevent="loginUserWithMagicLink" v-show="sign_in_method === 'magic_link'">
                         <Input
                             label="Email"
                             placeholder="name@company.com"
@@ -44,16 +44,13 @@
                             :key="inputKey"
                         />
                         <Button :text="'Sign in with Magic Link'"  :disabled="disabled" :loading="loading"/>
-                        <p class="text-gray-700 text-center text-sm">
-                            Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
-                        </p>
                     </form>
                     <!--  Login Form for Magic Link Method-->
-                    <Button :text="btn_text"  :bg-class="'bg-orange-700 hover:bg-orange-600'" @click="switchLoginMethod"/>
-                    <p class="text-gray-700 text-center text-sm mt-4">
-                        Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
-                    </p>
+                    <Button :text="btn_text"  :bg-class="'bg-orange-700 hover:bg-orange-600'"  @click="switchLoginMethod"/>
                 </div>
+                <p class="text-gray-700 text-center text-sm mt-4">
+                    Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
+                </p>
                 <!--  Login Form for Magic Link Method-->
 
             </div>
