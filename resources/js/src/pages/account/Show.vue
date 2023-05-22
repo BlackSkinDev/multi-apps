@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-3xl font-bold mb-8">My Account</h1>
+        <p class="text-xl font-bold mb-8">My Account</p>
         <div class="flex flex-col md:flex-row justify-between">
             <div class="w-full md:w-2/3 pr-8 order-2 md:order-1">
                 <div class="mb-8">

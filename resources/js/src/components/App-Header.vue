@@ -83,6 +83,13 @@
                                         <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600">My Company</a>
                                     </MenuItem>
                                 </router-link>
+                                <router-link
+                                    v-slot="{ isActive, href, navigate }"
+                                    :to="{name:'settings'}">
+                                    <MenuItem  v-slot="{active}">
+                                        <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-gray-600">Personal Settings</a>
+                                    </MenuItem>
+                                </router-link>
                                 <MenuItem v-slot="{active}">
                                     <a href="#" :class="{'bg-gray-100': active}" class="block px-4 py-3 text-sm text-red-500 border-t-2" @click="logoutUser()">Log out</a>
                                 </MenuItem>

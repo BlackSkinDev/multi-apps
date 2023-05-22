@@ -72,6 +72,20 @@ class PasswordResetService
 
     }
 
+    /**
+     * Change user password
+     * @param array $data
+     * @throws ClientErrorException
+     */
+    public function changePassword(array $data): void
+    {
+        $user = auth()->user();
+
+        if (!password_verify($data['old_password'],$user->password)){
+            throw new ClientErrorException("Old password incorrect");
+        }
+        $this->userRepository->update($user,['password'=>$data['new_password']]);
+    }
 
 
 

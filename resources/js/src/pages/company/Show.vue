@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-3xl font-bold mb-8">My Company</h1>
+        <p class="text-xl font-bold mb-8">My Company</p>
         <div class="flex flex-col md:flex-row justify-between">
             <div class="w-full md:w-2/3 pr-8 order-2 md:order-1">
                 <div class="mb-8">
@@ -16,7 +16,7 @@
             <div class="w-full md:w-1/3 mt-4 md:mt-0 md:pl-8 order-1 md:order-2">
                 <div class="flex flex-col mb-4 space-y-4 items-center">
                     <h3 class="text-lg font-bold text-center text-gray-600">{{ company.name }}</h3>
-                    <img :src="companyForm.logo" alt="Company Logo" class="w-60 h-40  mb-2 mt-2" />
+                    <img :src="company.image" alt="Company Logo" class="w-60 h-40  mb-2 mt-2" />
                     <p class="text-sm text-gray-600 text-center text-justify" v-html="company.description "/>
                     <!--                <div>-->
                     <!--                    <h2 class="text-2xl font-bold mb-4">Invite Team Members</h2>-->

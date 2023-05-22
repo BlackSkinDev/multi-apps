@@ -10,7 +10,7 @@ export default {
             Accept: 'application/json',
         };
 
-        return Api.post(`${BASE_ENPOINT}/profile-picture`, formData,{ headers });
+        return Api.post(`${BASE_ENPOINT}/account/profile-picture`, formData,{ headers });
     },
 
     fetchUserAccountInfo() {

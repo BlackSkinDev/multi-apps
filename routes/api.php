@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Account\AccountController;
+use App\Http\Controllers\Api\Account\PasswordUpdateController;
 use App\Http\Controllers\Api\Account\ProfilePictureController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\AuthUserController;
@@ -68,11 +69,13 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('users')->group(function () {
 
-            Route::post('profile-picture', [ProfilePictureController::class,'update']);
+
 
             Route::prefix('/account')->group(function () {
                 Route::get('', [AccountController::class,'show']);
                 Route::patch('', [AccountController::class,'update']);
+                Route::post('profile-picture', [ProfilePictureController::class,'update']);
+                Route::post('change-password', [PasswordUpdateController::class,'update']);
             });
 
             Route::prefix('/companies')->group(function () {

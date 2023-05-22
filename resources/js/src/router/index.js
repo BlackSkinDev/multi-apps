@@ -86,6 +86,16 @@ const routes = [
     },
 
 
+    {
+        path:'/dashboard/settings',
+        name:"settings",
+        component:()=>import('../pages/settings/Index.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+
 
 ]
 
