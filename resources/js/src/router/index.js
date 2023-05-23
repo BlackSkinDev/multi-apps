@@ -49,14 +49,13 @@ const routes = [
     },
 
     {
-        path:'/dashboard',
+        path:'/dashboard/your-work',
         name:"dashboard",
-        component:()=>import('../pages/dashboard/Index.vue'),
+        component:()=>import('../pages/work/Index.vue'),
         meta: {
             requiresAuth: true
         }
     },
-
 
     {
         path:'/dashboard/company/create',
@@ -99,6 +98,15 @@ const routes = [
         path:'/dashboard/people',
         name:"people",
         component:()=>import('../pages/people/Index.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path:'/dashboard/projects',
+        name:"projects",
+        component:()=>import('../pages/project/Index.vue'),
         meta: {
             requiresAuth: true
         }

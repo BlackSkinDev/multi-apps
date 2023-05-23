@@ -10,10 +10,10 @@
 
         <h1 class="font-medium mt-8">You work with</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-            <div v-for="user in users" :key="user.id" class="p-4 bg-white shadow rounded-lg mt-4 cursor-pointer">
+            <div v-for="user in users" :key="user.id" class="p-4 bg-white rounded-lg mt-4 cursor-pointer  shadow hover:shadow-lg transition-shadow">
                 <div class="flex items-center justify-center">
                     <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
-                    <div  v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100 " :style="{ backgroundColor:bg_colors[user?.id] }">
+                    <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_colors[user?.id] }">
                         <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
                     </div>
                 </div>
@@ -22,6 +22,8 @@
                     <p class="text-sm text-gray-500 mt-2">{{ user.role }}</p>
                 </div>
             </div>
+
+
         </div>
     </div>
 

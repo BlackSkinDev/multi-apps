@@ -13,13 +13,13 @@
             </div>
             <div class="absolute md:static left-0 top-full md:left-[unset] md:top-[unset] h-max w-full bg-gray-300 md:bg-transparent md:flex md:items-center md:justify-between" :class="{ 'hidden': !showMenu }">
                 <div class="md:flex md:items-center" >
-                    <a href="#" :class="active_link === 'tasks'  ? 'text-blue-600' : '' "   @click="active_link='tasks'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
-                       Your tasks
-                    </a>
-                    <a href="#" :class="active_link === 'teams'  ? 'text-blue-600' : '' " @click="active_link='teams'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
+                    <router-link  :to="{name:'dashboard'}" :class="[active_link === 'dashboard' ? 'text-blue-600' : '', 'block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium']" @click="active_link='dashboard'">
+                        Your work
+                    </router-link>
+                    <router-link :to="{name:'projects'}" :class="[active_link === 'projects' ? 'text-blue-600' : '', 'block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium']" @click="active_link='projects'">
                         Projects
-                    </a>
-                    <router-link :to="{name:'people'}" :class="active_link === 'people'  ? 'text-blue-600' : '' " @click="active_link='people'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
+                    </router-link>
+                    <router-link :to="{name:'people'}" :class="[active_link === 'people'   ? 'text-blue-600' : '', 'block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium']" @click="active_link='people'">
                         People
                     </router-link>
                 </div>
@@ -126,11 +126,12 @@ export default {
     },
     data(){
         return{
-            active_link:"tasks",
+            active_link:this.$route.name,
             logo:logo,
             app_name:APP_NAME,
             showMenu: false,
             src:"",
+            currentRouteName:this.$route.name
         }
     },
     methods:{
