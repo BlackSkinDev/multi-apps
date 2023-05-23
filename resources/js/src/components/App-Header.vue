@@ -19,9 +19,9 @@
                     <a href="#" :class="active_link === 'teams'  ? 'text-blue-600' : '' " @click="active_link='teams'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
                         Projects
                     </a>
-                    <a href="#" :class="active_link === 'projects'  ? 'text-blue-600' : '' " @click="active_link='projects'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
-                        Teams
-                    </a>
+                    <router-link :to="{name:'people'}" :class="active_link === 'people'  ? 'text-blue-600' : '' " @click="active_link='people'" class="block md:inline-block mt-4 md:mt-0 md:ml-6 px-3 py-2 border-b-2 border-transparent hover:bg-blue-100 hover:text-blue-600 hover:rounded transition-colors font-medium">
+                        People
+                    </router-link>
                 </div>
                 <div class="flex space-x-6  md:flex w-full md:w-auto">
                     <div class="w-full">

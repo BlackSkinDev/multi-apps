@@ -95,6 +95,15 @@ const routes = [
         }
     },
 
+    {
+        path:'/dashboard/people',
+        name:"people",
+        component:()=>import('../pages/people/Index.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
 
 
 ]
