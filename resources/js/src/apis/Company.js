@@ -26,6 +26,11 @@ export default {
         return Api.post(`${BASE_ENPOINT}`, companyData, { headers });
     },
 
+    fetchCompanyUsers(q){
+        const params = {...(q && { q })};
+        return Api.get(`${BASE_ENPOINT}/people`,{params});
+    },
+
 }
 
 

@@ -3,23 +3,51 @@
         <p class="text-xl font-bold ">People and teams</p>
         <div class="mt-6 mb-2 relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-               <SearchIcon class="w-6 h-5 text-zinc-400"/>
+                 <SearchIcon v-if="!loading" class="w-6 h-5 text-zinc-400"/>
+                 <clip-loader v-if="loading"  class="mt-1 mx-auto block " :loading="true" :color="'gray'" :size="'18px'"></clip-loader>
             </span>
-            <input type="text" class="focus:outline-none border-b-2 focus:border-blue-400 w-full text-lg pl-10" placeholder="Search for people">
+            <input v-model="searchedUser" @keyup="handleInput"   type="text" class="focus:outline-none border-b-2 focus:border-blue-400 w-full text-lg pl-10 py-2" placeholder="Search for people" >
+
+            <div class="absolute top-10 left-0 bg-white border border-gray-300 w-full z-10 shadow-xl rounded-md" v-if="searching">
+                <!-- Overlay mask -->
+                <div class="fixed z-[100] w-full h-full top-0 left-0" @click="searching = false" />
+                <div v-if="searched_users.length">
+                    <p class="text-sm font-medium text-gray-400 mb-2 px-6 mt-3 uppercase">People</p>
+                    <ul class="max-h-[25vh] mb-3">
+                        <li
+                            v-for="user in searched_users.slice(0,4)"
+                            class="cursor-pointer hover:bg-gray-100  border-transparent flex justify-start space-x-2 px-6  py-1.5 "
+                            tabindex="0"
+                        >
+                            <img :src="user.image" alt="User Avatar" class="rounded-full w-6 h-6" v-if="user.image">
+                            <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_colors[user?.id] }" >
+                                <span class="font-bold text-white " :style="{fontSize:'11px'}">{{user?.initial || '?'}}</span>
+                            </div>
+                            <p>{{user.name }}</p>
+                        </li>
+                    </ul>
+                    <div class="px-6 border-t-2 mb-6" v-if="searched_users.length>4">
+                        <div class="mt-4"><router-link :to="{name:'people',query:{q:searchedUser}}" class="text-blue-700">See all results for "{{searchedUser}}"</router-link></div>
+                    </div>
+                </div>
+                <p class="flex justify-center text-sm font-medium text-gray-400 mx-auto items-center p-4" v-else>No result found.</p>
+            </div>
+
+
         </div>
 
         <h1 class="font-medium mt-8">You work with</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-            <div v-for="user in users" :key="user.id" class="p-4 bg-white rounded-lg mt-4 cursor-pointer  shadow hover:shadow-lg transition-shadow">
+            <div v-for="user in users" :key="user.id" class="p-4 bg-white rounded-lg mt-4 cursor-pointer  border hover:shadow-lg transition-shadow">
                 <div class="flex items-center justify-center">
                     <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
                     <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_colors[user?.id] }">
                         <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
                     </div>
                 </div>
-                <div class="text-center mt-4 mb-8">
-                    <h1 class="text-sm font-medium text-gray-600">{{ user.fullName }}</h1>
-                    <p class="text-sm text-gray-500 mt-2">{{ user.role }}</p>
+                <div class="text-center mt-4 mb-2">
+                    <h1 class="text-sm font-medium text-gray-600">{{ user?.name }}</h1>
+                    <p class="text-sm text-gray-500 mt-2">{{ user?.role }}</p>
                 </div>
             </div>
 
@@ -33,96 +61,50 @@
 <script>
 
 import {SearchIcon} from "@heroicons/vue/solid";
-import RichEditor from "../../components/ui/RichEditor.vue";
-import TextInput from "../../components/ui/TextInput.vue";
-import Button from "../../components/ui/Button.vue";
-import FileInput from "../../components/ui/FileInput.vue";
-import {useUserStore} from "../../store/UserStore";
-import {mapActions, mapState} from "pinia";
+import {useCompanyStore} from "../../store/CompanyStore";
+import {mapActions,mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
-import {UPDATE_USER_ACCOUNT_SUCCESS_MESSAGE} from "../../constants/constants";
+import ClipLoader from "vue-spinner/src/ClipLoader.vue";
+
 export default {
     components: {
-        TextInput,
-        RichEditor,
-        FileInput,
-        Button,
-        SearchIcon
+        SearchIcon,
+        ClipLoader
     },
     data() {
         return {
-            userForm: {},
-            src:"",
-            isEditing:false,
-            users: [
-                {
-                    id: 1,
-                    fullName: "John Doe",
-                    image: null,
-                    role: "Software Engineer",
-                    initial:"JD"
-                },
-                {
-                    id: 2,
-                    fullName: "Jane Smith",
-                    image: null,
-                    role: "Frontend Developer",
-                    initial:"JS"
-                },
-                {
-                    id: 3,
-                    fullName: "Alex Johnson",
-                    image: "http://chillingdev.test/storage/user-images/37d1e299f10ac2fbebd7a12ab274af69.jpg",
-                    role: "Data Scientist",
-                    initial:"AJ"
-                },
-                {
-                    id: 4,
-                    fullName: "John Doe",
-                    image: "http://chillingdev.test/storage/user-images/37d1e299f10ac2fbebd7a12ab274af69.jpg",
-                    role: "Software Engineer",
-                    initial:"JD"
-                },
-                {
-                    id: 5,
-                    fullName: "Jane Smith",
-                    image: "http://chillingdev.test/storage/user-images/37d1e299f10ac2fbebd7a12ab274af69.jpg",
-                    role: "Frontend Developer",
-                    initial:"JS"
-                },
-                {
-                    id: 6,
-                    fullName: "Alex Johnson",
-                    image: null,
-                    role: "Data Scientist",
-                    initial:"AJ"
-                },
-                // Add more user objects here
-            ]
+            searchedUser:"",
+            loading:false,
+            searching:false
         };
     },
-    async created() {
-        await TriggerPiniaAction(this.fetchUserAccountInfo())
-        await this.$nextTick(() => {
-            this.userForm = {...this.userInfo}
-        });
-
+    async mounted() {
+        await TriggerPiniaAction(this.fetchCompanyUsers(this.$route.query.q))
     },
     methods: {
-        ...mapActions(useUserStore,['fetchUserAccountInfo','updateUserInfo']),
-        async submitForm() {
-            await TriggerPiniaAction(this.updateUserInfo(this.userForm),UPDATE_USER_ACCOUNT_SUCCESS_MESSAGE,true)
+        ...mapActions(useCompanyStore,['fetchCompanyUsers','searchCompanyUsers']),
+        handleInput() {
+            if (this.searchedUser!==''){
+                this.loading = true
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => {
+                    this.search();
+                }, 500);
+            }
+            else{
+                this.searching = false;
+            }
         },
-        setEditorValue(text) {
-            this.isEditing = this.$refs.richEditor.isEditing
-            this.userForm.bio = text;
+        async search() {
+            await TriggerPiniaAction(this.searchCompanyUsers(this.searchedUser))
+            this.searching = true
+            this.loading=false
         },
-        handleLogoChange(file) {
-            this.src = file;
-        },
-
     },
     computed:{
+        ...mapState(useCompanyStore,{
+            users:(state)     => state.users
+        }),
         bg_colors(){
             let bg_colors = []
             for (let i = 0; i < 500; i++) {
@@ -131,15 +113,14 @@ export default {
             }
             return bg_colors;
         },
-        ...mapState(useUserStore,{
-            userInfo:(state)  => state.userAccountInfo,
-            loading:(state)  => state.processingRequest
-        }),
-        disabled(){
-            return this.userForm.name === '' ||
-                this.userForm.username === ''
-
-        }
+        searched_users:{
+            get(){
+                return useCompanyStore().searched_users
+            },
+            set(value){
+                useCompanyStore().searched_users = value
+            }
+        },
     }
 };
 </script>

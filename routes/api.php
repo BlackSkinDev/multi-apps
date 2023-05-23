@@ -82,6 +82,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('', [CompanyController::class,'store']);
                 Route::get('', [CompanyController::class,'show']);
                 Route::patch('', [CompanyController::class,'update']);
+                Route::get('people', [CompanyController::class,'index']);
             });
         });
 

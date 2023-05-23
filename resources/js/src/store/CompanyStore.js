@@ -7,7 +7,9 @@ export const useCompanyStore = defineStore('CompanyStore', {
     state: () => {
         return {
             processingRequest:false,
-            company:{}
+            company:{},
+            users:[],
+            searched_users:[]
         }
     },
 
@@ -42,6 +44,32 @@ export const useCompanyStore = defineStore('CompanyStore', {
                 await companyApi.updateUserCompany(companyData)
                 await useAuthStore().fetchAuthUser()
                 await this.fetchUserCompany();
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingRequest = false
+            }
+        },
+
+        async fetchCompanyUsers(q) {
+            this.processingRequest = true
+            try {
+                const {data:{data}} = await companyApi.fetchCompanyUsers(q)
+                this.users =  data
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
+            } finally {
+                this.processingRequest = false
+            }
+        },
+
+        async searchCompanyUsers(q) {
+            this.processingRequest = true
+            try {
+                const {data:{data}} = await companyApi.fetchCompanyUsers(q)
+                this.searched_users =  data
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message

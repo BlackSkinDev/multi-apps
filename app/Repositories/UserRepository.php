@@ -24,11 +24,25 @@ class UserRepository implements IUserRepository
     }
 
     /**
+     * Search logged in user company users
+     */
+    public function searchCompanyUsers(User $user,$q=null)
+    {
+        return $this->model->enabled()
+                ->where('company_id',$user->company_id)
+                ->where('id','!=',$user->id)
+                ->when($q,function ($query) use ($q){
+                    $query->where('name', 'LIKE', "%$q%");
+                })
+                ->get();
+    }
+
+    /**
      * Find user by email
      */
     public function findByEmail(string $email):User|null
     {
-        return $this->model->where('email',$email)->first();
+        return $this->model->enabled()->where('email',$email)->first();
     }
 
     /**
@@ -74,14 +88,16 @@ class UserRepository implements IUserRepository
     /**
      * attach company to user
      */
-    public function attachCompany(User $user,$company_id){
+    public function attachCompany(User $user,$company_id)
+    {
         $user->update(['company_id'=>$company_id]);
     }
 
     /**
      * attach profile picture to user
      */
-    public function attachProfilePicture(User $user,$filepath){
+    public function attachProfilePicture(User $user,$filepath)
+    {
         $user->update(['image'=>$filepath]);
     }
 

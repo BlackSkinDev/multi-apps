@@ -8,6 +8,7 @@ interface IUserRepository
 {
     public function create(array $data);
     public function findByEmail(string $email);
+    public function searchCompanyUsers(User $user,$q);
     public function update(User $user, array $data);
     public function destroy(User $user);
     public function verifyEmail(User $user);
