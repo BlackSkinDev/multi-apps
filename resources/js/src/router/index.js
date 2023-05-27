@@ -94,6 +94,8 @@ const routes = [
         }
     },
 
+
+
     {
         path:'/dashboard/people',
         name:"people",
@@ -102,6 +104,18 @@ const routes = [
             requiresAuth: true
         }
     },
+
+
+
+    {
+        path:'/dashboard/people/:id',
+        name:"people-profile",
+        component:()=>import('../pages/people/Show.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
 
     {
         path:'/dashboard/projects',
