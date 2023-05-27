@@ -41,7 +41,7 @@ import FileInput from "../../components/ui/FileInput.vue";
 import {useCompanyStore} from "../../store/CompanyStore";
 import {mapActions, mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
-import {UPDATE_COMPANY_SUCCESS_MESSAGE} from "../../constants/constants";
+import {APP_NAME, UPDATE_COMPANY_SUCCESS_MESSAGE} from "../../constants/constants";
 export default {
     components: {
         TextInput,
@@ -57,6 +57,7 @@ export default {
         };
     },
     async created() {
+        document.title = `${APP_NAME} | My Company`;
         await TriggerPiniaAction(this.fetchUserCompany())
         await this.$nextTick(() => {
             this.companyForm = {

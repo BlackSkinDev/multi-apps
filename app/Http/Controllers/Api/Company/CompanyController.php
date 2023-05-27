@@ -21,17 +21,6 @@ class CompanyController extends Controller
 
 
     /**
-     * get users in logged in user company
-     */
-    public function index(): JsonResponse
-    {
-        $q= request('q');
-        $users = $this->companyService->fetchUsers($q);
-        return httpResponse(true,CompanyUserResource::collection($users));
-    }
-
-
-    /**
      * Create new user company
      * @throws ClientErrorException
      */

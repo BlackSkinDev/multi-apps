@@ -28,7 +28,7 @@
                             class="cursor-pointer hover:bg-gray-100 border-transparent px-6 py-1.5"
                             ref="listItems"
                         >
-                            <router-link :to="{name:'people-profile',params:{id:user.id}}" class="flex justify-start space-x-2">
+                            <router-link :to="{name:'people-profile',params:{id:user.uuid}}" class="flex justify-start space-x-2">
                                 <img :src="user.image" alt="User Avatar" class="rounded-full w-6 h-6" v-if="user.image">
                                 <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_colors[user?.id] }" >
                                     <span class="font-bold text-white " :style="{fontSize:'11px'}">{{user?.initial || '?'}}</span>
@@ -63,17 +63,19 @@
             <div v-if="!isFetchingUsers">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                     <div v-for="user in users" :key="user.id" class="p-4 bg-white rounded-lg mt-4 cursor-pointer  border hover:shadow-lg transition-shadow">
-                    <div class="flex items-center justify-center">
-                        <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
-                        <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_colors[user?.id] }">
-                            <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
+                        <router-link :to="{name:'people-profile',params:{id:user.uuid}}">
+                        <div class="flex items-center justify-center">
+                            <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
+                            <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_colors[user?.id] }">
+                                <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
+                            </div>
                         </div>
+                        <div class="text-center mt-4 mb-2">
+                            <h1 class="text-sm font-medium text-gray-600">{{ user?.name }}</h1>
+                            <p class="text-sm text-gray-500 mt-2">{{ user?.role }}</p>
+                        </div>
+                        </router-link>
                     </div>
-                    <div class="text-center mt-4 mb-2">
-                        <h1 class="text-sm font-medium text-gray-600">{{ user?.name }}</h1>
-                        <p class="text-sm text-gray-500 mt-2">{{ user?.role }}</p>
-                    </div>
-                </div>
                 </div>
             </div>
             <clip-loader v-else class="mt-1 mx-auto block " :loading="true" :color="'gray'" :size="'20px'"></clip-loader>
@@ -87,8 +89,9 @@
 import {SearchIcon} from "@heroicons/vue/solid";
 import {useCompanyStore} from "../../store/CompanyStore";
 import {mapActions,mapState} from "pinia";
-import {TriggerPiniaAction} from "../../util";
+import {getRandomBgColors, TriggerPiniaAction} from "../../util";
 import ClipLoader from "vue-spinner/src/ClipLoader.vue";
+import {APP_NAME} from "../../constants/constants";
 
 export default {
     components: {
@@ -100,8 +103,12 @@ export default {
             searchedUser:"",
             loading:false,
             searching:false,
-            focusedIndex: -1
+            focusedIndex: -1,
+            bg_colors:getRandomBgColors()
         };
+    },
+    created() {
+        document.title = `${APP_NAME} | People`;
     },
     async mounted() {
         await TriggerPiniaAction(this.fetchCompanyUsers(this.$route.query.q))
@@ -155,7 +162,7 @@ export default {
                     }
                 } else if (event.key === "Enter") {
                     if (this.focusedIndex >= 0 && this.focusedIndex <= lastIndex) {
-                        const selectedUserId = this.searched_users[this.focusedIndex].id;
+                        const selectedUserId = this.searched_users[this.focusedIndex].uuid;
                         this.$router.push({name: 'people-profile', params: {id:selectedUserId}});
                     }
                 }
@@ -168,14 +175,6 @@ export default {
             users:(state)            => state.users,
             isFetchingUsers:(state)  => state.processingRequest
         }),
-        bg_colors(){
-            let bg_colors = []
-            for (let i = 0; i < 500; i++) {
-                const color = '#' + Math.floor(Math.random()*16777215).toString(16);
-                bg_colors.push(color);
-            }
-            return bg_colors;
-        },
         searched_users:{
             get(){
                 return useCompanyStore().searched_users

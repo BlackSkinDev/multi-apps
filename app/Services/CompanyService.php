@@ -114,11 +114,19 @@ class CompanyService
 
 
     /**
-     * fetch company users
+     * fetch/search company users
      */
     public function fetchUsers($q)
     {
-            return$this->userRepository->searchCompanyUsers(auth()->user(),$q);
+        return$this->userRepository->searchCompanyUsers(auth()->user(),$q);
+    }
+
+    /**
+     * fetch company user by uuid
+     */
+    public function fetchUserByUuid($uuid)
+    {
+        return $this->userRepository->findByUuid($uuid);
     }
 
 

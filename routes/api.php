@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Auth\MagicAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RefreshTokenController;
 use App\Http\Controllers\Api\Company\CompanyController;
+use App\Http\Controllers\Api\Company\CompanyUserController;
 use App\Http\Controllers\Api\Project\ProjectController;
 use App\Http\Controllers\Api\Project\ProjectTaskAssignmentController;
 use App\Http\Controllers\Api\Project\ProjectTaskController;
@@ -82,7 +83,8 @@ Route::prefix('v1')->group(function () {
                 Route::post('', [CompanyController::class,'store']);
                 Route::get('', [CompanyController::class,'show']);
                 Route::patch('', [CompanyController::class,'update']);
-                Route::get('people', [CompanyController::class,'index']);
+                Route::get('people', [CompanyUserController::class,'index']);
+                Route::get('people/{user}', [CompanyUserController::class,'show']);
             });
         });
 

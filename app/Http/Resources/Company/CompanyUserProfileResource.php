@@ -4,8 +4,9 @@ namespace App\Http\Resources\Company;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
-class CompanyUserResource extends JsonResource
+class CompanyUserProfileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +17,15 @@ class CompanyUserResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'uuid'      => $this->uuid,
             'name'      => $this->name,
             'image'     => $this->image ? $this->photo : null,
             'initial'   => $this->initials,
-            'role'      => $this->role
+            'role'      => $this->role,
+            'email'     => $this->email,
+            'username'  => $this->username,
+            'bio'       => $this->bio,
+            'linkedin'  => $this->linkedin,
+            'phone'     => $this->phone
         ];
     }
 }

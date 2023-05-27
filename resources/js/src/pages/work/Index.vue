@@ -3,8 +3,13 @@
 </template>
 
 <script>
+import {APP_NAME} from "../../constants/constants";
+
 export default {
-    name: "Index"
+    name: "Index",
+    created() {
+        document.title = `${APP_NAME} | Your Work`;
+    }
 }
 </script>
 

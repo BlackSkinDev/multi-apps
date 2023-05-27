@@ -31,6 +31,10 @@ export default {
         return Api.get(`${BASE_ENPOINT}/people`,{params});
     },
 
+    getCompanyUser(uuid){
+        return Api.get(`${BASE_ENPOINT}/people/${uuid}`);
+    }
+
 }
 
 

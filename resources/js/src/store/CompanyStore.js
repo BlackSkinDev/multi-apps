@@ -9,7 +9,8 @@ export const useCompanyStore = defineStore('CompanyStore', {
             processingRequest:false,
             company:{},
             users:[],
-            searched_users:[]
+            searched_users:[],
+            user:{}
         }
     },
 
@@ -62,6 +63,16 @@ export const useCompanyStore = defineStore('CompanyStore', {
                 return error.response?.data?.message
             } finally {
                 this.processingRequest = false
+            }
+        },
+
+        async fetchCompanyUser(uuid) {
+            try {
+                const {data:{data}} = await companyApi.getCompanyUser(uuid)
+                this.user =  data
+                return API_SUCCESS_MESSAGE
+            } catch (error) {
+                return error.response?.data?.message
             }
         },
 

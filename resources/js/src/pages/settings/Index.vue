@@ -31,7 +31,7 @@ import Button from "../../components/ui/Button.vue";
 import {useSettingStore} from "../../store/SettingStore";
 import {mapActions, mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
-import {CHANGE_PASSWORD_SUCCESS_MESSAGE} from "../../constants/constants";
+import {APP_NAME, CHANGE_PASSWORD_SUCCESS_MESSAGE} from "../../constants/constants";
 export default {
     components: {
         TextInput,
@@ -45,7 +45,9 @@ export default {
             },
         };
     },
-
+    created() {
+        document.title = `${APP_NAME} | Personal Settings`;
+    },
     methods: {
         ...mapActions(useSettingStore,['changeUserPassword']),
         async submitForm() {

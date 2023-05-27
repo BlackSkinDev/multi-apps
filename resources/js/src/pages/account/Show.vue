@@ -38,7 +38,7 @@ import FileInput from "../../components/ui/FileInput.vue";
 import {useUserStore} from "../../store/UserStore";
 import {mapActions, mapState} from "pinia";
 import {TriggerPiniaAction} from "../../util";
-import {UPDATE_USER_ACCOUNT_SUCCESS_MESSAGE} from "../../constants/constants";
+import {APP_NAME, UPDATE_USER_ACCOUNT_SUCCESS_MESSAGE} from "../../constants/constants";
 export default {
     components: {
         TextInput,
@@ -54,11 +54,11 @@ export default {
         };
     },
     async created() {
+        document.title = `${APP_NAME} | My Account`;
         await TriggerPiniaAction(this.fetchUserAccountInfo())
         await this.$nextTick(() => {
             this.userForm = {...this.userInfo}
         });
-
     },
     methods: {
         ...mapActions(useUserStore,['fetchUserAccountInfo','updateUserInfo']),

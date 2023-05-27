@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class AdminSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
+            'uuid'        => Str::uuid(),
             'name'              => 'Afeez Azeez',
             'email'             => 'azeezafeez212@gmail.com',
             'username'          => 'afeez_dev',

@@ -45,6 +45,15 @@ class UserRepository implements IUserRepository
         return $this->model->enabled()->where('email',$email)->first();
     }
 
+
+    /**
+     * Find user by uuid
+     */
+    public function findByUuid(string $uuid)
+    {
+        return $this->model->enabled()->where('uuid',$uuid)->first();
+    }
+
     /**
      * Update  user
      */

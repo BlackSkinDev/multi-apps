@@ -35,3 +35,13 @@ export const ValidateUsername =  (username) => {
     return username.length >= 6;
 };
 
+export const getRandomBgColors =  () => {
+    let bg_colors = []
+    for (let i = 0; i < 500; i++) {
+        const color = '#' + Math.floor(Math.random()*16777215).toString(16);
+        bg_colors.push(color);
+    }
+    return bg_colors;
+};
+
+
