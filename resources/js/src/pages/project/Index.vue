@@ -1,5 +1,7 @@
 <template>
-<h1>Projects</h1>
+    <div class="px-16 mt-28">
+        <h1>Projects</h1>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-16 mt-28">
         <p class="text-xl font-bold ">People and teams</p>
         <div class="mt-6 mb-2 relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -30,7 +30,7 @@
                         >
                             <router-link :to="{name:'people-profile',params:{id:user.uuid}}" class="flex justify-start space-x-2">
                                 <img :src="user.image" alt="User Avatar" class="rounded-full w-6 h-6" v-if="user.image">
-                                <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_colors[user?.id] }" >
+                                <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_color }" >
                                     <span class="font-bold text-white " :style="{fontSize:'11px'}">{{user?.initial || '?'}}</span>
                                 </div>
                                 <div class="text-sm">
@@ -66,7 +66,7 @@
                         <router-link :to="{name:'people-profile',params:{id:user.uuid}}">
                         <div class="flex items-center justify-center">
                             <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
-                            <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_colors[user?.id] }">
+                            <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_color }">
                                 <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
                             </div>
                         </div>
@@ -104,10 +104,11 @@ export default {
             loading:false,
             searching:false,
             focusedIndex: -1,
-            bg_colors:getRandomBgColors()
+            bg_color:getRandomBgColors()
         };
     },
     created() {
+        console.log(this.bg_color)
         document.title = `${APP_NAME} | People`;
     },
     async mounted() {

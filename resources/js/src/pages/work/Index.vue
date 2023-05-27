@@ -1,5 +1,7 @@
 <template>
-<h1>Your work</h1>
+    <div class="px-16 mt-28">
+        <h1>Your Work</h1>
+    </div>
 </template>
 
 <script>

@@ -3,11 +3,11 @@
     <div class="flex h-screen bg-gray-100">
         <LeftSideBar v-if="user.has_company"/>
         <div class="flex-1 overflow-auto bg-white">
-            <div class="p-8 mt-16">
+            <div class="mt-16">
                 <router-view/>
             </div>
         </div>
-       <RightSideBar v-if="user.has_company"/>
+<!--       <RightSideBar v-if="user.has_company"/>-->
         <div class="starters-tour-guide">
             <v-tour name="myTour" :steps="steps" :options="myOptions" :callbacks="myCallbacks"/>
             <div v-show="showTour" class="fixed inset-0 bg-black bg-opacity-50" ></div>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-16 mt-28">
         <p class="text-xl font-bold mb-8">Personal Settings</p>
         <div class="pr-8 md:pr-0 order-2 md:order-1 w-full md:w-1/3">
             <div class="mt-2">

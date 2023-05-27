@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-16 mt-28">
         <p class="text-xl font-bold mb-8">My Company</p>
         <div class="flex flex-col md:flex-row justify-between">
             <div class="w-full md:w-2/3 pr-8 order-2 md:order-1">
