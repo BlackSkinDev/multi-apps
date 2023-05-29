@@ -40,7 +40,7 @@ export const getRandomBgColors =  () => {
         const color = '#' + Math.floor(Math.random()*1677).toString(16);
         bg_colors.push(color);
     }
-    return bg_colors[0];
+    return bg_colors;
 };
 
 

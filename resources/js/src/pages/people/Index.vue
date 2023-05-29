@@ -30,7 +30,7 @@
                         >
                             <router-link :to="{name:'people-profile',params:{id:user.uuid}}" class="flex justify-start space-x-2">
                                 <img :src="user.image" alt="User Avatar" class="rounded-full w-6 h-6" v-if="user.image">
-                                <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_color }" >
+                                <div v-else class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full" :style="{ backgroundColor:bg_color[user.id] }" >
                                     <span class="font-bold text-white " :style="{fontSize:'11px'}">{{user?.initial || '?'}}</span>
                                 </div>
                                 <div class="text-sm">
@@ -66,7 +66,7 @@
                         <router-link :to="{name:'people-profile',params:{id:user.uuid}}">
                         <div class="flex items-center justify-center">
                             <img :src="user.image" alt="User Avatar" class="rounded-full w-20 h-20" v-if="user.image">
-                            <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_color }">
+                            <div v-else class="relative inline-flex items-center justify-center rounded-full w-20 h-20 overflow-hidden bg-gray-100" :style="{ backgroundColor:bg_color[user.id] }">
                                 <span class="font-bold text-white text-2xl">{{user?.initial}}</span>
                             </div>
                         </div>
@@ -108,7 +108,6 @@ export default {
         };
     },
     created() {
-        console.log(this.bg_color)
         document.title = `${APP_NAME} | People`;
     },
     async mounted() {
