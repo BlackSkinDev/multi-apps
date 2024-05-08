@@ -1,4 +1,4 @@
-import {Api,publicApi} from "./Api";
+import {authApi,publicApi} from "./Api";
 
 
 const ENDPOINT = 'auth';
@@ -12,38 +12,19 @@ export default {
         return publicApi.post(`${ENDPOINT}/login`,credentials)
     },
 
-    sendMagicLink(email){
-        return Api.post(`${ENDPOINT}/magic-login`,{email})
-    },
-
-    loginWithMagicLink(token){
-        return Api.post(`${ENDPOINT}/magic-login/verify`,{token})
-    },
-
     logout(){
-        return Api.post(`${ENDPOINT}/logout`)
+        return authApi.delete(`${ENDPOINT}/logout`)
     },
     getAuthUser(){
-        return Api.get(`${ENDPOINT}/user`)
+        return authApi.get(`${ENDPOINT}/user`)
     },
 
     verifyEmail(token){
-        return Api.post(`${ENDPOINT}/email/verify`,{token})
+        return publicApi.post(`${ENDPOINT}/email/verify`,{token})
     },
 
     resendEmail(email){
-        return Api.post(`${ENDPOINT}/email/resend`,{email})
+        return publicApi.post(`${ENDPOINT}/email/resend`,{email})
     },
-
-    requestPasswordResetLink(email){
-        return Api.post(`${ENDPOINT}/password-reset`,{email})
-    },
-
-    resetPassword(data){
-        return Api.post(`${ENDPOINT}/password-reset/reset`,data)
-    },
-
-
-
 
 }

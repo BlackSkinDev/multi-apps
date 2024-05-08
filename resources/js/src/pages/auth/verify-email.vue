@@ -33,6 +33,7 @@ export default {
     async mounted() {
         document.title = `${APP_NAME} | Verify Email`;
         const token = this.$route.params.token
+
         const res = await TriggerPiniaAction(this.verifyEmail(token),EMAIL_VERIFICATION_SUCCESS_MESSAGE,true);
         if(res) this.$router.push({ name: "signin" });
     },
@@ -41,9 +42,9 @@ export default {
         async resendVerificationEmail() {
             const res = await TriggerPiniaAction(this.resendEmail(this.email), EMAIL_VERIFICATION_RESENT_SUCCESS_MESSAGE, true)
             if (res) {
-                this.$router.push({ name: "signin" });
+                this.email = "";
             }
-            this.email = ""
+
         },
     },
     computed:{

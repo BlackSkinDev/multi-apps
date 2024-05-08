@@ -19,17 +19,12 @@ class AuthUserController extends Controller
         $user  = auth()->user();
 
         $data = [
-            'name'                 => $user->name,
-            'firstname'            => $user->firstname,
+            'username'            => $user->username,
             'email'                => $user->email,
-            'is_admin'             => (bool) $user->is_admin,
-            'has_company'          => (bool) $user->company,
             'photo'                => $user->photo,
-            'company_name'         => $user->company?->name,
-            'company_description'  => Str::limit(strip_tags($user->company?->description), 20, '...'),
-            'company_image'        => $user->company?->image
+            'bio'         => $user->bio,
         ];
-        return httpResponse(true,$data);
+        return successResponse($data);
     }
 
 }

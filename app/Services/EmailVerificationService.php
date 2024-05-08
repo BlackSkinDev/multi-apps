@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\ClientErrorException;
 use App\Interfaces\IEmailVerificationTokenRepository;
 use App\Interfaces\IUserRepository;
+use App\Models\EmailVerificationToken;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,15 +13,10 @@ use Mockery\Exception;
 
 class EmailVerificationService
 {
-    public function __construct(
-        IEmailVerificationTokenRepository $emailVerificationTokenRepository,
-        EmailService                      $emailService,
-        IUserRepository                   $userRepository
+    private EmailService $emailService;
 
-    ) {
-        $this->emailVerificationTokenRepository = $emailVerificationTokenRepository;
-        $this->emailService                     = $emailService;
-        $this->userRepository                   = $userRepository;
+    public function __construct(EmailService $emailService,) {
+        $this->emailService  = $emailService;
     }
 
 
@@ -31,11 +27,11 @@ class EmailVerificationService
      */
     public function sendVerificationEmail(string $email): void
     {
-        $user = $this->userRepository->findByEmail($email);
+        $user = User::whereEmail($email)->firstorfail();
 
         DB::beginTransaction();
 
-        $email_verification = $this->emailVerificationTokenRepository->create(['user_id'=>$user->id]);
+        $email_verification = EmailVerificationToken::create(['user_id'=>$user->id]);
 
         try {
 
@@ -46,7 +42,7 @@ class EmailVerificationService
         } catch (\Exception $e){
             DB::rollBack();
             Log::error($e);
-            throw new ClientErrorException(__('validation.error_occurred'));
+            throw new ClientErrorException('Unable to send email verification link');
         }
     }
 
@@ -58,15 +54,17 @@ class EmailVerificationService
     public function verifyEmail(string $token): void
     {
 
-        $email_verification = $this->emailVerificationTokenRepository->findByToken($token);
+        $email_verification = EmailVerificationToken::whereToken($token)->first();
 
         if ($email_verification->expired_at->lt(now())){
             throw new ClientErrorException("Verification link has expired");
         }
 
-        $this->userRepository->verifyEmail($email_verification->user);
+        $user = $email_verification->user;
 
-        $this->emailVerificationTokenRepository->delete($email_verification);
+        $user->update(['email_verified_at' => now()]);
+
+        $email_verification->delete();
 
     }
 

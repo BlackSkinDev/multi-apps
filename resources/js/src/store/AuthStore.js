@@ -28,10 +28,10 @@ export const useAuthStore = defineStore('AuthStore', {
             this.processingAuthRequest = true
             try {
                 const {data:{data}} = await authApi.login(userData)
-                const { email, name,refresh_token,is_admin,photo } = data;
-                this.user = {email, name,is_admin,photo}
+                const { email, photo,username,bio,token} = data;
+                this.user = {email, username,bio,photo}
                 localStorage.setItem('logged_in',true)
-                localStorage.setItem('refresh_token',refresh_token)
+                localStorage.setItem('token',token)
                 return API_SUCCESS_MESSAGE
             } catch (error) {
                 return error.response?.data?.message
@@ -40,33 +40,6 @@ export const useAuthStore = defineStore('AuthStore', {
             }
         },
 
-        async sendUserMagicLink(email) {
-            this.processingAuthRequest = true
-            try {
-                await authApi.sendMagicLink(email)
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            } finally {
-                this.processingAuthRequest = false
-            }
-        },
-
-        async loginWithMagicLink(token) {
-            this.processingAuthRequest = true
-            try {
-                const {data:{data}} = await authApi.loginWithMagicLink(token)
-                const { email, name,refresh_token,is_admin,photo } = data;
-                this.user = {email, name,is_admin,photo}
-                localStorage.setItem('logged_in',true)
-                localStorage.setItem('refresh_token',refresh_token)
-                return API_SUCCESS_MESSAGE
-            } catch (error) {
-                return error.response?.data?.message
-            } finally {
-                this.processingAuthRequest = false
-            }
-        },
 
         async fetchAuthUser() {
             try {
@@ -83,7 +56,7 @@ export const useAuthStore = defineStore('AuthStore', {
             try {
                 await authApi.logout()
                 localStorage.removeItem('logged_in')
-                localStorage.removeItem('refresh_token')
+                localStorage.removeItem('token')
                 this.user = {}
                 return API_SUCCESS_MESSAGE
             } catch (error) {
@@ -96,6 +69,7 @@ export const useAuthStore = defineStore('AuthStore', {
                 await authApi.verifyEmail(token)
                 return API_SUCCESS_MESSAGE
             } catch (error) {
+                //console.log(error)
                 return error.response?.data?.message
             }
         },

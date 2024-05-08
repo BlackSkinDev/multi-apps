@@ -5,7 +5,7 @@
         </div>
         <div class="flex flex-col justify-center items-center w-full md:w-1/3 px-8 py-6">
             <h1 class="font-bold text-xl p-6 w-full text-gray-700 " >
-                Simplify project management, boost team collaboration, and stay on track with <span class="text-blue-700 cursor-pointer">{{app_name}}.</span>
+              <span class="text-blue-700 cursor-pointer">{{app_name}}.</span>
             </h1>
             <div class="w-full">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -13,12 +13,7 @@
                         Get started for free
                     </h1>
                     <form class="space-y-4 md:space-y-6 " :class="loading ? 'opacity-50' : ''" action="#" @submit.prevent="registerAccount">
-                        <Input
-                            label="Name"
-                            placeholder="Afeez Azeez"
-                            type="text"
-                            v-model="registerFormData.name"
-                        />
+
                         <Input
                             label="Username"
                             placeholder="afeez_dev"
@@ -81,7 +76,6 @@ export default {
         ...mapActions(useAuthStore,['register']),
         resetForm(){
             this.registerFormData ={
-                name:"",
                 email:"",
                 username:"",
                 password:""
@@ -103,8 +97,8 @@ export default {
             loading:(state)         => state.processingAuthRequest,
         }),
         disabled(){
-            return this.registerFormData.name     === ''
-                || this.registerFormData.email    === ''
+            return
+                 this.registerFormData.email    === ''
                 || this.registerFormData.password === ''
                 || this.registerFormData.username === ''
 

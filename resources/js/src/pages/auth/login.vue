@@ -12,7 +12,7 @@
 
                         <Input
                             label="Email"
-                            placeholder="name@company.com"
+                            placeholder="johndoe@gmail.com"
                             type="email"
                             v-model="passwordLoginFormData.email"
                             :key="inputKey"
@@ -27,27 +27,27 @@
                         />
                         <Button :text="'Sign in'"  :disabled="disabled" :loading="loading"/>
                     </form>
-                    <span class="flex justify-end text-gray-700 text-center text-sm">
-                        <router-link :to="{name:'password-reset-request'}" class="text-blue-500 hover:text-blue-700 mt-2 ">Forgot password?</router-link>
-                    </span>
+<!--                    <span class="flex justify-end text-gray-700 text-center text-sm">-->
+<!--                        <router-link :to="{name:'password-reset-request'}" class="text-blue-500 hover:text-blue-700 mt-2 ">Forgot password?</router-link>-->
+<!--                    </span>-->
                 </div>
                 <!--  Login Form for Password Method-->
 
                 <!--  Login Form for Magic Link Method-->
-                <div>
-                    <form class="space-y-4 md:space-y-6 mb-6" action="#" @submit.prevent="loginUserWithMagicLink" v-show="sign_in_method === 'magic_link'">
-                        <Input
-                            label="Email"
-                            placeholder="name@company.com"
-                            type="email"
-                            v-model="magicLoginFormData.email"
-                            :key="inputKey"
-                        />
-                        <Button :text="'Sign in with Magic Link'"  :disabled="disabled" :loading="loading"/>
-                    </form>
-                    <!--  Login Form for Magic Link Method-->
-                    <Button :text="btn_text"  :bg-class="'bg-orange-700 hover:bg-orange-600'"  @click="switchLoginMethod"/>
-                </div>
+<!--                <div>-->
+<!--                    <form class="space-y-4 md:space-y-6 mb-6" action="#" @submit.prevent="loginUserWithMagicLink" v-show="sign_in_method === 'magic_link'">-->
+<!--                        <Input-->
+<!--                            label="Email"-->
+<!--                            placeholder="name@company.com"-->
+<!--                            type="email"-->
+<!--                            v-model="magicLoginFormData.email"-->
+<!--                            :key="inputKey"-->
+<!--                        />-->
+<!--                        <Button :text="'Sign in with Magic Link'"  :disabled="disabled" :loading="loading"/>-->
+<!--                    </form>-->
+<!--                    &lt;!&ndash;  Login Form for Magic Link Method&ndash;&gt;-->
+<!--                    <Button :text="btn_text"  :bg-class="'bg-orange-700 hover:bg-orange-600'"  @click="switchLoginMethod"/>-->
+<!--                </div>-->
                 <p class="text-gray-700 text-center text-sm mt-4">
                     Don't have an account? <router-link :to="{name:'homepage'}" class="text-blue-500 hover:text-blue-700">Sign up here.</router-link>
                 </p>
@@ -65,7 +65,7 @@ import Button from "../../components/ui/Button.vue";
 import {mapActions, mapState} from "pinia/dist/pinia";
 import {useAuthStore} from "../../store/AuthStore"
 import {TriggerPiniaAction} from "../../util";
-import {APP_NAME, MAGIC_LINK_SENT_SUCCESS_MESSAGE, MAGIC_LOGIN_SUCCESS_MESSAGE} from "../../constants/constants";
+import {APP_NAME} from "../../constants/constants";
 
 export default {
     name: "login.vue",
@@ -87,7 +87,7 @@ export default {
         document.title = `${APP_NAME} | Sign in`;
         const token = this.$route.query.token
         if (token) {
-            const res = await TriggerPiniaAction(this.loginWithMagicLink(token),MAGIC_LOGIN_SUCCESS_MESSAGE,true)
+            const res = await TriggerPiniaAction(this.loginWithMagicLink(token),'ddd',true)
             if (res) {
                 this.$router.push({ name: "dashboard" })
             }else{
@@ -104,7 +104,7 @@ export default {
         },
 
         async loginUserWithMagicLink() {
-            const response = await TriggerPiniaAction(this.sendUserMagicLink(this.magicLoginFormData.email),MAGIC_LINK_SENT_SUCCESS_MESSAGE,true)
+            const response = await TriggerPiniaAction(this.sendUserMagicLink(this.magicLoginFormData.email),'dddd',true)
             if (response){
                 this.magicLoginFormData.email = ""
             }

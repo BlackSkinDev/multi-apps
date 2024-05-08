@@ -13,22 +13,10 @@ use App\Models\User;
 class EmailService
 {
 
-    public function __construct(
-        IUserRepository $userRepository,
+    public function __construct() {
 
-    ) {
-        $this->userRepository = $userRepository;
     }
 
-
-    /**
-     * Send Welcome email to user
-     * @param User $user
-     */
-    public function sendWelcomeEmail(User $user): void
-    {
-        dispatch(new SendEmailsJob($user->email,$user,WelcomeEmail::class));
-    }
 
     /**
      * Send email verification mail to user
@@ -41,35 +29,8 @@ class EmailService
             'user'  =>$user,
             'token' =>$token
         ];
+
         dispatch(new SendEmailsJob($user->email,$data,EmailVerificationMail::class));
-    }
-
-    /**
-     * Send password reset link to user
-     * @param User $user
-     * @param $token
-     */
-    public function sendPasswordResetLink(User $user,$token): void
-    {
-        $data = [
-            'user'  =>$user,
-            'token' =>$token
-        ];
-        dispatch(new SendEmailsJob($user->email,$data,PasswordResetMail::class));
-    }
-
-    /**
-     * Send magic login link to user
-     * @param User $user
-     * @param $token
-     */
-    public function sendMagicLoginLink(User $user,$token): void
-    {
-        $data = [
-            'user'  =>$user,
-            'token' =>$token
-        ];
-        dispatch(new SendEmailsJob($user->email,$data,MagicLoginMail::class));
     }
 
 }

@@ -23,17 +23,20 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => ['required'],
-            'email'     => ['required','email','unique:users'],
+            'name'      => ['nullable','string'],
             'username'  => ['required','unique:users','regex:/^[a-z0-9_]+$/','min:6'],
-            'password'  => ['required','min:6']
+            'email'     => ['required','email','unique:users'],
+            'password' => ['required', 'min:8', 'max:16', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).+$/'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'username.regex' => 'Username can only contain letters,numbers and underscore'
+            'email.unique' => 'The email address is already associated with another account.',
+            'username.unique' => 'The username is already associated with another account.',
+            'username.regex' => 'The username can only contain letters, numbers, and underscores.',
+            'password.regex' => 'The password must contain an uppercase, lowercase letter and a special character.',
         ];
     }
 }

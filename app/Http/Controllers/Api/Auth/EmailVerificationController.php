@@ -27,7 +27,7 @@ class EmailVerificationController extends Controller
     public function update(VerifyEmailRequest $request): JsonResponse
     {
         $this->emailVerificationService->verifyEmail($request->token);
-        return httpResponse(true);
+        return successResponse();
     }
 
     /**
@@ -39,6 +39,6 @@ class EmailVerificationController extends Controller
     public function store(ResendVerifyEmailRequest $request): JsonResponse
     {
         $this->emailVerificationService->sendVerificationEmail($request->email);
-        return httpResponse(true);
+        return successResponse();
     }
 }

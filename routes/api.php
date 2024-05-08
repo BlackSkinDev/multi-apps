@@ -31,18 +31,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-         // Extract each api route into seperate file
-
 
 Route::prefix('v1')->group(function () {
 
 
     Route::prefix('auth')->group(function () {
 
-        Route::prefix('password-reset')->group(function () {
-            Route::post('',[PasswordResetController::class,'store'])->name('password_reset');
-            Route::post('reset',[PasswordResetController::class,'update']);
-        });
 
         Route::prefix('email')->group(function () {
             Route::post('verify',[EmailVerificationController::class,'update']);
@@ -51,77 +45,13 @@ Route::prefix('v1')->group(function () {
 
         Route::post('register',[AuthController::class,'store']);
         Route::post('login',[AuthController::class,'show'])->name('login');
-        Route::post('refresh-token',[RefreshTokenController::class,'update']);
-
-        Route::prefix('magic-login')->group(function () {
-            Route::post('',[MagicAuthController::class,'store']);
-            Route::post('verify',[MagicAuthController::class,'update']);
-        });
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('user', [AuthUserController::class, 'show']);
-            Route::post('logout', [AuthController::class,'delete']);
+            Route::delete('logout', [AuthController::class,'delete']);
         });
 
     });
-
-
-    Route::middleware('auth:sanctum')->group(function () {
-
-        Route::prefix('users')->group(function () {
-
-
-
-            Route::prefix('/account')->group(function () {
-                Route::get('', [AccountController::class,'show']);
-                Route::patch('', [AccountController::class,'update']);
-                Route::post('profile-picture', [ProfilePictureController::class,'update']);
-                Route::post('change-password', [PasswordUpdateController::class,'update']);
-            });
-
-            Route::prefix('/companies')->group(function () {
-                Route::post('', [CompanyController::class,'store']);
-                Route::get('', [CompanyController::class,'show']);
-                Route::patch('', [CompanyController::class,'update']);
-                Route::get('people', [CompanyUserController::class,'index']);
-                Route::get('people/{user}', [CompanyUserController::class,'show']);
-            });
-        });
-
-        Route::post('upload',[MediaController::class,'store']);
-
-
-    });
-
-
-
-    Route::prefix('projects')->middleware('auth:sanctum')->group(function () {
-        Route::get('', [ProjectController::class, 'index']);
-        Route::post('', [ProjectController::class, 'store']);
-        Route::get('{project}', [ProjectController::class, 'show']);
-        Route::patch('{project}', [ProjectController::class, 'update']);
-        Route::get('{project}/tasks', [ProjectTaskController::class, 'index']);
-        Route::post('{project}/tasks', [ProjectTaskController::class, 'store']);
-    });
-
-    Route::prefix('tasks')->middleware('auth:sanctum')->group(function () {
-        Route::patch( '{task}',[ProjectTaskController::class,'update']);
-        Route::delete('{task}',[ProjectTaskController::class,'destroy']);
-        Route::patch( '{task}/unassign',[ProjectTaskAssignmentController::class,'update']);
-        Route::patch( '{task}/move',[TaskPositionController::class,'update']);
-    });
-
-    Route::prefix('users')->middleware('auth:sanctum')->group(function () {
-        Route::get('',[ProjectUserController::class,'index']);
-        Route::get('{user}',[ProjectUserController::class,'show']);
-    });
-
-
-    Route::prefix('projects-dev-stages')->middleware('auth:sanctum')->group(function () {
-        Route::get('',[ProjectDevStageController::class,'index']);
-    });
-
-
 
 });
 

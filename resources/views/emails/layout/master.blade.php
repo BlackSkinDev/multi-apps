@@ -111,7 +111,8 @@
 <body>
 <div class="body-text">
     <div class="template-top">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/logo.png'))) }}" alt="Logo">
+{{--        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/logo.png'))) }}" alt="Logo">--}}
+        <h1 style="text-align: center">{{config('app.name')}}</h1>
     </div>
     <div class="body-content">
         <p>Hello {{$name}},</p>
@@ -132,10 +133,10 @@
 <footer style="padding: 2rem;">
     <div>
         <p style="font-size: 14px; margin-bottom: 1rem;text-align: center">
-            ChillingDev Inc | 33 Lekki P1, Lagos, Nigeria.
+            {{config('app.name')}} | 33 Jhalandar P1,  India.
         </p>
         <p style="font-size: 12px;text-align: center">
-            © {{date('Y')}} ChillingDev Inc. All rights reserved.
+            © {{date('Y')}} {{config('app.name')}} Inc. All rights reserved.
         </p>
     </div>
 </footer>

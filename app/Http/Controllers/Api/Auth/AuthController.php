@@ -6,6 +6,7 @@ use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 
@@ -27,9 +28,8 @@ class AuthController extends Controller
      */
     public function store(RegisterRequest $request): JsonResponse
     {
-        $user_data = array_merge($request->validated(),['is_admin'=>1]);
-        $user = $this->authService->register($user_data);
-        return httpResponse(true,$user);
+        $user = $this->authService->register($request->validated());
+        return successResponse(UserResource::make($user));
     }
 
     /**
@@ -42,7 +42,7 @@ class AuthController extends Controller
     {
         $data  = $this->authService->loginWithPassword($request->validated());
 
-        return httpResponse(true,array_diff_key($data, ['cookie' => null]))->withCookie($data['cookie']);
+        return successResponse($data);
     }
 
 

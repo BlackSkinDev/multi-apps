@@ -1,16 +1,10 @@
 
 
+
 import {createRouter, createWebHistory}  from 'vue-router'
 
 
 const routes = [
-
-    {
-        path:'/test',
-        name:"test",
-        component:()=>import('../components/Test.vue'),
-    },
-
 
     {
         path:'/',
@@ -40,87 +34,9 @@ const routes = [
     },
 
     {
-        path:'/password-reset/request',
-        name:"password-reset-request",
-        component:()=>import('../pages/auth/password-reset.vue'),
-        meta: {
-            redirectIfAuthenticated: true
-        }
-    },
-
-    {
-        path:'/dashboard/your-work',
+        path:'/dashboard',
         name:"dashboard",
-        component:()=>import('../pages/work/Index.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        path:'/dashboard/company/create',
-        name:"create-company",
-        component:()=>import('../pages/company/Create.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        path:'/dashboard/company',
-        name:"company",
-        component:()=>import('../pages/company/Show.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-    {
-        path:'/dashboard/account',
-        name:"account",
-        component:()=>import('../pages/account/Show.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-
-    {
-        path:'/dashboard/settings',
-        name:"settings",
-        component:()=>import('../pages/settings/Index.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-
-
-    {
-        path:'/dashboard/people',
-        name:"people",
-        component:()=>import('../pages/people/Index.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-
-
-    {
-        path:'/dashboard/people/:id',
-        name:"people-profile",
-        component:()=>import('../pages/people/Show.vue'),
-        meta: {
-            requiresAuth: true
-        }
-    },
-
-
-    {
-        path:'/dashboard/projects',
-        name:"projects",
-        component:()=>import('../pages/project/Index.vue'),
+        component:()=>import('../pages/user/dashboard.vue'),
         meta: {
             requiresAuth: true
         }

@@ -3,17 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,13 +28,10 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
-        'is_admin',
-        'company_id',
-        'email_verified_at',
-        'image',
-        'linkedin',
+        'avatar',
         'bio',
-        'phone'
+        'enabled',
+        'email_verified_at',
     ];
 
     /**
@@ -42,7 +42,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'id'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+
+    }
+
+
 
     /**
      * The attributes that should be cast.
@@ -81,8 +94,8 @@ class User extends Authenticatable
         $defaultLogoPath = url('/images/avatar.png');
         $logoFolder = 'public/user-images';
 
-        if ($this->image && Storage::exists($logoFolder . '/' . $this->image)) {
-            return url(Storage::url($logoFolder . '/' . $this->image));
+        if ($this->avatar && Storage::exists($logoFolder . '/' . $this->avatar)) {
+            return url(Storage::url($logoFolder . '/' . $this->avatar));
         } else {
             return $defaultLogoPath;
         }
@@ -109,12 +122,5 @@ class User extends Authenticatable
     }
 
 
-    /**
-     * get user company
-     *
-     */
-    public function company(){
-        return $this->belongsTo(Company::class);
-    }
 
 }

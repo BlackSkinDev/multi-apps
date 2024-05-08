@@ -16,21 +16,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->uuid();
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('username')->unique();
-            $table->foreignId('company_id')->nullable()->constrained()->onDelete('cascade');
             $table->tinyInteger('enabled')->default(1);
-            $table->tinyInteger('is_admin')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('bio')->nullable();
-            $table->string('role')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('image')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
